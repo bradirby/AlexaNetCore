@@ -5,6 +5,6 @@ using System.Text;
 
 [assembly:InternalsVisibleTo("AlexaNetCore.Tests")]
 [assembly:InternalsVisibleTo("AlexaNetCore.FlashBriefing.Tests")]
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class DefaultLaunchIntentHandler : AlexaIntentHandlerBase
     {

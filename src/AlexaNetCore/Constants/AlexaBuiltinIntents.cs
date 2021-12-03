@@ -1,4 +1,4 @@
-﻿namespace AlexaSkillDotNet
+﻿namespace AlexaNetCore
 {
     public static class AlexaBuiltInIntents
     {

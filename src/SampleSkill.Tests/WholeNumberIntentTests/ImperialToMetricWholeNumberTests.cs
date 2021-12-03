@@ -1,4 +1,4 @@
-﻿using AlexaSkillDotNet;
+﻿using AlexaNetCore;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

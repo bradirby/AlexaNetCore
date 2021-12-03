@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 using Amazon.Runtime.Internal;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class DefaultHelpIntentHandler : AlexaIntentHandlerBase
     {

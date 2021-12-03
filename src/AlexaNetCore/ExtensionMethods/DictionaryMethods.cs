@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Linq;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public static class DictionaryMethods
     {

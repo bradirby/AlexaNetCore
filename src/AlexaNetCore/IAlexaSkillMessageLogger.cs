@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public interface IAlexaSkillMessageLogger
     {

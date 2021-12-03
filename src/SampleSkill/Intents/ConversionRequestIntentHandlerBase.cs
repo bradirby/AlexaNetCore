@@ -1,4 +1,4 @@
-﻿using AlexaSkillDotNet;
+﻿using AlexaNetCore;
 using DistanceLibrary;
 using System;
 using System.Collections.Generic;

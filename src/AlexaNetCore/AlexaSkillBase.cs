@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using AlexaSkillDotNet.Model;
+using AlexaNetCore.Model;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     /// <summary>
     /// Base class all custom skills should derive from

@@ -1,4 +1,4 @@
-﻿using AlexaSkillDotNet;
+﻿using AlexaNetCore;
 using NUnit.Framework;
 
 namespace ExactMeasureSkill.Tests

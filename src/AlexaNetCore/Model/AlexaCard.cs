@@ -4,7 +4,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     /// <summary>
     /// The object containing a card to render to the Amazon Alexa App.

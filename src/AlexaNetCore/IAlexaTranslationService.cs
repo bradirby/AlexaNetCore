@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
 
     /// <summary>

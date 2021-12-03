@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Amazon.Runtime.Internal;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class AlexaSlot
     {

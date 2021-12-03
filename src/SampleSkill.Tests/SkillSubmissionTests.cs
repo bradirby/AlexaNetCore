@@ -1,4 +1,4 @@
-﻿using AlexaSkillDotNet;
+﻿using AlexaNetCore;
 using ExactMeasureSkill.Intents;
 using ExactMeasureSkill.Tests;
 using ExactMeasureSkill.Tests.TestData;

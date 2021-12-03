@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace AlexaSkillDotNet.Tests
+namespace AlexaNetCore.Tests
 {
     [DebuggerStepThrough]
     public  class AirportInfoRequests : SampleRequestBase

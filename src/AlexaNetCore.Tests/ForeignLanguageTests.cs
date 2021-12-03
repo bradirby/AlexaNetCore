@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Runtime.Internal.Util;
 using Moq;
 
-namespace AlexaSkillDotNet.Tests
+namespace AlexaNetCore.Tests
 {
     public class ForeignLanguageTests
     {

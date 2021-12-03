@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     /// <summary>
     /// A map of key-value pairs to persist in the session.  This is one of the few objects that is in the

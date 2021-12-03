@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public static class DateTimeExtensionMethods
     {

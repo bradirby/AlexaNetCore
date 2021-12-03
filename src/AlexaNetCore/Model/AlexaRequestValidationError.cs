@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlexaSkillDotNet.Model
+namespace AlexaNetCore.Model
 {
     public class AlexaRequestValidationError
     {

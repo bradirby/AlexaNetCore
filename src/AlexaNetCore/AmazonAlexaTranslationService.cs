@@ -3,7 +3,7 @@ using Amazon.Translate;
 using System;
 using System.Threading.Tasks;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class AmazonAlexaTranslationService : IAlexaTranslationService
     {

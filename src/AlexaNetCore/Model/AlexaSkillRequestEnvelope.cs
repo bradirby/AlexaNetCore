@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
-using AlexaSkillDotNet.Model;
+using AlexaNetCore.Model;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class AlexaSkillRequestEnvelope
     {

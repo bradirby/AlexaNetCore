@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace AlexaSkillDotNet.Model
+namespace AlexaNetCore.Model
 {
     public class AlexaViewport
     {

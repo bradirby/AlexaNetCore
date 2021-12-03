@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 using NUnit.Framework;
 
-namespace AlexaSkillDotNet.Tests
+namespace AlexaNetCore.Tests
 {
     public class RequestEnvelope_DeserializationTests
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public static class StringExtensionMethods
     {

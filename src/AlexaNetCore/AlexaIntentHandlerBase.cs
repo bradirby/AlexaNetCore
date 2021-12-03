@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public abstract class AlexaIntentHandlerBase
     {

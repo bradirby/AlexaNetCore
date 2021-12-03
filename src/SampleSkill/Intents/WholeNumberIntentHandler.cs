@@ -1,4 +1,4 @@
-﻿using AlexaSkillDotNet;
+﻿using AlexaNetCore;
 using System;
 using System.Security.Cryptography;
 using DistanceLibrary;

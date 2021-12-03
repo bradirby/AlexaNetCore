@@ -1,6 +1,6 @@
 ﻿
 
-using AlexaSkillDotNet;
+using AlexaNetCore;
 using DistanceLibrary;
 using NUnit.Framework;
 

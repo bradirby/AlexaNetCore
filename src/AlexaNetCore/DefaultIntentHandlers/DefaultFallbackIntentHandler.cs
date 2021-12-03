@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class DefaultFallbackIntentHandler : AlexaIntentHandlerBase
     {

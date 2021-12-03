@@ -1,5 +1,5 @@
 ﻿using System;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 using NUnit.Framework;
 
 namespace AlexaFlashBriefing.Tests

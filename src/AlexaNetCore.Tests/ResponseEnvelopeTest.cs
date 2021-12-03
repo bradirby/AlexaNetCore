@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 using NUnit.Framework;
 
-namespace AlexaSkillDotNet.Tests
+namespace AlexaNetCore.Tests
 {
     public class ResponseEnvelopeTest
     {

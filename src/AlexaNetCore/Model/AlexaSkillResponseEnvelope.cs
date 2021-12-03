@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
 
     public class AlexaSkillResponseEnvelope  : AlexaObjectBase

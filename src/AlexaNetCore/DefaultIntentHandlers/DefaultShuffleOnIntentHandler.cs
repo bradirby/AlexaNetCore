@@ -1,6 +1,6 @@
-﻿using AlexaSkillDotNet;
+﻿using AlexaNetCore;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class DefaultShuffleOnIntentHandler: AlexaIntentHandlerBase
     {

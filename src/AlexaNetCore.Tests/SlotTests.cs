@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 
-namespace AlexaSkillDotNet.Tests
+namespace AlexaNetCore.Tests
 {
     public class SlotTests
     {

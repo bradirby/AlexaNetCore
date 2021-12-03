@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Runtime.Serialization;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
 
 

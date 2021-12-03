@@ -1,5 +1,5 @@
 ﻿using System;
-using AlexaSkillDotNet;
+using AlexaNetCore;
 
 namespace ExactMeasureSkill
 {

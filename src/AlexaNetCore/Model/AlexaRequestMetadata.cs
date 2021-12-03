@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public class AlexaRequestMetadata
     {

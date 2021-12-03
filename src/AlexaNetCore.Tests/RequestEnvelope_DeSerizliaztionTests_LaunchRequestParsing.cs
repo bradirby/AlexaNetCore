@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using NUnit.Framework;
 
-namespace AlexaSkillDotNet.Tests
+namespace AlexaNetCore.Tests
 {
     public class RequestEnvelope_DeSerizliaztionTests_LaunchRequestParsing
     {

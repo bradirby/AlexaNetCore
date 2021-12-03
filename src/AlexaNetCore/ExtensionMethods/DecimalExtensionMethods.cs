@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace AlexaSkillDotNet
+namespace AlexaNetCore
 {
     public static class DecimalExtensionMethods
     {
