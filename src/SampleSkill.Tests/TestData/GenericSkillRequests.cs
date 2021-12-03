@@ -21,7 +21,7 @@ namespace AlexaNetCoreSampleSkill.Tests
     ""new"": false,
     ""sessionId"": ""amzn1.echo-api.session.123456789012"",
     ""application"": {
-      ""applicationId"": ""amzn1.ask.skill.987654321""
+      ""applicationId"": ""amzn1.ask.skill.111111111""
     },
     ""attributes"": {},
     ""user"": {
@@ -31,7 +31,7 @@ namespace AlexaNetCoreSampleSkill.Tests
   ""context"": {
     ""System"": {
       ""application"": {
-        ""applicationId"": ""amzn1.ask.skill.987654321""
+        ""applicationId"": ""amzn1.ask.skill.111111111""
       },
       ""user"": {
         ""userId"": ""amzn1.ask.account.testUser""
@@ -58,13 +58,8 @@ namespace AlexaNetCoreSampleSkill.Tests
 
         }
 
-        
-            /// <summary>
-        /// This is the request generated when I type "Open exact measure" at the Alexa Simulator console here
-        /// https://developer.amazon.com/alexa/console/ask/test/amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5/development/en_IN/
-        /// </summary>
-        /// <returns></returns>
-        public static string OpenExactMeasure()
+       
+        public static string OpenRequest()
         {
             var str = @"
 
@@ -75,11 +70,11 @@ namespace AlexaNetCoreSampleSkill.Tests
 		""new"": true,
 		""sessionId"": ""amzn1.echo-api.session.4bb67e53-b3c9-475c-8ab7-e9531e6ea695"",
 		""application"": {
-			""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+			""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
 		},
 		""attributes"": {},
 		""user"": {
-			""userId"": ""amzn1.ask.account.AFGETGN2WSE6YICNNRJUR3F5TZZJJZTR67TSL4YURMMJXJC3KTUFXKXHNECKRRD3UQUANBDRAF526CL5FTY6AD7BQRZAXMNF4DSXCYVVZAJHICSGCBTRZXCM4ARPC2WMH4OGOETJKE6KMK6KDI6LNHFW5M3QIHWHX577IOK7OMZGYZL25WKB7PZZKIJF3DLOATI3JGSPJ3VPHNA""
+			""userId"": ""amzn1.ask.account.AFG3JGSPJ3VPHNA""
 		}
 	},
 	""context"": {
@@ -142,7 +137,7 @@ namespace AlexaNetCoreSampleSkill.Tests
 		},
 		""System"": {
 			""application"": {
-				""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+				""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
 			},
 			""user"": {
 				""userId"": ""amzn1.ask.account.AFGETGN2WSE6YICNNRJUR3F5TZZJJZTR67TSL4YURMMJXJC3KTUFXKXHNECKRRD3UQUANBDRAF526CL5FTY6AD7BQRZAXMNF4DSXCYVVZAJHICSGCBTRZXCM4ARPC2WMH4OGOETJKE6KMK6KDI6LNHFW5M3QIHWHX577IOK7OMZGYZL25WKB7PZZKIJF3DLOATI3JGSPJ3VPHNA""
@@ -212,7 +207,7 @@ namespace AlexaNetCoreSampleSkill.Tests
   ""session"": {
     ""sessionId"": ""SessionId.3f1f8f0d-3c68-41f0-b24e-25c0bd1743da"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
     },
     ""attributes"": { },
     ""user"": {
@@ -248,7 +243,7 @@ namespace AlexaNetCoreSampleSkill.Tests
   ""session"": {
     ""sessionId"": ""SessionId.1412af2e-a9aa-453f-9c21-1bda18563169"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
     },
     ""attributes"": { },
     ""user"": {
@@ -294,7 +289,7 @@ namespace AlexaNetCoreSampleSkill.Tests
   ""session"": {
     ""sessionId"": ""SessionId.1412af2e-a9aa-453f-9c21-1bda18563169"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
     },
     ""attributes"": { },
     ""user"": {
@@ -342,7 +337,7 @@ namespace AlexaNetCoreSampleSkill.Tests
   ""session"": {
     ""sessionId"": ""SessionId.a8b29a9e-b5cf-4d7e-89f0-6fdf1cdd1c9c"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
     },
     ""attributes"": { },
     ""user"": {
@@ -495,7 +490,7 @@ namespace AlexaNetCoreSampleSkill.Tests
   ""session"": {
     ""sessionId"": ""SessionId.bbb7ba23-daef-4699-9755-454b3e601cae"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.11111111-1111-1111-1111-111111111111""
     },
     ""attributes"": { },
     ""user"": {
