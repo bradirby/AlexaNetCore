@@ -1,0 +1,198 @@
+﻿{
+	"interactionModel": {
+		"languageModel": {
+			"invocationName": "exact measure",
+			"intents": [
+				{
+					"name": "AMAZON.CancelIntent",
+					"samples": [
+						"thank you",
+						"thanks",
+						"cancel",
+						"quit",
+						"excellent"
+					]
+				},
+				{
+					"name": "AMAZON.HelpIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.StopIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.NavigateHomeIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.FallbackIntent",
+					"samples": []
+				},
+				{
+					"name": "WithDecimal",
+					"slots": [
+						{
+							"name": "inputValue",
+							"type": "AMAZON.NUMBER"
+						},
+						{
+							"name": "decimalValue",
+							"type": "AMAZON.NUMBER"
+						},
+						{
+							"name": "sourceType",
+							"type": "measuretype"
+						},
+						{
+							"name": "destType",
+							"type": "measuretype"
+						}
+					],
+					"samples": [
+						"what is {inputValue} point {decimalValue} {sourceType} in {destType}",
+						"now give me {inputValue} point {decimalValue} {sourceType} in {destType}",
+						"what about {inputValue} point {decimalValue} {sourceType} in {destType}",
+						"whats {inputValue} point {decimalValue} {sourceType} in {destType}",
+						"tell me {inputValue} point {decimalValue} {sourceType} in {destType}",
+						"give me {inputValue} point {decimalValue} {sourceType} in {destType}",
+						"convert {inputValue} point {decimalValue} {sourceType} to {destType}",
+						"change {inputValue} point {decimalValue} {sourceType} to {destType}",
+						"{inputValue} point {decimalValue} {sourceType} to {destType}",
+						"{inputValue} point {decimalValue} {sourceType} into {destType}",
+						"{inputValue} point {decimalValue} {sourceType} in {destType}",
+						"for {inputValue} point {decimalValue} {sourceType} in {destType}"
+					]
+				},
+				{
+					"name": "WithoutDecimal",
+					"slots": [
+						{
+							"name": "inputValue",
+							"type": "AMAZON.NUMBER"
+						},
+						{
+							"name": "sourceType",
+							"type": "measuretype"
+						},
+						{
+							"name": "destType",
+							"type": "measuretype"
+						}
+					],
+					"samples": [
+						"{inputValue} {sourceType} to {destType} ",
+						"{inputValue} {sourceType} into {destType} ",
+						"{inputValue} {sourceType} in {destType} ",
+						"for {inputValue} {sourceType} in {destType} ",
+						"to change {inputValue} {sourceType} into {destType}",
+						"to give me {inputValue} {sourceType} in {destType}",
+						"to convert {inputValue} {sourceType} to {destType}",
+						"to tell me what {inputValue} {sourceType} in {destType} is",
+						"give me {inputValue} {sourceType} in {destType}",
+						"whats {inputValue} {sourceType} in {destType}",
+						"what is {inputValue} {sourceType} in {destType}",
+						"now give me {inputValue} {sourceType} in {destType}",
+						"what about {inputValue} {sourceType} in {destType}"
+					]
+				},
+				{
+					"name": "TryAgain",
+					"slots": [
+						{
+							"name": "destType",
+							"type": "measuretype"
+						}
+					],
+					"samples": [
+						"what about in {destType} ",
+						"what about in {destType} instead",
+						"now give me {destType} ",
+						"now give me {destType} instead",
+						"give it to me in {destType} ",
+						"give it to me in {destType} instead",
+						"change that to {destType} ",
+						"change that to {destType} instead",
+						"convert to {destType} ",
+						"convert to {destType} instead",
+						"can you repeat that",
+						"what as that again",
+						"i didn't hear you",
+						"I didn't catch that'"
+					]
+				}
+			],
+			"types": [
+				{
+					"name": "measuretype",
+					"values": [
+						{
+							"name": {
+								"value": "inches",
+								"synonyms": [
+									"inch"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "feet",
+								"synonyms": [
+									"foot"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "yards",
+								"synonyms": [
+									"yard"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "miles",
+								"synonyms": [
+									"mile"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "millimeters",
+								"synonyms": [
+									"millimeter"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "centimeters",
+								"synonyms": [
+									"centimeter"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "meters",
+								"synonyms": [
+									"meter"
+								]
+							}
+						},
+						{
+							"name": {
+								"value": "kilometers",
+								"synonyms": [
+									"kilometer"
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+}

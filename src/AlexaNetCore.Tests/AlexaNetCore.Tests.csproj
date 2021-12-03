@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AlexaSkillBaseTest.cs" />
+    <Compile Remove="FakeAlexaSkillMessageLogger.cs" />
+    <Compile Remove="SkillTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlexaNetCore\AlexaNetCore.csproj" />
+  </ItemGroup>
+
+</Project>
