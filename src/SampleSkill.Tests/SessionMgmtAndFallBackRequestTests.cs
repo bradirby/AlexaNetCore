@@ -29,14 +29,6 @@ namespace AlexaNetCoreSampleSkill.Tests
             Assert.AreEqual("Goodbye", skill.ResponseEnv.Response.OutputSpeech.GetText(AlexaLocale.English_US));
         }
 
-        [Test]
-        public void MetricToImperial_ShouldNotEndSession()
-        {
-            var skill = new SampleSkill();
-            skill.LoadRequest(MetricToImperialSampleRequests.OneMeterInYards()).ProcessRequest();
-
-            Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
-        }
 
     }
 }

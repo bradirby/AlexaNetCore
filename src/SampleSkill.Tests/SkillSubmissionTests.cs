@@ -1,7 +1,6 @@
 ﻿using AlexaNetCore;
 using AlexaNetCoreSampleSkill.Intents;
 using AlexaNetCoreSampleSkill.Tests;
-using AlexaNetCoreSampleSkill.Tests.TestData;
 using NUnit.Framework;
 
 namespace AlexaNetCoreSampleSkill.Tests
@@ -57,7 +56,7 @@ namespace AlexaNetCoreSampleSkill.Tests
             Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.Response.OutputSpeech.SpeechType);
             Assert.IsFalse(string.IsNullOrEmpty(s.ResponseEnv.Response.OutputSpeech.GetText(AlexaLocale.English_US)));
-            Assert.AreEqual(ResponseTextObjects.BadUnitOfMeasure.GetText(), s.ResponseEnv.Response.OutputSpeech.GetText());
+            Assert.AreEqual("asdf", s.ResponseEnv.Response.OutputSpeech.GetText());
             Assert.AreEqual("Sorry, I didn't understand the value you are asking about. Please try again.", s.ResponseEnv.Response.Card.Text.GetText());
         }
 
