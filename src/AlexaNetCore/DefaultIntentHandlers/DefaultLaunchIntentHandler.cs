@@ -14,12 +14,12 @@ namespace AlexaNetCore
             LaunchText = new AlexaMultiLanguageText("Hello, what can I do for you today?");
         }
 
-        public DefaultLaunchIntentHandler(string defaultTxt, IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.LaunchRequest, log)
+        public DefaultLaunchIntentHandler(string defaultTxt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.LaunchRequest, log)
         {
             LaunchText = new AlexaMultiLanguageText(defaultTxt);
         }
 
-        public DefaultLaunchIntentHandler(AlexaMultiLanguageText defaultTxt, IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.LaunchRequest, log)
+        public DefaultLaunchIntentHandler(AlexaMultiLanguageText defaultTxt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.LaunchRequest, log)
         {
             LaunchText = defaultTxt;
         }

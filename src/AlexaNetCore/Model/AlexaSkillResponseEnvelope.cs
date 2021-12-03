@@ -118,37 +118,6 @@ namespace AlexaNetCore
             SessionAttributes.Add(sessionKey, value);
         }
 
-        public void AddToIntentHistory(string intentName, Dictionary<int, string> history, int historySize = 10)
-        {
-            history ??= new Dictionary<int, string>();
-            var newHistory = new Dictionary<int, string>();
-            int counter = 1;
-            newHistory.Add(counter, intentName);
-            foreach (var entry in history.OrderBy(h => h.Key))
-                newHistory.Add(++counter, entry.Value);
-            SetIntentHistory(newHistory, historySize);
-
-        }
-
-        internal string GetIntentHistoryString(Dictionary<int, string> history, int historySize = 10)
-        {
-            if (history == null) history = new Dictionary<int, string>();
-            var sb = new StringBuilder();
-            for (int n = 1; n <= historySize; n++)
-            {
-                if (history.ContainsKey(n)) sb.Append($"{n}:{history[n]};");
-            }
-
-            return sb.ToString();
-
-        }
-
-        public void SetIntentHistory(Dictionary<int, string> history, int historySize = 10)
-        {
-            var str = GetIntentHistoryString(history, historySize);
-            SetSessionValue("IntentHistory", str);
-
-        }
 
         public void SetOutputSpeech(string txt)
         {

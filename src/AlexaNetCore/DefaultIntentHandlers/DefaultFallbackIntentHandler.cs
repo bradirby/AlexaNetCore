@@ -15,17 +15,17 @@ namespace AlexaNetCore
             ResponseEnv.IntentHandlerName = this.GetType().Name;
         }
 
-        public DefaultFallbackIntentHandler(IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.FallbackIntent, log)
+        public DefaultFallbackIntentHandler(IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.FallbackIntent, log)
         {
             HelpText = new AlexaMultiLanguageText("I'm sorry, I didn't quite get that.  Can you try again?");
         }
  
-        public DefaultFallbackIntentHandler(string helpText, IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.FallbackIntent, log)
+        public DefaultFallbackIntentHandler(string helpText, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.FallbackIntent, log)
         {
             HelpText = new AlexaMultiLanguageText(helpText);
         }
  
-        public DefaultFallbackIntentHandler(AlexaMultiLanguageText helpText, IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.FallbackIntent, log)
+        public DefaultFallbackIntentHandler(AlexaMultiLanguageText helpText, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.FallbackIntent, log)
         {
             HelpText =  helpText;
         }

@@ -1,4 +1,4 @@
-﻿namespace ExactMeasureSkill
+﻿namespace AlexaNetCoreSampleSkill
 {
     public class SlotNames
     {

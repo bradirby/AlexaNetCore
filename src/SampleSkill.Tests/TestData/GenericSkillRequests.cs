@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExactMeasureSkill.Tests
+namespace AlexaNetCoreSampleSkill.Tests
 {
-    public class GenericSkillRequests : SampleRequestBase
+    public class GenericSkillRequests 
     {
         
 
@@ -54,7 +54,7 @@ namespace ExactMeasureSkill.Tests
 
 
 ";
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -167,7 +167,7 @@ namespace ExactMeasureSkill.Tests
 
 "
                 ;
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -198,7 +198,7 @@ namespace ExactMeasureSkill.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -235,7 +235,7 @@ namespace ExactMeasureSkill.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -283,7 +283,7 @@ namespace ExactMeasureSkill.Tests
 }
 "
                 ;
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -330,7 +330,7 @@ namespace ExactMeasureSkill.Tests
 "
                 ;
 
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -374,7 +374,7 @@ namespace ExactMeasureSkill.Tests
 }
 
 ";
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -480,7 +480,7 @@ namespace ExactMeasureSkill.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -518,7 +518,7 @@ namespace ExactMeasureSkill.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 

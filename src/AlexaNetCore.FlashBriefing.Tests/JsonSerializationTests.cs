@@ -2,7 +2,7 @@
 using AlexaNetCore;
 using NUnit.Framework;
 
-namespace AlexaFlashBriefing.Tests
+namespace AlexaNetCore.FlashBriefing.Tests
 {
     public class JsonSerializationTests
     {

@@ -16,17 +16,17 @@ namespace AlexaNetCore
 
         public AlexaMultiLanguageText CustomStartOverText { get; set; }
 
-        public DefaultStartOverIntentHandler(IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.StartOverIntent, log)
+        public DefaultStartOverIntentHandler(IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.StartOverIntent, log)
         {
             CustomStartOverText = new AlexaMultiLanguageText("I'm sorry, I don't know how to do that.");
         }
 
-        public DefaultStartOverIntentHandler(string txt, IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.StartOverIntent, log)
+        public DefaultStartOverIntentHandler(string txt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.StartOverIntent, log)
         {
             CustomStartOverText = new AlexaMultiLanguageText(txt);
         }
 
-        public DefaultStartOverIntentHandler(AlexaMultiLanguageText txt, IAlexaSkillMessageLogger log) : base(AlexaBuiltInIntents.StartOverIntent, log)
+        public DefaultStartOverIntentHandler(AlexaMultiLanguageText txt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.StartOverIntent, log)
         {
             CustomStartOverText =  txt;
         }

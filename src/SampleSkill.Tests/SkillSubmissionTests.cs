@@ -1,10 +1,10 @@
 ﻿using AlexaNetCore;
-using ExactMeasureSkill.Intents;
-using ExactMeasureSkill.Tests;
-using ExactMeasureSkill.Tests.TestData;
+using AlexaNetCoreSampleSkill.Intents;
+using AlexaNetCoreSampleSkill.Tests;
+using AlexaNetCoreSampleSkill.Tests.TestData;
 using NUnit.Framework;
 
-namespace ExactMeasureSkill.Tests
+namespace AlexaNetCoreSampleSkill.Tests
 {
     /// <summary>
     /// These tests attempt to cover the skills submission tests that are listed here:
@@ -16,7 +16,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void LaunchRequest_InvokeWithNoIntent()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
 
             Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
@@ -26,7 +26,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void StartRequest()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
             
             Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
@@ -38,7 +38,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void CancelRequest()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.CancelRequest()).ProcessRequest();
 
             Assert.AreEqual(true, s.ResponseEnv.Response.ShouldEndSession);
@@ -50,7 +50,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void EmptyRequest()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.EmptyRequest());
             s.ProcessRequest();
 
@@ -65,7 +65,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void StopRequest()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.StopRequest()).ProcessRequest();
 
             Assert.AreEqual(true, s.ResponseEnv.Response.ShouldEndSession);
@@ -78,7 +78,7 @@ namespace ExactMeasureSkill.Tests
           [Test]
         public void OpenExactMeasure()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.OpenExactMeasure()).ProcessRequest();
             
             Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
@@ -91,7 +91,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void InvalidIntentName()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.InvalidIntentName()).ProcessRequest();
 
             Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
@@ -102,7 +102,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void InvalidIntentType()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.InvalidIntentType()).ProcessRequest();
 
             Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
@@ -114,7 +114,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void LambdaManagementTestToolStartSession()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.StartSession()).ProcessRequest();
 
             Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
@@ -125,7 +125,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void LambdaManagementTestToolEndSession()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.EndSession()).ProcessRequest();
 
             Assert.AreEqual(true, s.ResponseEnv.Response.ShouldEndSession);
@@ -136,7 +136,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void CancelRequestSentFromSimulator()
         {
-            var s = new ExactMeasureAlexaSkill();
+            var s = new SampleSkill();
             s.LoadRequest(GenericSkillRequests.CancelRequest()).ProcessRequest();
 
             Assert.AreEqual(true, s.ResponseEnv.Response.ShouldEndSession);

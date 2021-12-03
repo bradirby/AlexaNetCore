@@ -7,9 +7,6 @@ namespace AlexaNetCore
     {
         protected IAlexaSkillMessageLogger MsgLogger;
 
-        public bool AddThisIntentToIntentHistory { get; protected set; }
-
-
         /// <summary>
         /// Set this flag to True if this intent is an extension of the previous intent.  For example, the
         /// Yes and No intents operate on a prompt from the previous intent
@@ -19,33 +16,41 @@ namespace AlexaNetCore
 
         public string IntentName { get; internal set; }
 
-        protected Dictionary<int, string> IntentHistory { get; set; }
-
         protected int IntentHistorySize { get; set; } = 10;
 
+        /// <summary>
+        /// Constructor for a custom skill
+        /// </summary>
+        /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
+        /// <param name="log">Logger to use (can be null)</param>
         public AlexaIntentHandlerBase(string intentName, IAlexaSkillMessageLogger log)
         {
             MsgLogger = log;
             IntentName = intentName;
         }
 
+        /// <summary>
+        /// The request envelope contains all the information coming from Amazon in the reqeust
+        /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; protected set; }
 
+        /// <summary>
+        /// Response envelope is where you craft your response
+        /// </summary>
         public AlexaSkillResponseEnvelope ResponseEnv { get; protected set; }
 
 
+        /// <summary>
+        /// Called by the dispatching engine
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
         internal void InitIntent(AlexaSkillRequestEnvelope request, AlexaSkillResponseEnvelope response)
         {
             RequestEnv = request ?? throw new ArgumentNullException(nameof(request));
             ResponseEnv = response ?? throw new ArgumentNullException(nameof(ResponseEnv));
 
             ResponseEnv.IntentHandlerName = IntentName;
-            
-            if (AddThisIntentToIntentHistory)
-            {
-                IntentHistory = RequestEnv.GetIntentHistory();
-                ResponseEnv.AddToIntentHistory(RequestEnv.Request.Intent.Name, IntentHistory, IntentHistorySize);
-            }
 
         }
 

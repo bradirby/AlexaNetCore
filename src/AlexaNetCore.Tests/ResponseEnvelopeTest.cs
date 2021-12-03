@@ -86,53 +86,6 @@ namespace AlexaNetCore.Tests
             Assert.IsNotNull(outputObj);
         }
 
-        [Test]
-        public void GetIntentHistoryString_EmptyList_DoesNotThrow()
-        {
-            var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
-            var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
-            var result = resp.GetIntentHistoryString(null);
-            Assert.AreEqual(string.Empty,result);
-        }
-
-        [Test]
-        public void GetIntentHistoryString_SingleEntry_WritesHistory()
-        {
-            var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
-            var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
-            var dict = new Dictionary<int, string>();
-            dict.Add(1,"intent1");
-            var str = resp.GetIntentHistoryString(dict);
-            Assert.AreEqual("1:intent1;",str);
-        }
-
-        [Test]
-        public void GetIntentHistoryString_MultipleEntries_WritesHistory()
-        {
-            var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
-            var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
-            var dict = new Dictionary<int, string>();
-            dict.Add(1, "intent1");
-            dict.Add(2, "intent2");
-            dict.Add(3, "intent3");
-            var str = resp.GetIntentHistoryString(dict);
-            Assert.AreEqual("1:intent1;2:intent2;3:intent3;", str);
-        }
-
-        [Test]
-        public void GetIntentHistoryString_TooManyEntries_WritesHistory()
-        {
-            var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
-            var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
-            var dict = new Dictionary<int, string>();
-            dict.Add(1, "intent1");
-            dict.Add(2, "intent2");
-            dict.Add(3, "intent3");
-            dict.Add(4, "intent4");
-            dict.Add(5, "intent5");
-            var str = resp.GetIntentHistoryString(dict, 3);
-            Assert.AreEqual("1:intent1;2:intent2;3:intent3;", str);
-        }
 
 
     }

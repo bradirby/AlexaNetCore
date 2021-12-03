@@ -1,9 +1,10 @@
-﻿namespace ExactMeasureSkill
+﻿namespace AlexaNetCoreSampleSkill
 {
     public class IntentNames
     {
-        public static string WithDecimalIntent => "WithDecimal";
-        public static string  WholeNumberIntent => "WithoutDecimal";
-        public static string  TryAgainIntent => "TryAgain";
+        /// <summary>
+        /// Intent names must match those in the SupportingFiles/InteractionModel.json
+        /// </summary>
+        public static string  SampleIntent => "SampleSkillIntent";
     }
 }

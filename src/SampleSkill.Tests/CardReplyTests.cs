@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using AlexaNetCore;
 
-namespace ExactMeasureSkill.Tests
+namespace AlexaNetCoreSampleSkill.Tests
 {
     public class CardReplyTests
     {
@@ -12,7 +12,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void LaunchRequest_ShouldNotReturnCard()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
 
             Assert.IsNull(skill.ResponseEnv.Response.Card);
@@ -21,7 +21,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void EndSession_ShouldNotReturnCard()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(GenericSkillRequests.EndSession()).ProcessRequest();
 
             Assert.IsNull(skill.ResponseEnv.Response.Card);
@@ -30,7 +30,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void MetricToImperial_NoDecimals_ShouldNotEndSession()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(MetricToImperialSampleRequests.OneMeterInYards());
             skill.ProcessRequest();
 
@@ -42,7 +42,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void MetricToImperial_Decimals_ShouldNotEndSession()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(MetricToImperialSampleRequests.OnePointTwoMetersInYards()).ProcessRequest();
 
             Assert.IsNotNull(skill.ResponseEnv.Response.Card);
@@ -54,7 +54,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void MetricToImperial_DecimalNumber_ShouldNotEndSession()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(MetricToImperialSampleRequests.OnePointTwoMetersInYards()).ProcessRequest();
 
             Assert.IsNotNull(skill.ResponseEnv.Response.Card);

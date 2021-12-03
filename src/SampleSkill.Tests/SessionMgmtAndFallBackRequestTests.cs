@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExactMeasureSkill.Tests
+namespace AlexaNetCoreSampleSkill.Tests
 {
     public class SessionMgmtAndFallBackRequestTests
     {
@@ -12,7 +12,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void LaunchRequest_ShouldNotEndSession()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
 
             Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
@@ -22,7 +22,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void EndSession_ShouldEndSession()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(GenericSkillRequests.EndSession()).ProcessRequest();
 
             Assert.AreEqual(true, skill.ResponseEnv.Response.ShouldEndSession);
@@ -32,7 +32,7 @@ namespace ExactMeasureSkill.Tests
         [Test]
         public void MetricToImperial_ShouldNotEndSession()
         {
-            var skill = new ExactMeasureAlexaSkill();
+            var skill = new SampleSkill();
             skill.LoadRequest(MetricToImperialSampleRequests.OneMeterInYards()).ProcessRequest();
 
             Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
