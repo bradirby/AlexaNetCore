@@ -14,16 +14,16 @@ namespace AlexaNetCore
 
         public AlexaMultiLanguageText CancelText { get; private set; } 
 
-        public DefaultCancelIntentHandler(IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.CancelIntent, log)
+        public DefaultCancelIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.CancelIntent, log)
         {
             CancelText=new AlexaMultiLanguageText("Goodbye.");
         }
 
-        public DefaultCancelIntentHandler(string txt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.CancelIntent, log)
+        public DefaultCancelIntentHandler(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.CancelIntent, log)
         {
             CancelText=new AlexaMultiLanguageText(txt);
         }
-        public DefaultCancelIntentHandler(AlexaMultiLanguageText txt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.CancelIntent, log)
+        public DefaultCancelIntentHandler(AlexaMultiLanguageText txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.CancelIntent, log)
         {
             CancelText=txt;
         }

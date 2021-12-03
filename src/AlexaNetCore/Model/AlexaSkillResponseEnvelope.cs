@@ -14,11 +14,11 @@ namespace AlexaNetCore
 
     public class AlexaSkillResponseEnvelope  : AlexaObjectBase
     {
-        private IAlexaSkillMessageLogger MsgLogger;
+        private IAlexaNetCoreMessageLogger MsgLogger;
 
         private AlexaLocale RequestLocale { get; set; }
 
-        internal AlexaSkillResponseEnvelope(AlexaSkillRequestEnvelope req, IAlexaSkillMessageLogger log)
+        internal AlexaSkillResponseEnvelope(AlexaSkillRequestEnvelope req, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             Response  = new AlexaResponse(req.Request.Locale, MsgLogger);

@@ -7,7 +7,7 @@ namespace AlexaNetCore
 {
     public class AmazonAlexaTranslationService : IAlexaTranslationService
     {
-        private IAlexaSkillMessageLogger MsgLogger;
+        private IAlexaNetCoreMessageLogger MsgLogger;
 
         public string SourceLanguageCode { get; private set; }
 
@@ -16,7 +16,7 @@ namespace AlexaNetCore
             SourceLanguageCode = sourceLanguageCode;
         }
 
-        public void SetLogger(IAlexaSkillMessageLogger log)
+        public void SetLogger(IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
         }
@@ -26,7 +26,7 @@ namespace AlexaNetCore
             SourceLanguageCode = newLanguageCode;
         }
 
-        public AmazonAlexaTranslationService(string languageCode, IAlexaSkillMessageLogger log)
+        public AmazonAlexaTranslationService(string languageCode, IAlexaNetCoreMessageLogger log)
         {
             SourceLanguageCode = languageCode;
             MsgLogger = log;

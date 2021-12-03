@@ -11,8 +11,8 @@ namespace AlexaNetCore
     /// </summary>
     public class AlexaOutputSpeech
     {
-        private IAlexaSkillMessageLogger MsgLogger;
-        public AlexaOutputSpeech(AlexaLocale locale, IAlexaSkillMessageLogger log)
+        private IAlexaNetCoreMessageLogger MsgLogger;
+        public AlexaOutputSpeech(AlexaLocale locale, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             SpeechType = AlexaOutputSpeechType.PlainText;

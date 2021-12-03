@@ -9,8 +9,8 @@ namespace AlexaNetCoreSampleSkill
 
         public SampleSkill()
         {
-            //There is a default console logger built in.  It can be replaced with any logger that
-            //implements IAlexaSkillMessageLogger.  
+            //There is a default console logger built in, which ties in with AWS logging.  It can be replaced with any logger that
+            //implements IAlexaNetCoreMessageLogger.  
             MsgLogger.Debug("Sample skill is initializing");
 
             SetSkillVersion("0.1");

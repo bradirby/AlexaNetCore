@@ -8,16 +8,16 @@ namespace AlexaNetCore
 
     public class AlexaReprompt
     {
-        private IAlexaSkillMessageLogger MsgLogger;
+        private IAlexaNetCoreMessageLogger MsgLogger;
 
-        public AlexaReprompt(string repromptText, IAlexaSkillMessageLogger log)
+        public AlexaReprompt(string repromptText, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(AlexaLocale.English_US, MsgLogger);
             OutputSpeech.SetText(repromptText);
         }
 
-        public AlexaReprompt(AlexaMultiLanguageText repromptText, IAlexaSkillMessageLogger log)
+        public AlexaReprompt(AlexaMultiLanguageText repromptText, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(AlexaLocale.English_US, MsgLogger);

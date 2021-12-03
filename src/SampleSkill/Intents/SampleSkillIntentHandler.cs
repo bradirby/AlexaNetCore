@@ -10,7 +10,7 @@ namespace AlexaNetCoreSampleSkill.Intents
     public class SampleSkillIntentHandler : AlexaIntentHandlerBase
     {
 
-        public SampleSkillIntentHandler(IAlexaSkillMessageLogger log) : base(IntentNames.SampleIntent, log)
+        public SampleSkillIntentHandler(IAlexaNetCoreMessageLogger log) : base(IntentNames.SampleIntent, log)
         {
         }
 

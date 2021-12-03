@@ -5,7 +5,7 @@ namespace AlexaNetCore
 {
     public abstract class AlexaIntentHandlerBase
     {
-        protected IAlexaSkillMessageLogger MsgLogger;
+        protected IAlexaNetCoreMessageLogger MsgLogger;
 
         /// <summary>
         /// Set this flag to True if this intent is an extension of the previous intent.  For example, the
@@ -16,14 +16,12 @@ namespace AlexaNetCore
 
         public string IntentName { get; internal set; }
 
-        protected int IntentHistorySize { get; set; } = 10;
-
         /// <summary>
         /// Constructor for a custom skill
         /// </summary>
         /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
         /// <param name="log">Logger to use (can be null)</param>
-        public AlexaIntentHandlerBase(string intentName, IAlexaSkillMessageLogger log)
+        public AlexaIntentHandlerBase(string intentName, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             IntentName = intentName;

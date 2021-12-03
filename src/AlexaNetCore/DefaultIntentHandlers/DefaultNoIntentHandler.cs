@@ -15,17 +15,17 @@ namespace AlexaNetCore
 
         }
 
-        public DefaultNoIntentHandler(IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.NoIntent, log)
+        public DefaultNoIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.NoIntent, log)
         {
             DefaultText = new AlexaMultiLanguageText("I'm sorry, I don't know how to do that.");
         }
 
-        public DefaultNoIntentHandler(string txt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.NoIntent, log)
+        public DefaultNoIntentHandler(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.NoIntent, log)
         {
             DefaultText = new AlexaMultiLanguageText(txt);
         }
 
-        public DefaultNoIntentHandler(AlexaMultiLanguageText txt, IAlexaSkillMessageLogger log = null) : base(AlexaBuiltInIntents.NoIntent, log)
+        public DefaultNoIntentHandler(AlexaMultiLanguageText txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.NoIntent, log)
         {
             DefaultText = txt;
         }

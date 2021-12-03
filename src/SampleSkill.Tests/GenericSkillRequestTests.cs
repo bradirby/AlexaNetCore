@@ -5,10 +5,6 @@ using NUnit.Framework;
 
 namespace AlexaNetCoreSampleSkill.Tests
 {
-    /// <summary>
-    /// These tests attempt to cover the skills submission tests that are listed here:
-    /// https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-voice-interface-and-user-experience-testing?ref_=pe_679090_102923190
-    /// </summary>
     public class GenericSkillRequestTests 
     {
 
@@ -100,8 +96,6 @@ namespace AlexaNetCoreSampleSkill.Tests
             Assert.AreEqual("Goodbye.", skill.ResponseEnv.Response.OutputSpeech.GetText());
         }
 
-
-    
 
         [Test]
         public void InvalidIntentName_ReturnsHelpText()

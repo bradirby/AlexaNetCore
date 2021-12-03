@@ -13,9 +13,9 @@ namespace AlexaNetCore
     public class AlexaCard
     {
 
-        private IAlexaSkillMessageLogger MsgLogger;
+        private IAlexaNetCoreMessageLogger MsgLogger;
 
-        public AlexaCard(AlexaCardType typ, IAlexaSkillMessageLogger log)
+        public AlexaCard(AlexaCardType typ, IAlexaNetCoreMessageLogger log)
         {
             CardType = typ;
             MsgLogger =log;

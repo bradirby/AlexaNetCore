@@ -6,9 +6,9 @@ namespace AlexaNetCore
 {
     public class AlexaResponse
     {
-        private IAlexaSkillMessageLogger MsgLogger;
+        private IAlexaNetCoreMessageLogger MsgLogger;
 
-        public AlexaResponse(AlexaLocale locale, IAlexaSkillMessageLogger log)
+        public AlexaResponse(AlexaLocale locale, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             OutputSpeech  = new AlexaOutputSpeech(locale, MsgLogger);

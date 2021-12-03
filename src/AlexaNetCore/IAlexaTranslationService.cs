@@ -10,7 +10,7 @@ namespace AlexaNetCore
     {
         Task<string> TranslateAsync(string toTranslate, string targetLanguageCode);
 
-        void SetLogger(IAlexaSkillMessageLogger log);
+        void SetLogger(IAlexaNetCoreMessageLogger log);
 
         void SetSourceLanguageCode(string newLanguageCode);
 

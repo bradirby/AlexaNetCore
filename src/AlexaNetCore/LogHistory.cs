@@ -1,8 +1,6 @@
-﻿using Amazon.Runtime.Internal.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AlexaNetCore
 {
@@ -33,16 +31,6 @@ namespace AlexaNetCore
             EnqueueItem(new LogHistoryRow(LogHistoryType.Error, msg));
         }
         
-        public void Fatal(string msg)
-        {
-            EnqueueItem(new LogHistoryRow(LogHistoryType.Error, msg));
-        }
-
-        public void Error(Exception e, string msg)
-        {
-            EnqueueItem(new LogHistoryRow(LogHistoryType.Exception, msg, e));
-        }
-
         private void EnqueueItem(LogHistoryRow row)
         {
             _history.Enqueue(row);
@@ -78,36 +66,6 @@ namespace AlexaNetCore
             }
 
             return lst;
-        }
-        
-        public void WriteOutLogHistory(IAlexaSkillMessageLogger logger)
-        {
-            logger.Error("*** Beginning of log history ***");
-            foreach (var logRow in _history.ToList())
-            {
-                switch (logRow.Logtype)
-                {
-                    case LogHistoryType.Debug:
-                        logger.Debug(logRow.Msg);
-                        break;
-                    case LogHistoryType.Info:
-                        logger.Information(logRow.Msg);
-                        break;
-                    case LogHistoryType.Warn:
-                        logger.Warning(logRow.Msg);
-                        break;
-                    case LogHistoryType.Error:
-                        logger.Error(logRow.Msg);
-                        break;
-                    case LogHistoryType.Exception:
-                        logger.Error(logRow.Exc, logRow.Msg);
-                        break;
-                    default:
-                        logger.Error(logRow.Msg);
-                        break;
-                }
-                logger.Error("*** End of log history ***");
-            }
         }
 
         internal enum LogHistoryType

@@ -25,7 +25,7 @@ namespace AlexaNetCore.FlashBriefing.Tests
             {
                 var item = new AlexaTextBriefingItem()
                     .SetTitle("This is the title")
-                    .SetContent("Meet Brads version of Echosim. A new online community tool for developers that simulates the look and feel of an Amazon Echo.")
+                    .SetContent("In Alexa news today, Alexa Net Core is taking the dot net development world by storm.")
                     .SetDisplayUrl("https://developer.amazon.com/public/community/blog");
 
                 AddFlashBriefing(item);

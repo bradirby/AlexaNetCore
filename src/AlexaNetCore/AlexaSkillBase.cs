@@ -30,7 +30,7 @@ namespace AlexaNetCore
             return this;
         }
 
-        public AlexaSkillBase SetLogger(IAlexaSkillMessageLogger log)
+        public AlexaSkillBase SetLogger(IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
             return this;
@@ -66,7 +66,7 @@ namespace AlexaNetCore
         /// <summary>
         /// Message Logger for writing debug messages
         /// </summary>
-        public IAlexaSkillMessageLogger MsgLogger { get; private set; }
+        public IAlexaNetCoreMessageLogger MsgLogger { get; private set; }
 
         /// <summary>
         /// The parsed contents of the incoming request string
