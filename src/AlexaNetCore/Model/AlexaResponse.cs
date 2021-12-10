@@ -100,6 +100,9 @@ namespace AlexaNetCore
         /// </summary>
         public bool? ShouldEndSession { get; set; }
 
+        /// <summary>
+        /// Returns true if there is a reprompt set
+        /// </summary>
         public bool IsRepromptSet => (Reprompt != null);
 
         public object GetJson(AlexaLocale locale, IAlexaTranslationService translator = null)
@@ -129,14 +132,15 @@ namespace AlexaNetCore
 
         }
 
-        public void SetOutputSpeech(AlexaMultiLanguageText txt)
+        public void SetOutputSpeech(AlexaMultiLanguageText txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
             OutputSpeech.SetText(txt);
         }
 
-        public void SetOutputSpeech(string txt)
+        public void SetOutputSpeech(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
             OutputSpeech.SetText(txt);
+            OutputSpeech.SpeechType = typ;
         }
 
         public string GetOutputSpeach(AlexaLocale locale, IAlexaTranslationService translator)

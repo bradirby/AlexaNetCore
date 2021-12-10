@@ -57,7 +57,7 @@ namespace AlexaNetCore
         /// </summary>
         public void SetShouldEndSession(bool shouldEndSession)
         {
-            ResponseEnv.Response.ShouldEndSession = shouldEndSession;
+            ResponseEnv.ShouldEndSession = shouldEndSession;
         }
 
         /// <summary>

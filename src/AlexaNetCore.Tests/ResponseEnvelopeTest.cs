@@ -15,7 +15,7 @@ namespace AlexaNetCore.Tests
             var reqEnv = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
             var respEnv = new AlexaSkillResponseEnvelope(reqEnv, new ConsoleMessageLogger());
             respEnv.Version = "1.2";
-            respEnv.Response.OutputSpeech.SetText("Hello From Brad");
+            respEnv.SetOutputSpeech("Hello From Brad");
             respEnv.Response.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
             respEnv.Response.Reprompt.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
             respEnv.Response.Reprompt.OutputSpeech.SetText("Anything else I can do?");

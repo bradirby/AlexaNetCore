@@ -10,8 +10,7 @@ namespace AlexaNetCore
 
         public override void Process()
         {
-            ResponseEnv.Response.OutputSpeech.SetText(HelpTxt);
-
+            ResponseEnv.SetOutputSpeech(HelpTxt);
             ResponseEnv.ShouldEndSession = false;
             ResponseEnv.IntentHandlerName = this.GetType().Name;
         }

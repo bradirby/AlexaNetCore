@@ -44,6 +44,9 @@ namespace AlexaNetCore
         }
 
        
+        /// <summary>
+        /// Tells the device if it should end the session immediately or wait for more interaction.
+        /// </summary>
         public bool? ShouldEndSession
         {
             get => Response.ShouldEndSession;
@@ -52,7 +55,7 @@ namespace AlexaNetCore
 
        
         /// <summary>
-        /// The version specifier for the response with the value to be defined as: “1.0”
+        /// The version specifier for the response with the value to be defined in this format: “1.0”
         /// </summary>
         public string Version { get; set; }
 
@@ -119,9 +122,9 @@ namespace AlexaNetCore
         }
 
 
-        public void SetOutputSpeech(string txt)
+        public void SetOutputSpeech(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetOutputSpeech(txt);
+            Response.SetOutputSpeech(txt, typ);
         }
 
         public void SetOutputSpeech(AlexaMultiLanguageText txt)
