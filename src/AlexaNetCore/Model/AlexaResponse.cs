@@ -77,19 +77,20 @@ namespace AlexaNetCore
         public AlexaReprompt Reprompt { get; private set; }
 
     
-        public void SetRepromptSpeech(string repromptTxt)
+        public void SetRepromptSpeechText(string repromptTxt, AlexaOutputSpeechType typ )
         {
-            if (string.IsNullOrEmpty(repromptTxt)) SetRepromptSpeech((AlexaMultiLanguageText) null);
-            else SetRepromptSpeech(new AlexaMultiLanguageText(repromptTxt));        
+            if (string.IsNullOrEmpty(repromptTxt)) SetRepromptSpeechText((AlexaMultiLanguageText) null, typ);
+            else SetRepromptSpeechText(new AlexaMultiLanguageText(repromptTxt), typ);        
         }
 
-        public void SetRepromptSpeech(AlexaMultiLanguageText repromptTxt)
+        public void SetRepromptSpeechText(AlexaMultiLanguageText repromptTxt, AlexaOutputSpeechType typ )
         {
             if (repromptTxt == null)
             {
                 Reprompt = null;
                 return;
             }
+            OutputSpeech.SpeechType = typ;
             Reprompt = new AlexaReprompt(repromptTxt, MsgLogger);
             ShouldEndSession = false;
         }
@@ -100,6 +101,9 @@ namespace AlexaNetCore
         /// </summary>
         public bool? ShouldEndSession { get; set; }
 
+        /// <summary>
+        /// Returns true if there is a reprompt set
+        /// </summary>
         public bool IsRepromptSet => (Reprompt != null);
 
         public object GetJson(AlexaLocale locale, IAlexaTranslationService translator = null)
@@ -129,17 +133,20 @@ namespace AlexaNetCore
 
         }
 
-        public void SetOutputSpeech(AlexaMultiLanguageText txt)
+        public void SetOutputSpeechText(AlexaMultiLanguageText txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
             OutputSpeech.SetText(txt);
+            OutputSpeech.SpeechType = typ;
         }
 
-        public void SetOutputSpeech(string txt)
+        public void SetOutputSpeechText(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
             OutputSpeech.SetText(txt);
+            OutputSpeech.SpeechType = typ;
         }
 
-        public string GetOutputSpeach(AlexaLocale locale, IAlexaTranslationService translator)
+
+        public string GetOutputSpeachText(AlexaLocale locale, IAlexaTranslationService translator)
         {
             return OutputSpeech.GetText(locale, translator);
         }

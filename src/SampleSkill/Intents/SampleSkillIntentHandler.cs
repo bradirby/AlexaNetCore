@@ -18,12 +18,12 @@ namespace AlexaNetCoreSampleSkill.Intents
         {
             try
             {
-                ResponseEnv.Response.OutputSpeech.SetText("Hello World");
+                ResponseEnv.SetOutputSpeechText("Hello World");
             }
             catch (Exception exc)
             {
                 MsgLogger.Error(exc, $"Exception: {exc.Message}");
-                ResponseEnv.Response.OutputSpeech.SetText($"I'm sorry, something went wrong.  Can you try again?");
+                ResponseEnv.SetOutputSpeechText($"I'm sorry, something went wrong.  Can you try again?");
             }
 
         }

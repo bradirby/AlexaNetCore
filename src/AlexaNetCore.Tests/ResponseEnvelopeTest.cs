@@ -15,11 +15,9 @@ namespace AlexaNetCore.Tests
             var reqEnv = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
             var respEnv = new AlexaSkillResponseEnvelope(reqEnv, new ConsoleMessageLogger());
             respEnv.Version = "1.2";
-            respEnv.Response.OutputSpeech.SetText("Hello From Brad");
-            respEnv.Response.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
-            respEnv.Response.Reprompt.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
-            respEnv.Response.Reprompt.OutputSpeech.SetText("Anything else I can do?");
-            respEnv.Response.ShouldEndSession = true;
+            respEnv.SetOutputSpeechText("Hello From Brad");
+            respEnv.SetRepromptSpeechText("Anything else I can do?", AlexaOutputSpeechType.PlainText);
+            respEnv.ShouldEndSession = true;
 
             // Act
             var outputObj = respEnv.CreateAlexaResponse(null);
@@ -49,11 +47,9 @@ namespace AlexaNetCore.Tests
             var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
             var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
             resp.Version = "1.2";
-            resp.Response.OutputSpeech.SetText("Hello From Brad");
-            resp.Response.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
-            resp.Response.Reprompt.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
-            resp.Response.Reprompt.OutputSpeech.SetText("Anything else I can do?");
-            resp.Response.ShouldEndSession = true;
+            resp.SetOutputSpeechText("Hello From Brad");
+            resp.SetRepromptSpeechText("Anything else I can do?");
+            resp.ShouldEndSession = true;
 
             // Act
             var outputObj = resp.CreateAlexaResponse(null);
@@ -71,13 +67,11 @@ namespace AlexaNetCore.Tests
             var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
             var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
             resp.Version = "1.0";
-            resp.Response.OutputSpeech.SpeechType = AlexaOutputSpeechType.SSML;
-            resp.Response.OutputSpeech.SetText(
-                "<speak>There is currently no delay at San Francisco International. The current weather conditions are A Few Clouds, 70.0 F (21.1 C) and wind Northwest at 13.8mph.</speak>");
+            resp.SetOutputSpeechText(
+                "<speak>There is currently no delay at San Francisco International. The current weather conditions are A Few Clouds, 70.0 F (21.1 C) and wind Northwest at 13.8mph.</speak>", AlexaOutputSpeechType.SSML);
 
-            resp.Response.Reprompt.OutputSpeech.SpeechType = AlexaOutputSpeechType.PlainText;
-            resp.Response.Reprompt.OutputSpeech.SetText("Anything else I can do?");
-            resp.Response.ShouldEndSession = true;
+            resp.SetRepromptSpeechText("Anything else I can do?");
+            resp.ShouldEndSession = true;
 
             // Act
             var outputObj = resp.CreateAlexaResponse(null);

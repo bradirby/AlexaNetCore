@@ -24,7 +24,7 @@ namespace AlexaNetCore.Tests
             var skill = new TestAlexaSkill();
             skill.RegisterDefaultIntentHandlers();
             skill.LoadRequest(AmazonIntentSampleRequests.LaunchRequest()).ProcessRequest();
-            skill.ResponseEnv.Response.AddSimpleCard("card title to find", "card body to find");
+            skill.ResponseEnv.AddSimpleCard("card title to find", "card body to find");
             var json = skill.CreateAlexaResponse();
 
             Assert.IsTrue(json.Contains("card title to find"));

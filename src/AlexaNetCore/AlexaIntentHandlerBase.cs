@@ -57,7 +57,7 @@ namespace AlexaNetCore
         /// </summary>
         public void SetShouldEndSession(bool shouldEndSession)
         {
-            ResponseEnv.Response.ShouldEndSession = shouldEndSession;
+            ResponseEnv.ShouldEndSession = shouldEndSession;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace AlexaNetCore
         /// </summary>
         public void SetOutputSpeech(string txt)
         {
-            ResponseEnv.SetOutputSpeech(txt);
+            ResponseEnv.SetOutputSpeechText(txt);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace AlexaNetCore
         /// </summary>
         public void SetOutputSpeech(AlexaMultiLanguageText txt)
         {
-            ResponseEnv.SetOutputSpeech(txt);
+            ResponseEnv.SetOutputSpeechText(txt);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace AlexaNetCore
         /// </summary>
         public void SetRepromptSpeech(string txt)
         {
-            ResponseEnv.SetRepromptSpeech(txt);
+            ResponseEnv.SetRepromptSpeechText(txt);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace AlexaNetCore
         /// </summary>
         public void SetRepromptSpeech(AlexaMultiLanguageText txt)
         {
-            ResponseEnv.SetRepromptSpeech(txt);
+            ResponseEnv.SetRepromptSpeechText(txt);
         }
         
         /// <summary>

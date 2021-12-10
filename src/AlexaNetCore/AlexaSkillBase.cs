@@ -92,7 +92,7 @@ namespace AlexaNetCore
             {
                 Debugger.Break();
                 MsgLogger?.Error($"{this.GetType().Name} Error ProcessIntentRequest", exc);
-                ResponseEnv.SetOutputSpeech("I'm sorry, I could not figure out what you want me to do.  Please try again");
+                ResponseEnv.SetOutputSpeechText("I'm sorry, I could not figure out what you want me to do.  Please try again");
                 ResponseEnv.ShouldEndSession = true;
                 return null;
             }
@@ -338,7 +338,7 @@ namespace AlexaNetCore
 
         public AlexaSkillBase SetRepromptSpeach(AlexaMultiLanguageText txt)
         {
-            ResponseEnv.SetRepromptSpeech(txt);
+            ResponseEnv.SetRepromptSpeechText(txt);
             return this;
         }
 
@@ -346,7 +346,7 @@ namespace AlexaNetCore
 
         public AlexaSkillBase SetRepromptSpeach(string txt)
         {
-            ResponseEnv.SetRepromptSpeech(txt);
+            ResponseEnv.SetRepromptSpeechText(txt);
             return this;
         }
 
