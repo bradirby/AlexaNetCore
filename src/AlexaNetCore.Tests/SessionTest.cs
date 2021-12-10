@@ -39,7 +39,7 @@ namespace AlexaNetCore.Tests
             skill.RequestEnv.Request.Intent.Name = IntentThatSaveSession.IntentName;
             skill.ProcessRequest();
 
-            Assert.AreEqual("Hello World", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("Hello World", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
             Assert.AreEqual("FindThisValue", skill.ResponseEnv.GetSessionValue("MySessionKey",""));
             var json = skill.CreateAlexaResponse();
 

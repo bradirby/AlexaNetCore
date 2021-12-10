@@ -12,7 +12,7 @@ namespace AlexaNetCoreSampleSkill.Tests
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
 
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
-            Assert.AreEqual("Hello, what can this SampleSkill do for you today?", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("Hello, what can this SampleSkill do for you today?", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace AlexaNetCoreSampleSkill.Tests
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.CancelRequest()).ProcessRequest();
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
-            Assert.AreEqual("Goodbye", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("Goodbye", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace AlexaNetCoreSampleSkill.Tests
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.EmptyRequest()).ProcessRequest();
 
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
-            Assert.AreEqual("I can help you with that", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("I can help you with that", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace AlexaNetCoreSampleSkill.Tests
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
 
             //Note the period in the string, this is coming from the default Stop handler, not the Cancel handler defined in the SampleSkill
-            Assert.AreEqual("Goodbye.", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("Goodbye.", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
 
@@ -102,7 +102,7 @@ namespace AlexaNetCoreSampleSkill.Tests
 
             Assert.AreEqual(false, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
-            Assert.AreEqual("I can help you with that", s.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("I can help you with that", s.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]

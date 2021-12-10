@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 namespace AlexaNetCore
@@ -152,8 +147,12 @@ namespace AlexaNetCore
         }
 
 
+        public string GetOutputSpeechText()
+        {
+            return Response.GetOutputSpeachText(AlexaLocale.English_US, null);
+        }
 
-        public string GetOutputSpeachText(AlexaLocale locale, IAlexaTranslationService translator = null)
+        public string GetOutputSpeechText(AlexaLocale locale, IAlexaTranslationService translator = null)
         {
             return Response.GetOutputSpeachText(locale, translator);
         }
@@ -187,6 +186,22 @@ namespace AlexaNetCore
         {
             return Response.OutputSpeech;
         }
+
+        public AlexaReprompt GetReprompt()
+        {
+            return Response.Reprompt;
+        }
+
+        public string GetRepromptSpeechText()
+        {
+            return Response.Reprompt.OutputSpeech.GetText(AlexaLocale.English_US, null);
+        }
+
+        public string GetRepromptSpeechText(AlexaLocale locale, IAlexaTranslationService translator = null)
+        {
+            return Response.Reprompt.OutputSpeech.GetText(locale, translator);
+        }
+
 
         public AlexaCard GetCard()
         {
