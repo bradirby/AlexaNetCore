@@ -149,6 +149,25 @@ namespace AlexaNetCore
             Response.SetDefaultResponseLocale(locale);
         }
 
+        public AlexaCard AddSimpleCard(string title, string txt)
+        {
+            return Response.AddSimpleCard(title, txt);
+        }
+
+        public AlexaCard AddSimpleCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt)
+        {
+            return Response.AddSimpleCard(title, txt);
+        }
+
+        public AlexaCard AddStandardCard(string title, string txt, AlexaImageLink urlLink)
+        {
+            return Response.AddStandardCard(title, txt, urlLink);
+        }
+        
+        public AlexaCard AddStandardCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink)
+        {
+            return Response.AddStandardCard(title, txt, urlLink);
+        }
 
         /// <summary>
         /// Sets an attribute value to be sent back to AWS Servers.  These values will be returned via the
