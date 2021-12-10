@@ -73,6 +73,9 @@ namespace AlexaNetCore
 
         private AlexaResponse Response { get; set; }
 
+        /// <summary>
+        /// Returns true if the Reprompt is set
+        /// </summary>
         public bool IsRepromptSet => Response.IsRepromptSet;
 
 
