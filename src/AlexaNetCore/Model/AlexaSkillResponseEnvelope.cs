@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 namespace AlexaNetCore
@@ -25,7 +20,7 @@ namespace AlexaNetCore
             RequestLocale = req.Request.Locale;
 
             //set the default reprompt text.  This can be overridden.  
-            SetRepromptSpeech("Is there anything else I can do?");
+            SetRepromptSpeechText("Is there anything else I can do?");
 
             try
             {
@@ -44,6 +39,9 @@ namespace AlexaNetCore
         }
 
        
+        /// <summary>
+        /// Tells the device if it should end the session immediately or wait for more interaction.
+        /// </summary>
         public bool? ShouldEndSession
         {
             get => Response.ShouldEndSession;
@@ -52,7 +50,7 @@ namespace AlexaNetCore
 
        
         /// <summary>
-        /// The version specifier for the response with the value to be defined as: “1.0”
+        /// The version specifier for the response with the value to be defined in this format: “1.0”
         /// </summary>
         public string Version { get; set; }
 
@@ -68,8 +66,11 @@ namespace AlexaNetCore
         /// </summary>
         public string IntentHandlerName { get; internal set; }
 
-        public AlexaResponse Response { get; set; }
+        private AlexaResponse Response { get; set; }
 
+        /// <summary>
+        /// Returns true if the Reprompt is set
+        /// </summary>
         public bool IsRepromptSet => Response.IsRepromptSet;
 
 
@@ -119,29 +120,41 @@ namespace AlexaNetCore
         }
 
 
-        public void SetOutputSpeech(string txt)
+
+
+        public void SetOutputSpeechText(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetOutputSpeech(txt);
+            Response.SetOutputSpeechText(txt, typ);
         }
 
-        public void SetOutputSpeech(AlexaMultiLanguageText txt)
+        public void SetOutputSpeechText(AlexaMultiLanguageText txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetOutputSpeech(txt);
+            Response.SetOutputSpeechText(txt, typ);
         }
 
-        public void SetRepromptSpeech(AlexaMultiLanguageText txt)
+
+
+
+
+        public void SetRepromptSpeechText(AlexaMultiLanguageText txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetRepromptSpeech(txt);
+            Response.SetRepromptSpeechText(txt, typ);
         }
 
-        public void SetRepromptSpeech(string txt)
+        public void SetRepromptSpeechText(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetRepromptSpeech(txt);
+            Response.SetRepromptSpeechText(txt, typ);
         }
 
-        public string GetOutputSpeach(AlexaLocale locale, IAlexaTranslationService translator = null)
+
+        public string GetOutputSpeechText()
         {
-            return Response.GetOutputSpeach(locale, translator);
+            return Response.GetOutputSpeachText(AlexaLocale.English_US, null);
+        }
+
+        public string GetOutputSpeechText(AlexaLocale locale, IAlexaTranslationService translator = null)
+        {
+            return Response.GetOutputSpeachText(locale, translator);
         }
 
         public void SetDefaultResponseLocale(AlexaLocale locale)
@@ -149,6 +162,51 @@ namespace AlexaNetCore
             Response.SetDefaultResponseLocale(locale);
         }
 
+        public AlexaCard AddSimpleCard(string title, string txt)
+        {
+            return Response.AddSimpleCard(title, txt);
+        }
+
+        public AlexaCard AddSimpleCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt)
+        {
+            return Response.AddSimpleCard(title, txt);
+        }
+
+        public AlexaCard AddStandardCard(string title, string txt, AlexaImageLink urlLink)
+        {
+            return Response.AddStandardCard(title, txt, urlLink);
+        }
+        
+        public AlexaCard AddStandardCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink)
+        {
+            return Response.AddStandardCard(title, txt, urlLink);
+        }
+
+        public AlexaOutputSpeech GetOutputSpeech()
+        {
+            return Response.OutputSpeech;
+        }
+
+        public AlexaReprompt GetReprompt()
+        {
+            return Response.Reprompt;
+        }
+
+        public string GetRepromptSpeechText()
+        {
+            return Response.Reprompt.OutputSpeech.GetText(AlexaLocale.English_US, null);
+        }
+
+        public string GetRepromptSpeechText(AlexaLocale locale, IAlexaTranslationService translator = null)
+        {
+            return Response.Reprompt.OutputSpeech.GetText(locale, translator);
+        }
+
+
+        public AlexaCard GetCard()
+        {
+            return Response.Card;
+        }
 
         /// <summary>
         /// Sets an attribute value to be sent back to AWS Servers.  These values will be returned via the

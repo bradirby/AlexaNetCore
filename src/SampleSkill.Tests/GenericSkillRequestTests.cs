@@ -1,6 +1,4 @@
 ﻿using AlexaNetCore;
-using AlexaNetCoreSampleSkill.Intents;
-using AlexaNetCoreSampleSkill.Tests;
 using NUnit.Framework;
 
 namespace AlexaNetCoreSampleSkill.Tests
@@ -13,15 +11,15 @@ namespace AlexaNetCoreSampleSkill.Tests
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
 
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.Response.OutputSpeech.SpeechType);
-            Assert.AreEqual("Hello, what can this SampleSkill do for you today?", skill.ResponseEnv.Response.OutputSpeech.GetText());
+            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
+            Assert.AreEqual("Hello, what can this SampleSkill do for you today?", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
         public void LaunchRequest_InvokeWithNoIntent_DoesNotEndSession()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
-            Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
+            Assert.AreEqual(false, skill.ResponseEnv.ShouldEndSession);
         }
 
         
@@ -29,15 +27,15 @@ namespace AlexaNetCoreSampleSkill.Tests
         public void CancelRequest_SaysGoodbye()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.CancelRequest()).ProcessRequest();
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.Response.OutputSpeech.SpeechType);
-            Assert.AreEqual("Goodbye", skill.ResponseEnv.Response.OutputSpeech.GetText());
+            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
+            Assert.AreEqual("Goodbye", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
         public void CancelRequest_EndsSession()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.CancelRequest()).ProcessRequest();
-            Assert.AreEqual(true, skill.ResponseEnv.Response.ShouldEndSession);
+            Assert.AreEqual(true, skill.ResponseEnv.ShouldEndSession);
         }
 
         
@@ -45,14 +43,14 @@ namespace AlexaNetCoreSampleSkill.Tests
         public void LaunchRequest_ShouldNotReturnCard()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
-            Assert.IsNull(skill.ResponseEnv.Response.Card);
+            Assert.IsNull(skill.ResponseEnv.GetCard());
         }
 
         [Test]
         public void EndSession_ShouldNotReturnCard()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.EndSession()).ProcessRequest();
-            Assert.IsNull(skill.ResponseEnv.Response.Card);
+            Assert.IsNull(skill.ResponseEnv.GetCard());
         }
 
         [Test]
@@ -60,29 +58,29 @@ namespace AlexaNetCoreSampleSkill.Tests
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.EmptyRequest()).ProcessRequest();
 
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.Response.OutputSpeech.SpeechType);
-            Assert.AreEqual("I can help you with that", skill.ResponseEnv.Response.OutputSpeech.GetText());
+            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
+            Assert.AreEqual("I can help you with that", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
         public void EmptyRequest_DoesNotEndSession()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.EmptyRequest()).ProcessRequest();
-            Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
+            Assert.AreEqual(false, skill.ResponseEnv.ShouldEndSession);
         }
 
         [Test]
         public void EmptyRequest_DoesNotReturnCard()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.EmptyRequest()).ProcessRequest();
-            Assert.IsNull( skill.ResponseEnv.Response.Card);
+            Assert.IsNull( skill.ResponseEnv.GetCard());
         }
 
         [Test]
         public void StopRequest_EndsSession()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.StopRequest()).ProcessRequest();
-            Assert.IsTrue( skill.ResponseEnv.Response.ShouldEndSession);
+            Assert.IsTrue( skill.ResponseEnv.ShouldEndSession);
 
         }
         
@@ -90,10 +88,10 @@ namespace AlexaNetCoreSampleSkill.Tests
         public void StopRequest_SaysGoodbye()
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.StopRequest()).ProcessRequest();
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.Response.OutputSpeech.SpeechType);
+            Assert.AreEqual(AlexaOutputSpeechType.PlainText, skill.ResponseEnv.GetOutputSpeech().SpeechType);
 
             //Note the period in the string, this is coming from the default Stop handler, not the Cancel handler defined in the SampleSkill
-            Assert.AreEqual("Goodbye.", skill.ResponseEnv.Response.OutputSpeech.GetText());
+            Assert.AreEqual("Goodbye.", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
 
@@ -102,9 +100,9 @@ namespace AlexaNetCoreSampleSkill.Tests
         {
             var s = new SampleSkill().LoadRequest(GenericSkillRequests.InvalidIntentName()).ProcessRequest();
 
-            Assert.AreEqual(false, s.ResponseEnv.Response.ShouldEndSession);
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.Response.OutputSpeech.SpeechType);
-            Assert.AreEqual("I can help you with that", s.ResponseEnv.Response.OutputSpeech.GetText());
+            Assert.AreEqual(false, s.ResponseEnv.ShouldEndSession);
+            Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
+            Assert.AreEqual("I can help you with that", s.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
         }
 
         [Test]
@@ -112,7 +110,7 @@ namespace AlexaNetCoreSampleSkill.Tests
         {
             var skill = new SampleSkill().LoadRequest(GenericSkillRequests.InvalidIntentType()).ProcessRequest();
 
-            Assert.AreEqual(false, skill.ResponseEnv.Response.ShouldEndSession);
+            Assert.AreEqual(false, skill.ResponseEnv.ShouldEndSession);
         }
 
        
