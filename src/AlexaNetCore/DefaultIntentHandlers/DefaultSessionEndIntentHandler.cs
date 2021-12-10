@@ -6,7 +6,7 @@ namespace AlexaNetCore
     {
         public override void Process()
         {
-            ResponseEnv.SetOutputSpeech(CancelText);
+            ResponseEnv.SetOutputSpeechText(CancelText);
             ResponseEnv.ShouldEndSession = true;
             ResponseEnv.IntentHandlerName = this.GetType().Name;
         }

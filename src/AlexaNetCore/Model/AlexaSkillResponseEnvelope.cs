@@ -25,7 +25,7 @@ namespace AlexaNetCore
             RequestLocale = req.Request.Locale;
 
             //set the default reprompt text.  This can be overridden.  
-            SetRepromptSpeech("Is there anything else I can do?");
+            SetRepromptSpeechText("Is there anything else I can do?");
 
             try
             {
@@ -71,7 +71,7 @@ namespace AlexaNetCore
         /// </summary>
         public string IntentHandlerName { get; internal set; }
 
-        public AlexaResponse Response { get; set; }
+        private AlexaResponse Response { get; set; }
 
         public bool IsRepromptSet => Response.IsRepromptSet;
 
@@ -122,29 +122,37 @@ namespace AlexaNetCore
         }
 
 
-        public void SetOutputSpeech(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
+
+
+        public void SetOutputSpeechText(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetOutputSpeech(txt, typ);
+            Response.SetOutputSpeechText(txt, typ);
         }
 
-        public void SetOutputSpeech(AlexaMultiLanguageText txt)
+        public void SetOutputSpeechText(AlexaMultiLanguageText txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetOutputSpeech(txt);
+            Response.SetOutputSpeechText(txt, typ);
         }
 
-        public void SetRepromptSpeech(AlexaMultiLanguageText txt)
+
+
+
+
+        public void SetRepromptSpeechText(AlexaMultiLanguageText txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetRepromptSpeech(txt);
+            Response.SetRepromptSpeechText(txt, typ);
         }
 
-        public void SetRepromptSpeech(string txt)
+        public void SetRepromptSpeechText(string txt, AlexaOutputSpeechType typ = AlexaOutputSpeechType.PlainText)
         {
-            Response.SetRepromptSpeech(txt);
+            Response.SetRepromptSpeechText(txt, typ);
         }
 
-        public string GetOutputSpeach(AlexaLocale locale, IAlexaTranslationService translator = null)
+
+
+        public string GetOutputSpeachText(AlexaLocale locale, IAlexaTranslationService translator = null)
         {
-            return Response.GetOutputSpeach(locale, translator);
+            return Response.GetOutputSpeachText(locale, translator);
         }
 
         public void SetDefaultResponseLocale(AlexaLocale locale)
@@ -170,6 +178,16 @@ namespace AlexaNetCore
         public AlexaCard AddStandardCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink)
         {
             return Response.AddStandardCard(title, txt, urlLink);
+        }
+
+        public AlexaOutputSpeech GetOutputSpeech()
+        {
+            return Response.OutputSpeech;
+        }
+
+        public AlexaCard GetCard()
+        {
+            return Response.Card;
         }
 
         /// <summary>

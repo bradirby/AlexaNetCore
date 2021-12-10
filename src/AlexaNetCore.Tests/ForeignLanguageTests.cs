@@ -196,9 +196,9 @@ namespace AlexaNetCore.Tests
                 .ProcessRequest()
                 .CreateAlexaResponse();
 
-            Assert.AreEqual("find this", skill.ResponseEnv.GetOutputSpeach(AlexaLocale.English_US));
-            Assert.AreEqual("trova questo", skill.ResponseEnv.GetOutputSpeach(AlexaLocale.Italian));
-            Assert.AreEqual("encuentra esto", skill.ResponseEnv.GetOutputSpeach(AlexaLocale.Spanish_ES));
+            Assert.AreEqual("find this", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.English_US));
+            Assert.AreEqual("trova questo", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.Italian));
+            Assert.AreEqual("encuentra esto", skill.ResponseEnv.GetOutputSpeachText(AlexaLocale.Spanish_ES));
 
             Assert.IsTrue(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("DEBUG")));
             Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("WARNING")));
