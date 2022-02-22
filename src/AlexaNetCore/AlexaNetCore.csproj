@@ -4,12 +4,24 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Version>0.5.2</Version>
     <Authors>Brad Irby</Authors>
-    <Description>Minimalist implementation of a .NET Core library for Alexa</Description>
+    <Description>Minimalist implementation of a .NET Core library for custom Alexa Skills</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/bradirby/AlexaNetCore</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/bradirby/AlexaNetCore</RepositoryUrl>
+    <PackageTags>Alexa AWS Lambda Net Core</PackageTags>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Model\AlexaAttribute.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
