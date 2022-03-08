@@ -14,15 +14,8 @@ namespace AlexaNetCore
 
         public AlexaUser(dynamic objDyn)
         {
-            try
-            {
-                UserID = objDyn.userId;
-                AccessToken = objDyn.accesstoken;
-            }
-            catch (Exception)
-            {
-                Debugger.Break();
-            }
+            UserID = objDyn.userId;
+            AccessToken = objDyn.accesstoken;
         }
 
         /// <summary>

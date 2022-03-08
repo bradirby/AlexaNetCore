@@ -34,7 +34,6 @@ namespace AlexaNetCore
             catch (Exception exc)
             {
                 MsgLogger?.Error(exc);
-                Debugger.Break();
             }
         }
 

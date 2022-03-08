@@ -1,5 +1,4 @@
-﻿using System.IO.Enumeration;
-
+﻿
 namespace AlexaNetCore
 {
     public class AlexaLocale

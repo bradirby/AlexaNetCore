@@ -78,7 +78,6 @@ namespace AlexaNetCore
             }
             catch (Exception e)
             {
-                Debugger.Break();
                 MsgLogger.Error(e,$"{this.GetType().Name} threw exception");
                 return null;
             }

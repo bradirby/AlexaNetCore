@@ -90,7 +90,6 @@ namespace AlexaNetCore
             }
             catch (Exception exc)
             {
-                Debugger.Break();
                 MsgLogger?.Error($"{this.GetType().Name} Error ProcessIntentRequest", exc);
                 ResponseEnv.SetOutputSpeechText("I'm sorry, I could not figure out what you want me to do.  Please try again");
                 ResponseEnv.ShouldEndSession = true;
@@ -121,7 +120,6 @@ namespace AlexaNetCore
             }
             catch (Exception exc)
             {
-                Debugger.Break();
                 MsgLogger?.Error($"{this.GetType().Name} ProcessRequest Error parsing request envelope", exc);
                 ProcessErrorInRequest();
                 return null;
@@ -241,7 +239,6 @@ namespace AlexaNetCore
             if (intent == null)
             {
                 MsgLogger.Warning($"Could not find intent with name '{intentName}' - returning the Help intent");
-                Debugger.Break();
                 intent = Intents.FirstOrDefault(i => i.IntentName.Equals(AlexaBuiltInIntents.HelpIntent, StringComparison.CurrentCultureIgnoreCase) );
             }
             return intent;

@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.5.2</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>0.6.0</Version>
     <Authors>Brad Irby</Authors>
-    <Description>Minimalist implementation of a .NET Core library for custom Alexa Skills</Description>
+    <Description>Minimalist implementation of a .NET Standard library for custom Alexa Skills</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/bradirby/AlexaNetCore</PackageProjectUrl>
+    <PackageProjectUrl>https://alexanetcore.com</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/bradirby/AlexaNetCore</RepositoryUrl>
     <PackageTags>Alexa AWS Lambda Net Core</PackageTags>
-    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>Convert to .Net Standard 2.0</PackageReleaseNotes>
+	  <LangVersion>8.0</LangVersion>
+	  <PackageLicenseExpression> MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +28,9 @@
 
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
-    <PackageReference Include="AWSSDK.Translate" Version="3.7.2.6" />
+    <PackageReference Include="AWSSDK.Translate" Version="3.7.4.5" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.2" />
   </ItemGroup>
 
 </Project>
