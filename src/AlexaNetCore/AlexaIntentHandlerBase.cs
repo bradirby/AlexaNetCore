@@ -20,10 +20,19 @@ namespace AlexaNetCore
         /// Constructor for a custom skill
         /// </summary>
         /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
-        /// <param name="log">Logger to use (can be null)</param>
+        /// <param name="log">Logger to use </param>
         public AlexaIntentHandlerBase(string intentName, IAlexaNetCoreMessageLogger log)
         {
             MsgLogger = log;
+            IntentName = intentName;
+        }
+
+        /// <summary>
+        /// Constructor for a custom skill
+        /// </summary>
+        /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
+        protected AlexaIntentHandlerBase(string intentName)
+        {
             IntentName = intentName;
         }
 

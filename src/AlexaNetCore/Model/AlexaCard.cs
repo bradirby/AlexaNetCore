@@ -110,9 +110,9 @@ namespace AlexaNetCore
             if (Image != null)
             {
                 if (Image.LargeImageUrl.Length > 2000)
-                    MsgLogger.Error("Large image link in Card exceeds 2000 character limit");
+                    MsgLogger?.Error("Large image link in Card exceeds 2000 character limit");
                 if (Image.SmallImageUrl.Length > 2000)
-                    MsgLogger.Error("Small image link in Card exceeds 2000 character limit");
+                    MsgLogger?.Error("Small image link in Card exceeds 2000 character limit");
 
                 if (!string.IsNullOrEmpty(Image.LargeImageUrl)) totalLen += Image.LargeImageUrl.Length;
                 if (!string.IsNullOrEmpty(Image.SmallImageUrl)) totalLen += Image.SmallImageUrl.Length;
@@ -122,7 +122,7 @@ namespace AlexaNetCore
             //if (!string.IsNullOrEmpty(Content)) totalLen += Content.Length;
             //if (!string.IsNullOrEmpty(Text.GetText())) totalLen += Text.GetText().Length;
             //if (totalLen > 8000)
-            //    MsgLogger.Error("Total card text length exceeds 8000 character limit");
+            //    MsgLogger?.Error("Total card text length exceeds 8000 character limit");
         }
 
 

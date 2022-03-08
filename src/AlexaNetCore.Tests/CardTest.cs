@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
 {
-   
+
 
     public class CardTest
     {
@@ -62,7 +62,7 @@ namespace AlexaNetCore.Tests
 
         }
 
-        
+
         [Test]
         public void GetJson_Simple_RendersJsonCorrectly()
         {

@@ -13,9 +13,14 @@ namespace AlexaNetCore
     /// </summary>
     public abstract class AlexaSkillBase : AlexaObjectBase
     {
-        public AlexaSkillBase()
+        protected AlexaSkillBase()
         {
             MsgLogger = new ConsoleMessageLogger();
+        }
+
+        protected AlexaSkillBase(IAlexaNetCoreMessageLogger log)
+        {
+            MsgLogger = log;
         }
 
         private AlexaLocale defaultResponseLocale = AlexaLocale.English_US;
@@ -198,7 +203,7 @@ namespace AlexaNetCore
                     ChosenIntent = GetPreviousSignificantIntent(ChosenIntent);
                 }
 
-                MsgLogger.Debug("Request being handled by " + ChosenIntent.IntentName);
+                MsgLogger?.Debug("Request being handled by " + ChosenIntent.IntentName);
 
                 ChosenIntent.InitIntent(RequestEnv, ResponseEnv);
                 ChosenIntent.Process();
@@ -238,7 +243,7 @@ namespace AlexaNetCore
             var intent = Intents.FirstOrDefault(i => i.IntentName.Equals(intentName, StringComparison.CurrentCultureIgnoreCase) );
             if (intent == null)
             {
-                MsgLogger.Warning($"Could not find intent with name '{intentName}' - returning the Help intent");
+                MsgLogger?.Warning($"Could not find intent with name '{intentName}' - returning the Help intent");
                 intent = Intents.FirstOrDefault(i => i.IntentName.Equals(AlexaBuiltInIntents.HelpIntent, StringComparison.CurrentCultureIgnoreCase) );
             }
             return intent;
