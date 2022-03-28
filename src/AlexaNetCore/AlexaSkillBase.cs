@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AlexaNetCore.Model;
+using Amazon.Lambda.Core;
 
 namespace AlexaNetCore
 {
@@ -13,6 +14,28 @@ namespace AlexaNetCore
     /// </summary>
     public abstract class AlexaSkillBase : AlexaObjectBase
     {
+        /// <summary>
+        /// Message Logger for writing debug messages
+        /// </summary>
+        public IAlexaNetCoreMessageLogger MsgLogger { get; private set; }
+
+        /// <summary>
+        /// The parsed contents of the incoming request string
+        /// </summary>
+        public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
+
+        /// <summary>
+        /// All the components of a value to return back to Amazon
+        /// </summary>
+        public AlexaSkillResponseEnvelope ResponseEnv { get; private set; }
+
+        private AlexaIntentHandlerBase ChosenIntent { get; set; }
+
+        private List<AlexaIntentHandlerBase> Intents = new List<AlexaIntentHandlerBase>();
+
+
+
+        
         protected AlexaSkillBase()
         {
             MsgLogger = new ConsoleMessageLogger();
@@ -20,7 +43,12 @@ namespace AlexaNetCore
 
         protected AlexaSkillBase(IAlexaNetCoreMessageLogger log)
         {
-            MsgLogger = log;
+            MsgLogger = log ?? null;
+        }
+
+        protected AlexaSkillBase(ILambdaLogger log)
+        {
+            MsgLogger = log == null ? null : new ConsoleMessageLogger(log);
         }
 
         private AlexaLocale defaultResponseLocale = AlexaLocale.English_US;
@@ -41,9 +69,11 @@ namespace AlexaNetCore
             return this;
         }
 
-        private AlexaIntentHandlerBase ChosenIntent { get; set; }
-
-        private List<AlexaIntentHandlerBase> Intents = new List<AlexaIntentHandlerBase>();
+        public AlexaSkillBase SetLogger(ILambdaLogger log)
+        {
+            MsgLogger = new ConsoleMessageLogger(log);
+            return this;
+        }
 
 
         /// <summary>
@@ -67,22 +97,6 @@ namespace AlexaNetCore
             if (RequestEnv != null) RequestEnv.Version = newVersion;
             return this;
         }
-
-        /// <summary>
-        /// Message Logger for writing debug messages
-        /// </summary>
-        public IAlexaNetCoreMessageLogger MsgLogger { get; private set; }
-
-        /// <summary>
-        /// The parsed contents of the incoming request string
-        /// </summary>
-        public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
-
-        /// <summary>
-        /// All the components of a value to return back to Amazon
-        /// </summary>
-        public AlexaSkillResponseEnvelope ResponseEnv { get; private set; }
-
 
         public AlexaSkillBase ProcessRequest()
         {
