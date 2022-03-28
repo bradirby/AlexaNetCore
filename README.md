@@ -25,5 +25,5 @@ test console into a unit test in Visual Studio, and you can test all your voice 
 would other business logic.
 
 # How do I get started?
-Check out the <a href="http://alexanetcore.com/" target="_blank">User docs</a> for sample project and how-to tutorials
+Check out the <a href="https://alexanetcore.com/" target="_blank">User docs</a> for sample project and how-to tutorials
 
