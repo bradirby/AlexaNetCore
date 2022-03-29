@@ -15,6 +15,7 @@ namespace AlexaSampleSkill
         public BasicSkill() : base()
         {
             SetSkillVersion("0.1");
+            InvocationName = "My Basic Skill";
             RegisterDefaultIntentHandlers();
             RegisterIntentHandler(new BasicIntent());
         }
@@ -22,6 +23,7 @@ namespace AlexaSampleSkill
         public BasicSkill(ILambdaLogger log) : base(log)
         {
             SetSkillVersion("0.1");
+            InvocationName = "My Basic Skill";
             RegisterDefaultIntentHandlers();
             RegisterIntentHandler(new BasicIntent());
         }
@@ -29,6 +31,7 @@ namespace AlexaSampleSkill
         public BasicSkill(IAlexaNetCoreMessageLogger log) : base(log)
         {
             SetSkillVersion("0.1");
+            InvocationName = "My Basic Skill";
             RegisterDefaultIntentHandlers();
             RegisterIntentHandler(new BasicIntent());
         }

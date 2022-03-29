@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AlexaNetCore.InteractionModel;
 using AlexaNetCore.Model;
 using Amazon.Lambda.Core;
 
@@ -33,7 +34,16 @@ namespace AlexaNetCore
 
         private List<AlexaIntentHandlerBase> Intents = new List<AlexaIntentHandlerBase>();
 
+        
+        public SkillInteractionModel GetInteractionModel()
+        {
+            return new SkillInteractionModel(InvocationName, Intents);
+        }
 
+        /// <summary>
+        /// String used to invoke this skill.  This is only needed when auto-generating the interaction model
+        /// </summary>
+        public string InvocationName { get; set; }
 
         
         protected AlexaSkillBase()
@@ -331,7 +341,7 @@ namespace AlexaNetCore
         /// <summary>
         /// Registers an intent handler, potentially replacing the existing one if one is already registered by that name
         /// </summary>
-        protected void RegisterIntentHandler(AlexaIntentHandlerBase intent, bool replaceExisting = true)
+        protected internal void RegisterIntentHandler(AlexaIntentHandlerBase intent, bool replaceExisting = true)
         {
             var existingIntent = Intents.FirstOrDefault(i => i.IntentName.Equals(intent.IntentName, StringComparison.CurrentCultureIgnoreCase));
             if (existingIntent == null)

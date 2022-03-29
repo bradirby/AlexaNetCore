@@ -16,6 +16,9 @@ namespace AlexaSampleSkill.Intents
         /// </summary>
         public BasicIntent() : base("BasicIntent")
         {
+            AddSampleInvocation("Hello");
+            AddSampleInvocation("hello there");
+            AddSampleInvocation("Hi Everybody");
         }
 
         public override void Process()

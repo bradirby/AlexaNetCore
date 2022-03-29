@@ -1,17 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using AlexaNetCore.InteractionModel;
 
 namespace AlexaNetCore
 {
     public abstract class AlexaIntentHandlerBase
     {
         protected IAlexaNetCoreMessageLogger MsgLogger;
+        private string dblQuote => "\"";
 
         /// <summary>
         /// Set this flag to True if this intent is an extension of the previous intent.  For example, the
         /// Yes and No intents operate on a prompt from the previous intent
         /// </summary>
         public bool OperatesOnPreviousIntent { get; protected set; }
+
+
+        /// <summary>
+        /// List of invocations to use for this intent.  Adding invocations here does not affect
+        /// the operation of the intent, it just helps with the generation of the IntentCollectionIteractionModel
+        /// </summary>
+        private List<string> SampleInvocations { get; set; } = new List<string>();
+
+        public void AddSampleInvocation(string sample)
+        {
+            SampleInvocations.Add(sample);
+        }
+
+        public List<string> GetSampleInvocations()
+        {
+            return SampleInvocations.ToList();
+        }
+
+        public IntentHandlerInteractionModel GetInteractionModel()
+        {
+            return new IntentHandlerInteractionModel(IntentName, SampleInvocations);
+        }
 
 
         public string IntentName { get; internal set; }
