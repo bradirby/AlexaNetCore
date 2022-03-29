@@ -92,6 +92,36 @@ namespace AlexaNetCore.Tests
             Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{fallbackIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
         }
 
+        [Test]
+        public void Skill_TwoIntentsWithNoSamples_HasIntentName()
+        {
+            var skill = new ModelGenSkill();
+            var fallbackIntent = new DefaultFallbackIntentHandler();
+            var cancelIntent = new DefaultCancelIntentHandler();
+            skill.InvocationName = "newSkill";
+            skill.RegisterIntentHandler(fallbackIntent);
+            skill.RegisterIntentHandler(cancelIntent);
+            var obj= skill.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+
+            Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{fallbackIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
+            Assert.IsTrue(str.Contains($"{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{cancelIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
+        }
+
+        [Test]
+        public void Skill_OneIntentsWithSamples_HasIntentName()
+        {
+            var skill = new ModelGenSkill();
+            var modelIntent = new ModelGenIntent();
+            modelIntent.AddSampleInvocation("find sample invocation");
+            skill.InvocationName = "newSkill";
+            skill.RegisterIntentHandler(modelIntent);
+            var obj= skill.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+
+            Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{modelIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[{dblQuote}find sample invocation{dblQuote}]"));
+        }
+
         private class ModelGenSkill : AlexaSkillBase
         {
 

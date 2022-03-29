@@ -21,7 +21,7 @@ namespace AlexaNetCore
 
         /// <summary>
         /// List of invocations to use for this intent.  Adding invocations here does not affect
-        /// the operation of the intent, it just helps with the generation of the InteractionModel
+        /// the operation of the intent, it just helps with the generation of the IntentCollectionIteractionModel
         /// </summary>
         private List<string> SampleInvocations { get; set; } = new List<string>();
 
