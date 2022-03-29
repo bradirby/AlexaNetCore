@@ -44,7 +44,7 @@ namespace AlexaNetCore
         
         public SkillInteractionModel GetInteractionModel()
         {
-            return new SkillInteractionModel(InvocationName, Intents);
+            return new SkillInteractionModel(InvocationName, Intents, SlotTypes);
         }
 
         /// <summary>

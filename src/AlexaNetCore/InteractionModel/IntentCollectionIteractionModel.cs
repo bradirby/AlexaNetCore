@@ -31,7 +31,9 @@ namespace AlexaNetCore.InteractionModel
             foreach (var intent in intents) intentModels.Add(intent.GetInteractionModel());
             IntentHandlerModels = intentModels.ToArray();
 
-            CustomSlotTypes = slots != null ? slots.ToArray() : new CustomSlotTypeInteractionModel[] { };
+            if (slots == null) CustomSlotTypes = new CustomSlotTypeInteractionModel[] { };
+            else if (!slots.Any()) CustomSlotTypes = new CustomSlotTypeInteractionModel[] { };
+            else CustomSlotTypes = slots.ToArray();
         }
     }
 
