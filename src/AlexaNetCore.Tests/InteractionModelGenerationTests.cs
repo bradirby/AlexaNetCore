@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -9,23 +10,26 @@ namespace AlexaNetCore.Tests
 {
     internal class InteractionModelGenerationTests
     {
-        string dblQuote => "\"";
+        private string dblQuote => "\"";
+        private string curlyBraceOpen => "{";
+        private string curlyBraceClose = "}";
         
         [Test]
         public void Intent_GeneratesNameCorrectly()
         {
             var intent = new ModelGenIntent();
-            var str = intent.GetInteractionModelIntentDescriptor();
-            Assert.IsTrue(str.Contains($"{dblQuote}name{dblQuote}: {dblQuote}ModelGenIntent{dblQuote}"));
+            var obj = intent.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+            Assert.IsTrue(str.Contains($"{dblQuote}name{dblQuote}:{dblQuote}ModelGenIntent{dblQuote}"));
         }
 
         [Test]
         public void Intent_NoSampleInvocations_GeneratesEmptyCollection()
         {
             var intent = new ModelGenIntent();
-            var str = intent.GetInteractionModelIntentDescriptor();
-            str = str.Replace("\r\n", "");
-            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}: []"));
+            var obj = intent.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}:[]"));
         }
 
         [Test]
@@ -33,9 +37,9 @@ namespace AlexaNetCore.Tests
         {
             var intent = new ModelGenIntent();
             intent.AddSampleInvocation("find this invocation");
-            var str = intent.GetInteractionModelIntentDescriptor();
-            str = str.Replace("\r\n", "");
-            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}: [{dblQuote}find this invocation{dblQuote}]"));
+            var obj = intent.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}:[{dblQuote}find this invocation{dblQuote}]"));
         }
 
         [Test]
@@ -44,12 +48,57 @@ namespace AlexaNetCore.Tests
             var intent = new ModelGenIntent();
             intent.AddSampleInvocation("find this invocation");
             intent.AddSampleInvocation("and this one");
-            var str = intent.GetInteractionModelIntentDescriptor();
-            str = str.Replace("\r\n", "");
-            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}: [{dblQuote}find this invocation{dblQuote}, {dblQuote}and this one{dblQuote}]"));
+            var obj = intent.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}:[{dblQuote}find this invocation{dblQuote},{dblQuote}and this one{dblQuote}]"));
         }
 
-        public class ModelGenIntent : AlexaIntentHandlerBase
+        [Test]
+        public void Skill_NoInvocationName_Throws()
+        {
+            var skill = new ModelGenSkill();
+            Assert.Throws<ArgumentNullException>(() => skill.GetInteractionModel());
+        }
+
+        [Test]
+        public void Skill_NoIntents_Throws()
+        {
+            var skill = new ModelGenSkill();
+            skill.InvocationName = "unimportant string";
+            Assert.Throws<ArgumentNullException>(() => skill.GetInteractionModel());
+        }
+
+
+        [Test]
+        public void Skill_OneIntent_HasInvocationName()
+        {
+            var skill = new ModelGenSkill();
+            skill.InvocationName = "newSkill";
+            skill.RegisterIntentHandler(new DefaultFallbackIntentHandler());
+            var obj= skill.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+            Assert.IsTrue(str.Contains($"{dblQuote}invocationName{dblQuote}:{dblQuote}newSkill{dblQuote},"));
+        }
+
+        [Test]
+        public void Skill_OneIntentWithNoSamples_HasIntentName()
+        {
+            var skill = new ModelGenSkill();
+            var fallbackIntent = new DefaultFallbackIntentHandler();
+            skill.InvocationName = "newSkill";
+            skill.RegisterIntentHandler(fallbackIntent);
+            var obj= skill.GetInteractionModel();
+            var str = JsonSerializer.Serialize(obj);
+            Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{fallbackIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
+        }
+
+        private class ModelGenSkill : AlexaSkillBase
+        {
+
+        }
+
+
+        private class ModelGenIntent : AlexaIntentHandlerBase
         {
             public ModelGenIntent() : base("ModelGenIntent")
             {

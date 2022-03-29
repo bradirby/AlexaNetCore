@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using AlexaNetCore.InteractionModel;
 
 namespace AlexaNetCore
 {
@@ -25,7 +27,7 @@ namespace AlexaNetCore
 
         public void AddSampleInvocation(string sample)
         {
-            if (!string.IsNullOrEmpty(sample)) SampleInvocations.Add(sample);
+            SampleInvocations.Add(sample);
         }
 
         public List<string> GetSampleInvocations()
@@ -33,20 +35,9 @@ namespace AlexaNetCore
             return SampleInvocations.ToList();
         }
 
-        public string GetInteractionModelIntentDescriptor()
+        public IntentHandlerInteractionModel GetInteractionModel()
         {
-            var sb = new StringBuilder();
-            sb.AppendLine("{");
-            sb.AppendLine($"{dblQuote}name{dblQuote}: {dblQuote}{IntentName}{dblQuote},");
-            sb.AppendLine($"{dblQuote}samples{dblQuote}: [");
-            foreach (var sampleInvocation in SampleInvocations)
-            {
-                sb.AppendLine($"{dblQuote}{sampleInvocation}{dblQuote}, ");
-            }
-
-            var finalStr = sb.ToString();
-            if (SampleInvocations.Any()) finalStr = finalStr.Substring(0, finalStr.Length - 4);  //remove ending , and space and carriage return
-            return finalStr + "]}";
+            return new IntentHandlerInteractionModel(IntentName, SampleInvocations);
         }
 
 
