@@ -40,7 +40,7 @@ namespace AlexaSampleSkill
             measureSlotType.AddValueOption("meters","meter");
             measureSlotType.AddValueOption("kilometers","kilometer");
 
-            AddSlotType(measureSlotType);
+            AddCustomSlotType(measureSlotType);
 
 
             SetSkillVersion("0.1");

@@ -27,9 +27,10 @@ namespace AlexaNetCore
 
         private List<CustomSlotTypeInteractionModel> SlotTypes { get; set; } = new List<CustomSlotTypeInteractionModel>();
 
-        public void AddSlotType(CustomSlotTypeInteractionModel customSlotType)
+        public AlexaSkillBase AddCustomSlotType(CustomSlotTypeInteractionModel customSlotType)
         {
             SlotTypes.Add(customSlotType);
+            return this;
         }
 
         /// <summary>

@@ -24,9 +24,10 @@ namespace AlexaNetCore
         /// </summary>
         private List<string> SampleInvocations { get; set; } = new List<string>();
 
-        public void AddSampleInvocation(string sample)
+        public AlexaIntentHandlerBase AddSampleInvocation(string sample)
         {
             SampleInvocations.Add(sample);
+            return this;
         }
 
         public List<string> GetSampleInvocations()
@@ -41,9 +42,10 @@ namespace AlexaNetCore
 
         private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();
 
-        public void AddSlotOption(SlotInteractionModel slot)
+        public AlexaIntentHandlerBase AddSlotOption(SlotInteractionModel slot)
         {
             SlotOptions.Add(slot);
+            return this;
         }
 
 
