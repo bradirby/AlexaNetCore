@@ -21,8 +21,7 @@ namespace AlexaSampleSkill.Tests
             var interactionModelObj = skill.GetInteractionModel();
             var interactionModelStr = JsonSerializer.Serialize(interactionModelObj);
 
-            var filePath = Environment.GetEnvironmentVariable("AlexaNetCoreRootFolder");
-            filePath = "D:\\Solutions\\Alexa\\AlexaNetCore\\AlexaNetCore\\src";
+            var filePath = Environment.GetEnvironmentVariable("AlexaNetCoreSourceCodeRootFolder");
             filePath = Path.Combine(filePath, "AlexaSampleSkill\\SupportingFiles\\InteractionModelEnglish.json");
             File.WriteAllText(filePath, interactionModelStr);
         }
