@@ -10,7 +10,6 @@ namespace AlexaNetCore
     public abstract class AlexaIntentHandlerBase
     {
         protected IAlexaNetCoreMessageLogger MsgLogger;
-        private string dblQuote => "\"";
 
         /// <summary>
         /// Set this flag to True if this intent is an extension of the previous intent.  For example, the
@@ -35,9 +34,9 @@ namespace AlexaNetCore
             return SampleInvocations.ToList();
         }
 
-        public IntentHandlerInteractionModel GetInteractionModel()
+        public IntentInteractionModel GetInteractionModel()
         {
-            return new IntentHandlerInteractionModel(IntentName, SampleInvocations);
+            return new IntentInteractionModel(IntentName, SampleInvocations);
         }
 
 

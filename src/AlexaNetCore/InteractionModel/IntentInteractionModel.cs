@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace AlexaNetCore.InteractionModel
 {
-    public class IntentHandlerInteractionModel
+    public class IntentInteractionModel
     {
-        public IntentHandlerInteractionModel(string name, List<string> invocations)
+        public IntentInteractionModel(string name, List<string> invocations)
         {
             IntentName = name;
             Samples = invocations.ToArray();

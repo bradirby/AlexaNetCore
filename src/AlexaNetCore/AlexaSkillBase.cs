@@ -25,6 +25,13 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
 
+        private List<CustomSlotTypeInteractionModel> SlotTypes { get; set; } = new List<CustomSlotTypeInteractionModel>();
+
+        public void AddSlotType(CustomSlotTypeInteractionModel customSlotType)
+        {
+            SlotTypes.Add(customSlotType);
+        }
+
         /// <summary>
         /// All the components of a value to return back to Amazon
         /// </summary>

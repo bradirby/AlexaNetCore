@@ -12,7 +12,7 @@ namespace AlexaNetCore.Tests
     {
         private string dblQuote => "\"";
         private string curlyBraceOpen => "{";
-        private string curlyBraceClose = "}";
+        private string curlyBraceClose => "}";
         
         [Test]
         public void Intent_GeneratesNameCorrectly()
