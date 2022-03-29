@@ -46,11 +46,29 @@ namespace AlexaNetCore.InteractionModel
             OptionValues = optionModels.ToList();
         }
 
-        public void AddOption(CustomSlotTypeValueOptionInteractionModel opt)
+        public void AddValueOption(CustomSlotTypeValueOptionInteractionModel opt)
         {
             OptionValues.Add(opt);
         }
 
+        public void AddValueOption(string name)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name));
+        }
+
+        public void AddValueOption(string name, string synonym)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name, synonym));
+        }
+
+        public void AddValueOption(string name, List<string> synonym)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name, synonym));
+        }
+        public void AddValueOption(string name, string[] synonym)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name, synonym));
+        }
 
     }
 
@@ -67,6 +85,11 @@ namespace AlexaNetCore.InteractionModel
         public CustomSlotTypeValueOptionInteractionModel(string val)
         {
             SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val) ;
+        }
+
+        public CustomSlotTypeValueOptionInteractionModel(string val, string synonym)
+        {
+            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonym) ;
         }
 
         public CustomSlotTypeValueOptionInteractionModel(string val, List<string> synonyms)
@@ -104,6 +127,11 @@ namespace AlexaNetCore.InteractionModel
         public CustomSlotTypeValueOptionDescriptorInteractionModel(string val)
         {
             Value = val;
+        }
+        public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, string synonym)
+        {
+            Value = val;
+            Synonyms.Add( synonym);
         }
 
         public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, List<string> synonyms)

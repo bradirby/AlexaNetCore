@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using ThirdParty.Json.LitJson;
 
 namespace AlexaNetCore.InteractionModel
 {
@@ -15,7 +16,11 @@ namespace AlexaNetCore.InteractionModel
         public IntentInteractionModel[] IntentHandlerModels { get; set; }
 
 
-        public IntentCollectionIteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents)
+        [JsonPropertyName("types")] public CustomSlotTypeInteractionModel[] CustomSlotTypes { get; set; } 
+
+
+
+        public IntentCollectionIteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents, List<CustomSlotTypeInteractionModel> slots = null)
         {
             if (string.IsNullOrEmpty(invocationName)) throw new ArgumentNullException();
             if (intents == null) throw new ArgumentNullException();
@@ -23,12 +28,10 @@ namespace AlexaNetCore.InteractionModel
 
             InvocationName = invocationName;
             var intentModels = new List<IntentInteractionModel>();
-            foreach (var intent in intents)
-            {
-                intentModels.Add(intent.GetInteractionModel());
-            }
-
+            foreach (var intent in intents) intentModels.Add(intent.GetInteractionModel());
             IntentHandlerModels = intentModels.ToArray();
+
+            CustomSlotTypes = slots != null ? slots.ToArray() : new CustomSlotTypeInteractionModel[] { };
         }
     }
 

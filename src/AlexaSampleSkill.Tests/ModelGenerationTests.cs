@@ -11,8 +11,6 @@ namespace AlexaSampleSkill.Tests
     /// </summary>
     public class ModelGenerationTests
     {
-      
-
         [Test]
         [Explicit]
         public void CreateInteractionModelFile()

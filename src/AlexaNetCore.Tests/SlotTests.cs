@@ -11,9 +11,6 @@ namespace AlexaNetCore.Tests
 {
     public class SlotTests
     {
-        private string dblQuote => "\"";
-        private string curlyOpen => "{";
-        private string curlyClose => "}";
 
         [Test]
         public void CustomSlotTypeValueOptionDescriptorInteractionModel_NoSynonyms_ReturnsValidJson()
@@ -97,7 +94,7 @@ namespace AlexaNetCore.Tests
         public void CustomSlotTypeInteractionModel_OneValueNoSyn_ReturnsValidJson()
         {
             var obj = new CustomSlotTypeInteractionModel("measureType");
-            obj.AddOption(new CustomSlotTypeValueOptionInteractionModel("opt1"));
+            obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt1"));
             var str = JsonSerializer.Serialize(obj);
             var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[]}}}}]}}";
             Assert.AreEqual(expectedVal, str);
@@ -107,7 +104,7 @@ namespace AlexaNetCore.Tests
         public void CustomSlotTypeInteractionModel_OneValueWithSyn_ReturnsValidJson()
         {
             var obj = new CustomSlotTypeInteractionModel("measureType");
-            obj.AddOption(new CustomSlotTypeValueOptionInteractionModel("opt1",new[] {"synName","secondSynName"}));
+            obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt1",new[] {"synName","secondSynName"}));
             var str = JsonSerializer.Serialize(obj);
             var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[\"synName\",\"secondSynName\"]}}}}]}}";
             Assert.AreEqual(expectedVal, str);
@@ -117,8 +114,8 @@ namespace AlexaNetCore.Tests
         public void CustomSlotTypeInteractionModel_TwoValuesNoSyn_ReturnsValidJson()
         {
             var obj = new CustomSlotTypeInteractionModel("measureType");
-            obj.AddOption(new CustomSlotTypeValueOptionInteractionModel("opt1"));
-            obj.AddOption(new CustomSlotTypeValueOptionInteractionModel("opt2"));
+            obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt1"));
+            obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt2"));
             var str = JsonSerializer.Serialize(obj);
             var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[]}}}},{{\"name\":{{\"value\":\"opt2\",\"synonyms\":[]}}}}]}}";
             Assert.AreEqual(expectedVal, str);
@@ -128,10 +125,10 @@ namespace AlexaNetCore.Tests
         public void CustomSlotTypeInteractionModel_TwoValuesWithSyn_ReturnsValidJson()
         {
             var obj = new CustomSlotTypeInteractionModel("measureType");
-            obj.AddOption(new CustomSlotTypeValueOptionInteractionModel("opt1",new[] {"synName","secondSynName"}));
-            obj.AddOption(new CustomSlotTypeValueOptionInteractionModel("opt2",new[] {"synName2","secondSynName2"}));
+            obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt1",new[] {"synName","secondSynName"}));
+            obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt2",new[] {"synName2","secondSynName2"}));
             var str = JsonSerializer.Serialize(obj);
-            var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[\"synName\",\"secondSynName\"]}}}}]}}";
+            var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[\"synName\",\"secondSynName\"]}}}},{{\"name\":{{\"value\":\"opt2\",\"synonyms\":[\"synName2\",\"secondSynName2\"]}}}}]}}";
             Assert.AreEqual(expectedVal, str);
         }
 
