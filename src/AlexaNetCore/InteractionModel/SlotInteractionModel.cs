@@ -57,11 +57,23 @@ namespace AlexaNetCore.InteractionModel
             SlotTypeValueOptionDescriptorInteractionModel = model;
         }
 
+        public CustomSlotTypeValueOptionInteractionModel(string val)
+        {
+            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val) ;
+        }
+
+        public CustomSlotTypeValueOptionInteractionModel(string val, List<string> synonyms)
+        {
+            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonyms) ;
+        }
+
         public void AddSynonym(string val)
         {
             SlotTypeValueOptionDescriptorInteractionModel.AddSynonym(val);
         }
     }
+
+
 
     public class CustomSlotTypeValueOptionDescriptorInteractionModel
     {
