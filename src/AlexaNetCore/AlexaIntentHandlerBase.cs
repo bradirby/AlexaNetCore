@@ -37,7 +37,7 @@ namespace AlexaNetCore
 
         public IntentInteractionModel GetInteractionModel()
         {
-            return new IntentInteractionModel(IntentName, SampleInvocations);
+            return new IntentInteractionModel(IntentName, SampleInvocations, SlotOptions);
         }
 
         private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();
