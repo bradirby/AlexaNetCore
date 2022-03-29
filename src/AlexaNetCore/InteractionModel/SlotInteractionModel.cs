@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -39,6 +40,12 @@ namespace AlexaNetCore.InteractionModel
             OptionValues = optionModels;
         }
 
+        public CustomSlotTypeInteractionModel(string name, CustomSlotTypeValueOptionInteractionModel[] optionModels)
+        {
+            Name = name;
+            OptionValues = optionModels.ToList();
+        }
+
         public void AddOption(CustomSlotTypeValueOptionInteractionModel opt)
         {
             OptionValues.Add(opt);
@@ -67,6 +74,11 @@ namespace AlexaNetCore.InteractionModel
             SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonyms) ;
         }
 
+        public CustomSlotTypeValueOptionInteractionModel(string val, string[] synonyms)
+        {
+            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonyms.ToList()) ;
+        }
+        
         public void AddSynonym(string val)
         {
             SlotTypeValueOptionDescriptorInteractionModel.AddSynonym(val);
@@ -100,6 +112,11 @@ namespace AlexaNetCore.InteractionModel
             Synonyms = synonyms;
         }
 
+        public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, string[] synonyms)
+        {
+            Value = val;
+            Synonyms = synonyms.ToList();
+        }
 
     }
 }
