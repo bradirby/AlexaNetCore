@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -11,8 +7,6 @@ namespace AlexaNetCore.Tests
     internal class InteractionModelGenerationTests
     {
         private string dblQuote => "\"";
-        private string curlyBraceOpen => "{";
-        private string curlyBraceClose = "}";
         
         [Test]
         public void Intent_GeneratesNameCorrectly()
@@ -89,7 +83,8 @@ namespace AlexaNetCore.Tests
             skill.RegisterIntentHandler(fallbackIntent);
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
-            Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{fallbackIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
+            var expectedVal = $"{{\"interactionModel\":{{\"languageModel\":{{\"invocationName\":\"newSkill\",\"intents\":[{{\"name\":\"AMAZON.FallbackIntent\",\"slots\":[],\"samples\":[]}}],\"types\":[]}}}}}}";
+            Assert.IsTrue(str.Contains(expectedVal));
         }
 
         [Test]
@@ -104,8 +99,11 @@ namespace AlexaNetCore.Tests
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
 
-            Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{fallbackIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
-            Assert.IsTrue(str.Contains($"{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{cancelIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[]"));
+            var expectedVal = $"\"intents\":[{{\"name\":\"AMAZON.FallbackIntent\",\"slots\":[],\"samples\":[]";
+            Assert.IsTrue(str.Contains(expectedVal));
+
+            expectedVal = $"{{\"name\":\"AMAZON.CancelIntent\",\"slots\":[],\"samples\":[]";
+            Assert.IsTrue(str.Contains(expectedVal));
         }
 
         [Test]
@@ -119,7 +117,8 @@ namespace AlexaNetCore.Tests
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
 
-            Assert.IsTrue(str.Contains($"{dblQuote}intents{dblQuote}:[{curlyBraceOpen}{dblQuote}name{dblQuote}:{dblQuote}{modelIntent.IntentName}{dblQuote},{dblQuote}samples{dblQuote}:[{dblQuote}find sample invocation{dblQuote}]"));
+            var expectedVal = $"{{\"interactionModel\":{{\"languageModel\":{{\"invocationName\":\"newSkill\",\"intents\":[{{\"name\":\"ModelGenIntent\",\"slots\":[],\"samples\":[\"find sample invocation\"]}}],\"types\":[]}}}}}}";
+            Assert.IsTrue(str.Contains(expectedVal));
         }
 
         private class ModelGenSkill : AlexaSkillBase

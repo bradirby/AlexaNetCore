@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AlexaNetCore;
+using AlexaNetCore.InteractionModel;
 
 namespace AlexaSampleSkill.Intents
 {
@@ -16,8 +17,12 @@ namespace AlexaSampleSkill.Intents
         /// </summary>
         public BasicIntent() : base("BasicIntent")
         {
-            AddSampleInvocation("Hello");
-            AddSampleInvocation("hello there");
+            AddSlotOption( new SlotInteractionModel("inputValue","AMAZON.Number"));
+            AddSlotOption( new SlotInteractionModel("sourceType","measuretype"));
+            AddSlotOption( new SlotInteractionModel("destType","measuretype"));
+
+            AddSampleInvocation($"Hello {{inputValue}} ");
+            AddSampleInvocation($"hello {{sourceType}} there");
             AddSampleInvocation("Hi Everybody");
         }
 

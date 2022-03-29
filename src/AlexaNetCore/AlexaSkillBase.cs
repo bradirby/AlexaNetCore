@@ -25,6 +25,14 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
 
+        private List<CustomSlotTypeInteractionModel> SlotTypes { get; set; } = new List<CustomSlotTypeInteractionModel>();
+
+        public AlexaSkillBase AddCustomSlotType(CustomSlotTypeInteractionModel customSlotType)
+        {
+            SlotTypes.Add(customSlotType);
+            return this;
+        }
+
         /// <summary>
         /// All the components of a value to return back to Amazon
         /// </summary>
@@ -37,7 +45,7 @@ namespace AlexaNetCore
         
         public SkillInteractionModel GetInteractionModel()
         {
-            return new SkillInteractionModel(InvocationName, Intents);
+            return new SkillInteractionModel(InvocationName, Intents, SlotTypes);
         }
 
         /// <summary>

@@ -1,1 +1,228 @@
-{"interactionModel":{"languageModel":{"invocationName":"My Basic Skill","intents":[{"name":"AMAZON.CancelIntent","samples":[]},{"name":"AMAZON.HelpIntent","samples":[]},{"name":"AMAZON.FallbackIntent","samples":[]},{"name":"LaunchRequest","samples":[]},{"name":"AMAZON.LoopOffIntent","samples":[]},{"name":"AMAZON.LoopOnIntent","samples":[]},{"name":"AMAZON.NextIntent","samples":[]},{"name":"AMAZON.NoIntent","samples":[]},{"name":"AMAZON.PauseIntent","samples":[]},{"name":"AMAZON.PreviousIntent","samples":[]},{"name":"AMAZON.RepeatIntent","samples":[]},{"name":"AMAZON.ResumeIntent","samples":[]},{"name":"SessionEndedRequest","samples":[]},{"name":"AMAZON.ShuffleOffIntent","samples":[]},{"name":"AMAZON.ShuffleOnIntent","samples":[]},{"name":"AMAZON.StartOverIntent","samples":[]},{"name":"AMAZON.StopIntent","samples":[]},{"name":"AMAZON.YesIntent","samples":[]},{"name":"BasicIntent","samples":["Hello","hello there","Hi Everybody"]}]}}}
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "My Basic Skill",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "LaunchRequest",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.LoopOffIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.LoopOnIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "SessionEndedRequest",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.ShuffleOffIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.ShuffleOnIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "slots": [
+          ],
+          "samples": [
+          ]
+        },
+        {
+          "name": "BasicIntent",
+          "slots": [
+            {
+              "name": "inputValue",
+              "type": "AMAZON.Number"
+            },
+            {
+              "name": "sourceType",
+              "type": "measuretype"
+            },
+            {
+              "name": "destType",
+              "type": "measuretype"
+            }
+          ],
+          "samples": [
+            "Hello {inputValue} ",
+            "hello {sourceType} there",
+            "Hi Everybody"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "measureType",
+          "values": [
+            {
+              "name": {
+                "value": "inches",
+                "synonyms": [
+                  "inch"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "feet",
+                "synonyms": [
+                  "foot",
+                  "feetsies"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "yards",
+                "synonyms": [
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "miles",
+                "synonyms": [
+                  "mile"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "millimeters",
+                "synonyms": [
+                  "millimeter"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "centimeters",
+                "synonyms": [
+                  "centimeter"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "meters",
+                "synonyms": [
+                  "meter"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "kilometers",
+                "synonyms": [
+                  "kilometer"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
