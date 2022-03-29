@@ -14,6 +14,12 @@ namespace AlexaNetCore.InteractionModel
         [JsonPropertyName("type")]
         public string SlotType { get; set; }
 
+        public SlotInteractionModel(string name, string typ)
+        {
+            Name = name;
+            SlotType = typ;
+        }
+
     }
 
 

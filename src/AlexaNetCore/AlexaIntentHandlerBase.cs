@@ -39,9 +39,9 @@ namespace AlexaNetCore
             return new IntentInteractionModel(IntentName, SampleInvocations);
         }
 
-        private List<CustomSlotTypeInteractionModel> SlotOptions { get; set; } = new List<CustomSlotTypeInteractionModel>();
+        private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();
 
-        public void AddSlotOption(CustomSlotTypeInteractionModel slot)
+        public void AddSlotOption(SlotInteractionModel slot)
         {
             SlotOptions.Add(slot);
         }
