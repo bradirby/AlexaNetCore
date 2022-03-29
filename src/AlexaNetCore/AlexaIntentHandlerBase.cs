@@ -1,17 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace AlexaNetCore
 {
     public abstract class AlexaIntentHandlerBase
     {
         protected IAlexaNetCoreMessageLogger MsgLogger;
+        private string dblQuote => "\"";
 
         /// <summary>
         /// Set this flag to True if this intent is an extension of the previous intent.  For example, the
         /// Yes and No intents operate on a prompt from the previous intent
         /// </summary>
         public bool OperatesOnPreviousIntent { get; protected set; }
+
+
+        /// <summary>
+        /// List of invocations to use for this intent.  Adding invocations here does not affect
+        /// the operation of the intent, it just helps with the generation of the InteractionModel
+        /// </summary>
+        private List<string> SampleInvocations { get; set; } = new List<string>();
+
+        public void AddSampleInvocation(string sample)
+        {
+            if (!string.IsNullOrEmpty(sample)) SampleInvocations.Add(sample);
+        }
+
+        public List<string> GetSampleInvocations()
+        {
+            return SampleInvocations.ToList();
+        }
+
+        public string GetInteractionModelIntentDescriptor()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("{");
+            sb.AppendLine($"{dblQuote}name{dblQuote}: {dblQuote}{IntentName}{dblQuote},");
+            sb.AppendLine($"{dblQuote}samples{dblQuote}: [");
+            foreach (var sampleInvocation in SampleInvocations)
+            {
+                sb.AppendLine($"{dblQuote}{sampleInvocation}{dblQuote}, ");
+            }
+
+            var finalStr = sb.ToString();
+            if (SampleInvocations.Any()) finalStr = finalStr.Substring(0, finalStr.Length - 4);  //remove ending , and space and carriage return
+            return finalStr + "]}";
+        }
 
 
         public string IntentName { get; internal set; }
