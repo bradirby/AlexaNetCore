@@ -54,7 +54,7 @@ namespace AlexaNetCore
 
             if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
 
-            if (!Intents.Any(i => i.IntentName == "AMAZON.HelpIntent"))
+            if (Intents.All(i => i.IntentName != "AMAZON.HelpIntent"))
                 throw new ArgumentException("AMAZON.HelpIntent is required for custom skill");
 
             foreach (var intent in Intents)
@@ -71,7 +71,7 @@ namespace AlexaNetCore
                         var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
                         if (customSlotType == null)
                             throw new ArgumentException(
-                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  (Names are case sensitive)");
+                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
                     }
                 }
             }
