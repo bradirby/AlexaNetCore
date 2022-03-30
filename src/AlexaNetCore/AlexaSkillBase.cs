@@ -45,7 +45,7 @@ namespace AlexaNetCore
         
         public SkillInteractionModel GetInteractionModel(AlexaLocale locale = null)
         {
-            locale ??= AlexaLocale.English_US;
+            locale ??= defaultResponseLocale;
 
             if (InvocationName == null)
                 throw new ArgumentNullException("You must specify an invocation name");
@@ -53,7 +53,7 @@ namespace AlexaNetCore
             if (InvocationName.GetText(locale) != InvocationName.GetText(locale).Trim().ToLower())
             {
                 var errMsg = "Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.";
-                if (InvocationName.NumLanguages > 1) errMsg = $"({locale.LanguageCode}) {errMsg}";
+                if (InvocationName.NumLanguages > 1) errMsg = $"({locale.LocaleString}) {errMsg}";
                 throw new ArgumentException(errMsg);
             }
 
@@ -81,10 +81,10 @@ namespace AlexaNetCore
                 }
             }
 
-            return new SkillInteractionModel(InvocationName.GetText(locale), 
+            return new SkillInteractionModel(locale, InvocationName.GetText(locale), 
                 Intents.Where(i => i.IncludeInInteractionModel)
                     .OrderBy(i => i.IntentName).ToList(), 
-                SlotTypes, locale);
+                SlotTypes);
         }
 
         /// <summary>

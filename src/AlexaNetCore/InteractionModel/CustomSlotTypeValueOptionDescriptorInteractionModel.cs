@@ -26,6 +26,7 @@ namespace AlexaNetCore.InteractionModel
         {
             Value = val;
         }
+
         public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, string synonym)
         {
             Value = val;

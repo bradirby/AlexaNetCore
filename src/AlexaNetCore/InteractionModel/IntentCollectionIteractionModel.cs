@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using ThirdParty.Json.LitJson;
 
 namespace AlexaNetCore.InteractionModel
 {
@@ -22,8 +21,8 @@ namespace AlexaNetCore.InteractionModel
 
 
 
-        public IntentCollectionIteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents, 
-            List<CustomSlotTypeInteractionModel> slots = null, AlexaLocale locale = null)
+        public IntentCollectionIteractionModel(AlexaLocale locale , string invocationName, List<AlexaIntentHandlerBase> intents
+            , List<CustomSlotTypeInteractionModel> slots = null)
         {
             if (string.IsNullOrEmpty(invocationName)) throw new ArgumentNullException();
             if (intents == null) throw new ArgumentNullException();
