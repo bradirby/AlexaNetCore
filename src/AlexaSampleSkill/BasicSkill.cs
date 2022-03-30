@@ -31,7 +31,7 @@ namespace AlexaSampleSkill
 
         private void Init()
         {
-            var measureSlotType = new CustomSlotTypeInteractionModel("measureType");
+            var measureSlotType = new CustomSlotType("measureType");
             measureSlotType.AddValueOption("inches","inch");
             measureSlotType.AddValueOption("feet",new[] {"foot", "feetsies"});
             measureSlotType.AddValueOption("yards");

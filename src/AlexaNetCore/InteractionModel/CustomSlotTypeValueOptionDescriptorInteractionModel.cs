@@ -9,40 +9,62 @@ namespace AlexaNetCore.InteractionModel
         [JsonPropertyName("value")]
         public string Value { get; set; }
 
-        
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonPropertyName("synonyms")] 
-        public string[] SynonymStrings => !Synonyms.Any() ? null : Synonyms.ToArray();
+        [JsonPropertyName("synonyms")]
+        public string[] SynonymStrings { get; set; }
 
 
-        private List<string> Synonyms { get; set; } = new List<string>();
+        internal CustomSlotTypeValueOptionDescriptorInteractionModel(string value, string[] synStrings)
+        {
+            Value = value;
+            if (synStrings.Length == 0) SynonymStrings = null;
+            else SynonymStrings = synStrings;
+        }
+    }
+
+
+    public class CustomSlotTypeValueOptionDescriptor
+    {
+        public AlexaMultiLanguageText Value { get; set; }
+
+
+        private List<AlexaMultiLanguageText> Synonyms { get; set; } = new List<AlexaMultiLanguageText>();
 
         public void AddSynonym(string val)
         {
-            Synonyms.Add(val);
+            Synonyms.Add(new AlexaMultiLanguageText(val));
         }
 
-        public CustomSlotTypeValueOptionDescriptorInteractionModel(string val)
+        public CustomSlotTypeValueOptionDescriptor(string val)
         {
-            Value = val;
+            Value = new AlexaMultiLanguageText(val);
         }
 
-        public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, string synonym)
+        public CustomSlotTypeValueOptionDescriptor(string val, string synonym)
         {
-            Value = val;
-            Synonyms.Add( synonym);
+            Value = new AlexaMultiLanguageText(val);
+            Synonyms.Add( new AlexaMultiLanguageText(synonym));
         }
 
-        public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, List<string> synonyms)
+        public CustomSlotTypeValueOptionDescriptor(string val, List<string> synonyms)
         {
-            Value = val;
-            Synonyms = synonyms;
+            Value = new AlexaMultiLanguageText(val);
+            Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
         }
 
-        public CustomSlotTypeValueOptionDescriptorInteractionModel(string val, string[] synonyms)
+        public CustomSlotTypeValueOptionDescriptor(string val, string[] synonyms)
         {
-            Value = val;
-            Synonyms = synonyms.ToList();
+            Value = new AlexaMultiLanguageText(val);
+            Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
+        }
+
+        public CustomSlotTypeValueOptionDescriptorInteractionModel GetInteractionModel(AlexaLocale locale = null)
+        {
+            locale ??= AlexaLocale.English_US;
+
+            return new CustomSlotTypeValueOptionDescriptorInteractionModel(
+                Value.GetText(locale), Synonyms.Select(s => s.GetText(locale)).ToArray());
         }
 
     }

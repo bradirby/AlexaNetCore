@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace AlexaNetCore.InteractionModel
 {
+
+
     public class CustomSlotTypeValueOptionInteractionModel
     {
         [JsonPropertyName("name")]
@@ -13,30 +15,45 @@ namespace AlexaNetCore.InteractionModel
         {
             SlotTypeValueOptionDescriptorInteractionModel = model;
         }
+    }
 
-        public CustomSlotTypeValueOptionInteractionModel(string val)
+    public class CustomSlotTypeValueOption
+    {
+        public CustomSlotTypeValueOptionDescriptor SlotTypeValueOptionDescriptor { get; set; }
+
+        public CustomSlotTypeValueOption(CustomSlotTypeValueOptionDescriptor model)
         {
-            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val) ;
+            SlotTypeValueOptionDescriptor = model;
         }
 
-        public CustomSlotTypeValueOptionInteractionModel(string val, string synonym)
+        public CustomSlotTypeValueOption(string val)
         {
-            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonym) ;
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val) ;
         }
 
-        public CustomSlotTypeValueOptionInteractionModel(string val, List<string> synonyms)
+        public CustomSlotTypeValueOption(string val, string synonym)
         {
-            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonyms) ;
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonym) ;
         }
 
-        public CustomSlotTypeValueOptionInteractionModel(string val, string[] synonyms)
+        public CustomSlotTypeValueOption(string val, List<string> synonyms)
         {
-            SlotTypeValueOptionDescriptorInteractionModel = new CustomSlotTypeValueOptionDescriptorInteractionModel(val, synonyms.ToList()) ;
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonyms) ;
+        }
+
+        public CustomSlotTypeValueOption(string val, string[] synonyms)
+        {
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonyms.ToList()) ;
         }
         
         public void AddSynonym(string val)
         {
-            SlotTypeValueOptionDescriptorInteractionModel.AddSynonym(val);
+            SlotTypeValueOptionDescriptor.AddSynonym(val);
+        }
+
+        public CustomSlotTypeValueOptionInteractionModel GetInteractionModel(AlexaLocale locale)
+        {
+            return new CustomSlotTypeValueOptionInteractionModel(  SlotTypeValueOptionDescriptor.GetInteractionModel(locale));
         }
     }
 }

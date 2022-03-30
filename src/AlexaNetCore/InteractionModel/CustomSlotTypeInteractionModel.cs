@@ -10,52 +10,74 @@ namespace AlexaNetCore.InteractionModel
         public string Name { get; set; }
 
         [JsonPropertyName("values")]
-        public CustomSlotTypeValueOptionInteractionModel[] Values => OptionValues.ToArray();
+        public CustomSlotTypeValueOptionInteractionModel[] Values;
 
-
-        private List<CustomSlotTypeValueOptionInteractionModel> OptionValues { get; set; } 
-
-        public CustomSlotTypeInteractionModel(string name)
+        public CustomSlotTypeInteractionModel(string name, CustomSlotTypeValueOptionInteractionModel[] values)
         {
             Name = name;
-            OptionValues = new List<CustomSlotTypeValueOptionInteractionModel>();
+            Values = values;
+        }
+    }
+
+    public class CustomSlotType
+    {
+
+        /// <summary>
+        /// the name of the custom slot type.  this is always the same regardless of language
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Options allowed for this slot
+        /// </summary>
+        private List<CustomSlotTypeValueOption> OptionValues { get; set; } 
+
+        public CustomSlotType(string name)
+        {
+            Name = name;
+            OptionValues = new List<CustomSlotTypeValueOption>();
         }
 
-        public CustomSlotTypeInteractionModel(string name, List<CustomSlotTypeValueOptionInteractionModel> optionModels)
+        public CustomSlotType(string name, List<CustomSlotTypeValueOption> optionModels)
         {
             Name = name;
             OptionValues = optionModels;
         }
 
-        public CustomSlotTypeInteractionModel(string name, CustomSlotTypeValueOptionInteractionModel[] optionModels)
+        public CustomSlotType(string name, CustomSlotTypeValueOption[] optionModels)
         {
             Name = name;
             OptionValues = optionModels.ToList();
         }
 
-        public void AddValueOption(CustomSlotTypeValueOptionInteractionModel opt)
+        public void AddValueOption(CustomSlotTypeValueOption opt)
         {
             OptionValues.Add(opt);
         }
 
         public void AddValueOption(string name)
         {
-            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name));
+            OptionValues.Add(new CustomSlotTypeValueOption(name));
         }
 
         public void AddValueOption(string name, string synonym)
         {
-            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name, synonym));
+            OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }
 
         public void AddValueOption(string name, List<string> synonym)
         {
-            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name, synonym));
+            OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }
         public void AddValueOption(string name, string[] synonym)
         {
-            OptionValues.Add(new CustomSlotTypeValueOptionInteractionModel(name, synonym));
+            OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }
 
+        public CustomSlotTypeInteractionModel GetInteractionModel(AlexaLocale locale)
+        {
+            return new CustomSlotTypeInteractionModel(Name,
+                OptionValues.Select(ov => ov.GetInteractionModel(locale)).ToArray());
+        }
     }
 }

@@ -25,9 +25,9 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
 
-        private List<CustomSlotTypeInteractionModel> SlotTypes { get; set; } = new List<CustomSlotTypeInteractionModel>();
+        private List<CustomSlotType> SlotTypes { get; set; } = new List<CustomSlotType>();
 
-        public AlexaSkillBase AddCustomSlotType(CustomSlotTypeInteractionModel customSlotType)
+        public AlexaSkillBase AddCustomSlotType(CustomSlotType customSlotType)
         {
             SlotTypes.Add(customSlotType);
             return this;
@@ -84,7 +84,7 @@ namespace AlexaNetCore
             return new SkillInteractionModel(locale, InvocationName.GetText(locale), 
                 Intents.Where(i => i.IncludeInInteractionModel)
                     .OrderBy(i => i.IntentName).ToList(), 
-                SlotTypes);
+                SlotTypes.Select(st => st.GetInteractionModel(locale)).ToList());
         }
 
         /// <summary>
