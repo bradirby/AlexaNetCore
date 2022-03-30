@@ -66,11 +66,27 @@ namespace AlexaNetCore.InteractionModel
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }
 
-        public void AddValueOption(string name, List<string> synonym)
+        public void AddValueOption(AlexaMultiLanguageText name, string synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }
+
+        public void AddValueOption(AlexaMultiLanguageText name, AlexaMultiLanguageText synonym)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+        }
+
         public void AddValueOption(string name, string[] synonym)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+        }
+
+        public void AddValueOption(AlexaMultiLanguageText name, string[] synonym)
+        {
+            OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+        }
+
+        public void AddValueOption(AlexaMultiLanguageText name, AlexaMultiLanguageText[] synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }

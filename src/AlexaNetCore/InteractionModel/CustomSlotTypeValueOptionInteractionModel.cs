@@ -36,9 +36,14 @@ namespace AlexaNetCore.InteractionModel
             SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonym) ;
         }
 
-        public CustomSlotTypeValueOption(string val, List<string> synonyms)
+        public CustomSlotTypeValueOption(AlexaMultiLanguageText val, string synonym)
         {
-            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonyms) ;
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonym) ;
+        }
+
+        public CustomSlotTypeValueOption(AlexaMultiLanguageText val, AlexaMultiLanguageText synonym)
+        {
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonym) ;
         }
 
         public CustomSlotTypeValueOption(string val, string[] synonyms)
@@ -46,6 +51,16 @@ namespace AlexaNetCore.InteractionModel
             SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonyms.ToList()) ;
         }
         
+        public CustomSlotTypeValueOption(AlexaMultiLanguageText val, AlexaMultiLanguageText[] synonyms)
+        {
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonyms) ;
+        }
+
+        public CustomSlotTypeValueOption(AlexaMultiLanguageText val, string[] synonyms)
+        {
+            SlotTypeValueOptionDescriptor = new CustomSlotTypeValueOptionDescriptor(val, synonyms.ToList()) ;
+        }
+
         public void AddSynonym(string val)
         {
             SlotTypeValueOptionDescriptor.AddSynonym(val);

@@ -47,9 +47,27 @@ namespace AlexaNetCore.InteractionModel
             Synonyms.Add( new AlexaMultiLanguageText(synonym));
         }
 
+        public CustomSlotTypeValueOptionDescriptor(AlexaMultiLanguageText val, string synonym)
+        {
+            Value = val;
+            Synonyms.Add( new AlexaMultiLanguageText(synonym));
+        }
+
+        public CustomSlotTypeValueOptionDescriptor(AlexaMultiLanguageText val, AlexaMultiLanguageText synonym)
+        {
+            Value = val;
+            Synonyms.Add( synonym);
+        }
+
         public CustomSlotTypeValueOptionDescriptor(string val, List<string> synonyms)
         {
             Value = new AlexaMultiLanguageText(val);
+            Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
+        }
+
+        public CustomSlotTypeValueOptionDescriptor(AlexaMultiLanguageText val, List<string> synonyms)
+        {
+            Value = val;
             Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
         }
 
@@ -57,6 +75,18 @@ namespace AlexaNetCore.InteractionModel
         {
             Value = new AlexaMultiLanguageText(val);
             Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
+        }
+
+        public CustomSlotTypeValueOptionDescriptor(AlexaMultiLanguageText val, string[] synonyms)
+        {
+            Value = val;
+            Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
+        }
+
+        public CustomSlotTypeValueOptionDescriptor(AlexaMultiLanguageText val, AlexaMultiLanguageText[] synonyms)
+        {
+            Value = val;
+            Synonyms = synonyms.ToList();
         }
 
         public CustomSlotTypeValueOptionDescriptorInteractionModel GetInteractionModel(AlexaLocale locale = null)

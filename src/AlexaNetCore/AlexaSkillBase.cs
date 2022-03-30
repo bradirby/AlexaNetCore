@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using AlexaNetCore.InteractionModel;
-using AlexaNetCore.Model;
 using Amazon.Lambda.Core;
 
 namespace AlexaNetCore
