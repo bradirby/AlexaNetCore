@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using AlexaNetCore;
 using NUnit.Framework;
 
 namespace AlexaSampleSkill.Tests
@@ -16,7 +17,7 @@ namespace AlexaSampleSkill.Tests
         public void CreateInteractionModelFile()
         {
             var skill = new BasicSkill();
-            var interactionModelObj = skill.GetInteractionModel();
+            var interactionModelObj = skill.GetInteractionModel(AlexaLocale.Spanish_ES);
             var interactionModelStr = JsonSerializer.Serialize(interactionModelObj);
 
             var filePath = Environment.GetEnvironmentVariable("AlexaNetCoreSourceCodeRootFolder");

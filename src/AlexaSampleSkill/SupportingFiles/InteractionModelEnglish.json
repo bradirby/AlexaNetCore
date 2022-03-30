@@ -35,9 +35,9 @@
             }
           ],
           "samples": [
-            "Hello {inputValue} ",
-            "hello {sourceType} there",
-            "Hi Everybody"
+            "Hola, {inputValue} es su valor de entrada",
+            "Hola, {inputValue} a ti",
+            "Hola, a todos"
           ]
         }
       ],

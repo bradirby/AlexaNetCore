@@ -27,22 +27,30 @@ namespace AlexaNetCore
         /// List of invocations to use for this intent.  Adding invocations here does not affect
         /// the operation of the intent, it just helps with the generation of the IntentCollectionIteractionModel
         /// </summary>
-        private List<string> SampleInvocations { get; set; } = new List<string>();
+        private List<AlexaMultiLanguageText> SampleInvocations { get; set; } = new List<AlexaMultiLanguageText>();
 
         public AlexaIntentHandlerBase AddSampleInvocation(string sample)
+        {
+            SampleInvocations.Add(new AlexaMultiLanguageText(sample));
+            return this;
+        }
+
+        public AlexaIntentHandlerBase AddSampleInvocation(AlexaMultiLanguageText sample)
         {
             SampleInvocations.Add(sample);
             return this;
         }
 
-        public List<string> GetSampleInvocations()
+        public List<AlexaMultiLanguageText> GetSampleInvocations()
         {
             return SampleInvocations.ToList();
         }
 
-        public IntentInteractionModel GetInteractionModel()
+        public IntentInteractionModel GetInteractionModel(AlexaLocale locale = null)
         {
-            return new IntentInteractionModel(IntentName, SampleInvocations, SlotOptions);
+            locale ??= AlexaLocale.English_US;
+            var invocationsInProperLanguage = SampleInvocations.Select(i => i.GetText(locale)).ToList();
+            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, SlotOptions);
         }
 
         private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();

@@ -43,8 +43,10 @@ namespace AlexaNetCore
         private List<AlexaIntentHandlerBase> Intents = new List<AlexaIntentHandlerBase>();
 
         
-        public SkillInteractionModel GetInteractionModel()
+        public SkillInteractionModel GetInteractionModel(AlexaLocale locale = null)
         {
+            locale ??= AlexaLocale.English_US;
+
             if (string.IsNullOrEmpty(InvocationName))
                 throw new ArgumentNullException("You must specify an invocation name");
 
@@ -77,8 +79,9 @@ namespace AlexaNetCore
             }
 
             return new SkillInteractionModel(InvocationName, 
-                Intents.Where(i => i.IncludeInInteractionModel).OrderBy(i => i.IntentName).ToList(), 
-                SlotTypes);
+                Intents.Where(i => i.IncludeInInteractionModel)
+                    .OrderBy(i => i.IntentName).ToList(), 
+                SlotTypes, locale);
         }
 
         /// <summary>

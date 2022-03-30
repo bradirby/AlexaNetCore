@@ -16,10 +16,23 @@ namespace AlexaSampleSkill.Intents
             AddSlotOption( new SlotInteractionModel("sourceType","measureType"));
             AddSlotOption( new SlotInteractionModel("destType","measureType"));
 
-            AddSampleInvocation($"Hello {{inputValue}} ");
-            AddSampleInvocation($"hello {{sourceType}} there");
-            AddSampleInvocation("Hi Everybody");
+
+            var txt = new AlexaMultiLanguageText( $"Hello, {{inputValue}} is your input value", AlexaLocale.English_US)
+                .AddText( $"Ciao, {{inputValue}} è il tuo valore di input", AlexaLocale.Italian)
+                .AddText( $"Hola, {{inputValue}} es su valor de entrada", AlexaLocale.Spanish_US);
+            AddSampleInvocation(txt);
+
+            txt = new AlexaMultiLanguageText( $"Hello, {{inputValue}} there", AlexaLocale.English_US)
+                .AddText( $"Ciao, {{inputValue}} a voi", AlexaLocale.Italian)
+                .AddText( $"Hola, {{inputValue}} a ti", AlexaLocale.Spanish_US);
+            AddSampleInvocation(txt);
+            
+            txt = new AlexaMultiLanguageText( $"Hello everyone", AlexaLocale.English_US)
+                .AddText( $"Ciao, a tutti", AlexaLocale.Italian)
+                .AddText( $"Hola, a todos", AlexaLocale.Spanish_US);
+            AddSampleInvocation(txt);
         }
+
 
         public override void Process()
         {

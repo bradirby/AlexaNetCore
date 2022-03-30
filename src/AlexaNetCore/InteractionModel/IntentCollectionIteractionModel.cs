@@ -22,7 +22,8 @@ namespace AlexaNetCore.InteractionModel
 
 
 
-        public IntentCollectionIteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents, List<CustomSlotTypeInteractionModel> slots = null)
+        public IntentCollectionIteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents, 
+            List<CustomSlotTypeInteractionModel> slots = null, AlexaLocale locale = null)
         {
             if (string.IsNullOrEmpty(invocationName)) throw new ArgumentNullException();
             if (intents == null) throw new ArgumentNullException();
@@ -30,7 +31,7 @@ namespace AlexaNetCore.InteractionModel
 
             InvocationName = invocationName;
             var intentModels = new List<IntentInteractionModel>();
-            foreach (var intent in intents) intentModels.Add(intent.GetInteractionModel());
+            foreach (var intent in intents) intentModels.Add(intent.GetInteractionModel(locale));
             IntentHandlerModels = intentModels.ToArray();
 
             if (slots == null) CustomSlotTypes = null;

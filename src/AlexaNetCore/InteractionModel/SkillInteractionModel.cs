@@ -8,9 +8,10 @@ namespace AlexaNetCore.InteractionModel
         [JsonPropertyName("interactionModel")]
         public LanguageInteractionModel LanguageModel { get; set; }
 
-        public SkillInteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents, List<CustomSlotTypeInteractionModel> slotTypes = null)
+        public SkillInteractionModel(string invocationName, List<AlexaIntentHandlerBase> intents, 
+            List<CustomSlotTypeInteractionModel> slotTypes = null, AlexaLocale locale = null)
         {
-            LanguageModel = new LanguageInteractionModel(invocationName, intents, slotTypes);
+            LanguageModel = new LanguageInteractionModel(invocationName, intents, slotTypes, locale);
         }
     }
 }
