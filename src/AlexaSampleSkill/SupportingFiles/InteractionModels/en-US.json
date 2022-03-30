@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "my basic skill",
+      "invocationName": "birthday echo",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -35,9 +35,9 @@
             }
           ],
           "samples": [
-            "Hola, {inputValue} es su valor de entrada",
-            "Hola, {inputValue} a ti",
-            "Hola, a todos"
+            "Hello, {inputValue} is your input value",
+            "Hello, {inputValue} there",
+            "Hello everyone"
           ]
         }
       ],
@@ -58,7 +58,7 @@
                 "value": "feet",
                 "synonyms": [
                   "foot",
-                  "feetsies"
+                  "footsies"
                 ]
               }
             },

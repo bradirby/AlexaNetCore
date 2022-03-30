@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "my basic skill",
+      "invocationName": "cumpleano grita",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -47,18 +47,18 @@
           "values": [
             {
               "name": {
-                "value": "inches",
+                "value": "pulgadas",
                 "synonyms": [
-                  "inch"
+                  "pulgada"
                 ]
               }
             },
             {
               "name": {
-                "value": "feet",
+                "value": "pies",
                 "synonyms": [
-                  "foot",
-                  "feetsies"
+                  "pie",
+                  "piesies"
                 ]
               }
             },

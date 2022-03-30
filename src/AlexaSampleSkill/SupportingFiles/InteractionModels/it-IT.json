@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "my basic skill",
+      "invocationName": "tanti aguri",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -35,9 +35,9 @@
             }
           ],
           "samples": [
-            "Hola, {inputValue} es su valor de entrada",
-            "Hola, {inputValue} a ti",
-            "Hola, a todos"
+            "Ciao, {inputValue} \u00E8 il tuo valore di input",
+            "Ciao, {inputValue} a voi",
+            "Ciao, a tutti"
           ]
         }
       ],
@@ -47,18 +47,18 @@
           "values": [
             {
               "name": {
-                "value": "inches",
+                "value": "pollici",
                 "synonyms": [
-                  "inch"
+                  "pollice"
                 ]
               }
             },
             {
               "name": {
-                "value": "feet",
+                "value": "piedi",
                 "synonyms": [
-                  "foot",
-                  "feetsies"
+                  "piede",
+                  "piedies"
                 ]
               }
             },

@@ -26,6 +26,8 @@ namespace AlexaNetCore
 
         private Dictionary<string, string> Phrases = new Dictionary<string, string>();
 
+        public int NumLanguages => Phrases.Count;
+
         public bool LanguageExists(AlexaLocale locale)
         {
             return Phrases.ContainsKey(locale.LocaleString);

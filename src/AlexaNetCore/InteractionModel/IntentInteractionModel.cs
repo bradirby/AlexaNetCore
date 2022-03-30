@@ -11,17 +11,24 @@ namespace AlexaNetCore.InteractionModel
         public IntentInteractionModel(string name, List<string> invocations, List<SlotInteractionModel> slotOptions = null)
         {
             IntentName = name;
+
+
             Samples = invocations.ToArray();
-            if (slotOptions == null) Slots = new SlotInteractionModel[] { };
-            else if (!slotOptions.Any()) Slots = new SlotInteractionModel[] { };
+
+            if (slotOptions == null) Slots = null;
+            else if (!slotOptions.Any()) Slots = null;
             else Slots = slotOptions.ToArray();
         }
 
         [JsonPropertyName("name")] public string IntentName { get;}
 
-        [JsonPropertyName("slots")] public SlotInteractionModel[] Slots{ get; }
+        [JsonPropertyName("slots")] 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public SlotInteractionModel[] Slots{ get; }
 
-        [JsonPropertyName("samples")] public string[] Samples { get; }
+
+        [JsonPropertyName("samples")] 
+        public string[] Samples { get; }
 
     }
 }
