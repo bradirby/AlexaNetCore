@@ -28,7 +28,6 @@ namespace AlexaNetCore.InteractionModel
 
 
         [JsonPropertyName("samples")] 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string[] Samples { get; }
 
     }
