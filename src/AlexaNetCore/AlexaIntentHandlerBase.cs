@@ -42,6 +42,8 @@ namespace AlexaNetCore
 
         private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();
 
+        public List<SlotInteractionModel> GetSlotOptions => SlotOptions.ToList();
+
         public AlexaIntentHandlerBase AddSlotOption(SlotInteractionModel slot)
         {
             SlotOptions.Add(slot);

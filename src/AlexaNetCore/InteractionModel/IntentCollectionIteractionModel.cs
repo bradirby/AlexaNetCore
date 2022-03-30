@@ -16,7 +16,9 @@ namespace AlexaNetCore.InteractionModel
         public IntentInteractionModel[] IntentHandlerModels { get; set; }
 
 
-        [JsonPropertyName("types")] public CustomSlotTypeInteractionModel[] CustomSlotTypes { get; set; } 
+        [JsonPropertyName("types")] 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public CustomSlotTypeInteractionModel[] CustomSlotTypes { get; set; } 
 
 
 
@@ -31,8 +33,8 @@ namespace AlexaNetCore.InteractionModel
             foreach (var intent in intents) intentModels.Add(intent.GetInteractionModel());
             IntentHandlerModels = intentModels.ToArray();
 
-            if (slots == null) CustomSlotTypes = new CustomSlotTypeInteractionModel[] { };
-            else if (!slots.Any()) CustomSlotTypes = new CustomSlotTypeInteractionModel[] { };
+            if (slots == null) CustomSlotTypes = null;
+            else if (!slots.Any()) CustomSlotTypes = null;
             else CustomSlotTypes = slots.ToArray();
         }
     }

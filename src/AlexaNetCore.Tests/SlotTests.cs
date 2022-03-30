@@ -17,7 +17,7 @@ namespace AlexaNetCore.Tests
         {
             var obj = new CustomSlotTypeValueOptionDescriptorInteractionModel("Test");
             var str = JsonSerializer.Serialize(obj);
-            var expectedVal = $"{{\"value\":\"Test\",\"synonyms\":[]}}";
+            var expectedVal = $"{{\"value\":\"Test\"}}";
             Assert.AreEqual(expectedVal, str);
         }
 
@@ -50,7 +50,7 @@ namespace AlexaNetCore.Tests
         {
             var obj = new CustomSlotTypeValueOptionInteractionModel("Test");
             var str = JsonSerializer.Serialize(obj);
-            var expectedVal = $"{{\"name\":{{\"value\":\"Test\",\"synonyms\":[]}}}}";
+            var expectedVal = $"{{\"name\":{{\"value\":\"Test\"}}}}";
             Assert.AreEqual(expectedVal, str);
         }
 
@@ -96,7 +96,7 @@ namespace AlexaNetCore.Tests
             var obj = new CustomSlotTypeInteractionModel("measureType");
             obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt1"));
             var str = JsonSerializer.Serialize(obj);
-            var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[]}}}}]}}";
+            var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\"}}}}]}}";
             Assert.AreEqual(expectedVal, str);
         }
 
@@ -117,7 +117,7 @@ namespace AlexaNetCore.Tests
             obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt1"));
             obj.AddValueOption(new CustomSlotTypeValueOptionInteractionModel("opt2"));
             var str = JsonSerializer.Serialize(obj);
-            var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\",\"synonyms\":[]}}}},{{\"name\":{{\"value\":\"opt2\",\"synonyms\":[]}}}}]}}";
+            var expectedVal = $"{{\"name\":\"measureType\",\"values\":[{{\"name\":{{\"value\":\"opt1\"}}}},{{\"name\":{{\"value\":\"opt2\"}}}}]}}";
             Assert.AreEqual(expectedVal, str);
         }
 

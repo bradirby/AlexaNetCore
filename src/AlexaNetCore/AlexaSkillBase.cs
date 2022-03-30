@@ -45,13 +45,40 @@ namespace AlexaNetCore
         
         public SkillInteractionModel GetInteractionModel()
         {
+            if (string.IsNullOrEmpty(InvocationName))
+                throw new ArgumentNullException("You must specify an invocation name");
+
+            if (InvocationName != InvocationName.Trim().ToLower())
+                throw new ArgumentException(
+                    "Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.");
+
+            if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
+
+            foreach (var intent in Intents)
+            {
+                foreach (var slotOption in intent.GetSlotOptions.Where(o => !o.SlotType.StartsWith("AMAZON")))
+                {
+                    var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
+                    if (customSlotType == null)
+                        throw new ArgumentException(
+                            $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  (Names are case sensitive)");
+                }
+            }
+
             return new SkillInteractionModel(InvocationName, Intents, SlotTypes);
         }
 
         /// <summary>
-        /// String used to invoke this skill.  This is only needed when auto-generating the interaction model
+        /// String used to invoke this skill.  This is only needed when auto-generating the interaction model.
+        /// Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.
         /// </summary>
-        public string InvocationName { get; set; }
+        public string InvocationName { get; private set; }
+
+        public AlexaSkillBase SetInvocationName(string name)
+        {
+            InvocationName = name;
+            return this;
+        }
 
         
         protected AlexaSkillBase()

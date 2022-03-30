@@ -17,9 +17,9 @@ namespace AlexaSampleSkill.Intents
         /// </summary>
         public BasicIntent() : base("BasicIntent")
         {
-            AddSlotOption( new SlotInteractionModel("inputValue","AMAZON.Number"));
-            AddSlotOption( new SlotInteractionModel("sourceType","measuretype"));
-            AddSlotOption( new SlotInteractionModel("destType","measuretype"));
+            AddSlotOption( new SlotInteractionModel("inputValue","AMAZON.NUMBER"));
+            AddSlotOption( new SlotInteractionModel("sourceType","measureType"));
+            AddSlotOption( new SlotInteractionModel("destType","measureType"));
 
             AddSampleInvocation($"Hello {{inputValue}} ");
             AddSampleInvocation($"hello {{sourceType}} there");
