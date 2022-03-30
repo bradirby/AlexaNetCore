@@ -51,8 +51,10 @@ namespace AlexaNetCore.InteractionModel
             SlotTypeValueOptionDescriptor.AddSynonym(val);
         }
 
-        public CustomSlotTypeValueOptionInteractionModel GetInteractionModel(AlexaLocale locale)
+        public CustomSlotTypeValueOptionInteractionModel GetInteractionModel(AlexaLocale locale = null)
         {
+            locale ??= AlexaLocale.English_US;
+            
             return new CustomSlotTypeValueOptionInteractionModel(  SlotTypeValueOptionDescriptor.GetInteractionModel(locale));
         }
     }

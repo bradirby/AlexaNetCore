@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ namespace AlexaNetCore.InteractionModel
         public string Name { get; set; }
 
         [JsonPropertyName("values")]
-        public CustomSlotTypeValueOptionInteractionModel[] Values;
+        public CustomSlotTypeValueOptionInteractionModel[] Values { get; set; }
 
         public CustomSlotTypeInteractionModel(string name, CustomSlotTypeValueOptionInteractionModel[] values)
         {
@@ -74,10 +75,14 @@ namespace AlexaNetCore.InteractionModel
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
         }
 
-        public CustomSlotTypeInteractionModel GetInteractionModel(AlexaLocale locale)
+        public CustomSlotTypeInteractionModel GetInteractionModel(AlexaLocale locale = null)
         {
-            return new CustomSlotTypeInteractionModel(Name,
-                OptionValues.Select(ov => ov.GetInteractionModel(locale)).ToArray());
+            locale ??= AlexaLocale.English_US;
+            var valuesForLang = OptionValues.Select(ov => ov.GetInteractionModel(locale)).ToList();
+
+            if (!valuesForLang.Any()) throw new ArgumentException("Custom slots require at least one option value");
+
+            return new CustomSlotTypeInteractionModel(Name, valuesForLang.ToArray());
         }
     }
 }
