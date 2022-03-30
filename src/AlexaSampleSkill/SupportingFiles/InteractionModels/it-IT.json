@@ -47,18 +47,18 @@
           "values": [
             {
               "name": {
-                "value": "inches",
+                "value": "pollici",
                 "synonyms": [
-                  "inch"
+                  "pollice"
                 ]
               }
             },
             {
               "name": {
-                "value": "feet",
+                "value": "piedi",
                 "synonyms": [
-                  "foot",
-                  "feetsies"
+                  "piede",
+                  "piedies"
                 ]
               }
             },

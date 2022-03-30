@@ -59,17 +59,6 @@ namespace AlexaNetCore.InteractionModel
             Synonyms.Add( synonym);
         }
 
-        public CustomSlotTypeValueOptionDescriptor(string val, List<string> synonyms)
-        {
-            Value = new AlexaMultiLanguageText(val);
-            Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
-        }
-
-        public CustomSlotTypeValueOptionDescriptor(AlexaMultiLanguageText val, List<string> synonyms)
-        {
-            Value = val;
-            Synonyms = synonyms.Select(s => new AlexaMultiLanguageText(s)).ToList();
-        }
 
         public CustomSlotTypeValueOptionDescriptor(string val, string[] synonyms)
         {

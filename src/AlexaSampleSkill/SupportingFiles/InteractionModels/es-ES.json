@@ -47,18 +47,18 @@
           "values": [
             {
               "name": {
-                "value": "inches",
+                "value": "pulgadas",
                 "synonyms": [
-                  "inch"
+                  "pulgada"
                 ]
               }
             },
             {
               "name": {
-                "value": "feet",
+                "value": "pies",
                 "synonyms": [
-                  "foot",
-                  "feetsies"
+                  "pie",
+                  "piesies"
                 ]
               }
             },
