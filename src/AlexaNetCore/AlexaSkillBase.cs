@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
-using AlexaNetCore.Model;
+using AlexaNetCore.InteractionModel;
 using Amazon.Lambda.Core;
 
 namespace AlexaNetCore
@@ -24,6 +22,14 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
 
+        private List<CustomSlotType> SlotTypes { get; set; } = new List<CustomSlotType>();
+
+        public AlexaSkillBase AddCustomSlotType(CustomSlotType customSlotType)
+        {
+            SlotTypes.Add(customSlotType);
+            return this;
+        }
+
         /// <summary>
         /// All the components of a value to return back to Amazon
         /// </summary>
@@ -33,8 +39,68 @@ namespace AlexaNetCore
 
         private List<AlexaIntentHandlerBase> Intents = new List<AlexaIntentHandlerBase>();
 
+        
+        public SkillInteractionModel GetInteractionModel(AlexaLocale locale = null)
+        {
+            locale ??= defaultResponseLocale;
 
+            if (InvocationName == null)
+                throw new ArgumentNullException("You must specify an invocation name");
 
+            if (InvocationName.GetText(locale) != InvocationName.GetText(locale).Trim().ToLower())
+            {
+                var errMsg = "Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.";
+                if (InvocationName.NumLanguages > 1) errMsg = $"({locale.LocaleString}) {errMsg}";
+                throw new ArgumentException(errMsg);
+            }
+
+            if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
+
+            if (Intents.All(i => i.IntentName != "AMAZON.HelpIntent"))
+                throw new ArgumentException("AMAZON.HelpIntent is required for custom skill");
+
+            foreach (var intent in Intents)
+            {
+                foreach (var slotOption in intent.GetSlotOptions)
+                {
+                    if (slotOption.SlotType.StartsWith("AMAZON.", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        if (slotOption.SlotType != slotOption.SlotType.ToUpper())
+                            throw new ArgumentException("Built in Amazon slot type names must be all uppercase (i.e. AMAZON.NUMBER)");
+                    }
+                    else
+                    {
+                        var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
+                        if (customSlotType == null)
+                            throw new ArgumentException(
+                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
+                    }
+                }
+            }
+
+            return new SkillInteractionModel(locale, InvocationName.GetText(locale), 
+                Intents.Where(i => i.IncludeInInteractionModel)
+                    .OrderBy(i => i.IntentName).ToList(), 
+                SlotTypes.Select(st => st.GetInteractionModel(locale)).ToList());
+        }
+
+        /// <summary>
+        /// String used to invoke this skill.  This is only needed when auto-generating the interaction model.
+        /// Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.
+        /// </summary>
+        public AlexaMultiLanguageText InvocationName { get; private set; }
+
+        public AlexaSkillBase SetInvocationName(AlexaMultiLanguageText name)
+        {
+            InvocationName = name;
+            return this;
+        }
+
+        public AlexaSkillBase SetInvocationName(string name)
+        {
+            InvocationName = new AlexaMultiLanguageText(name);
+            return this;
+        }
         
         protected AlexaSkillBase()
         {
@@ -331,7 +397,7 @@ namespace AlexaNetCore
         /// <summary>
         /// Registers an intent handler, potentially replacing the existing one if one is already registered by that name
         /// </summary>
-        protected void RegisterIntentHandler(AlexaIntentHandlerBase intent, bool replaceExisting = true)
+        protected internal void RegisterIntentHandler(AlexaIntentHandlerBase intent, bool replaceExisting = true)
         {
             var existingIntent = Intents.FirstOrDefault(i => i.IntentName.Equals(intent.IntentName, StringComparison.CurrentCultureIgnoreCase));
             if (existingIntent == null)
