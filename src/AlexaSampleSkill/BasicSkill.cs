@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using AlexaNetCore.InteractionModel;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AlexaSampleSkill
 {
@@ -44,7 +45,13 @@ namespace AlexaSampleSkill
 
 
             SetSkillVersion("0.1");
-            SetInvocationName("my basic skill");
+
+                 
+            var txt = new AlexaMultiLanguageText( $"birthday echo", AlexaLocale.English_US)
+                .AddText( $"tanti aguri", AlexaLocale.Italian)
+                .AddText( $"cumpleano grita", AlexaLocale.Spanish_US);
+
+            SetInvocationName(txt);
             RegisterIntentHandler(new DefaultCancelIntentHandler());
             RegisterIntentHandler(new DefaultStopIntentHandler());
             RegisterIntentHandler(new DefaultHelpIntentHandler());

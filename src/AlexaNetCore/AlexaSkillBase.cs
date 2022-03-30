@@ -47,12 +47,15 @@ namespace AlexaNetCore
         {
             locale ??= AlexaLocale.English_US;
 
-            if (string.IsNullOrEmpty(InvocationName))
+            if (InvocationName == null)
                 throw new ArgumentNullException("You must specify an invocation name");
 
-            if (InvocationName != InvocationName.Trim().ToLower())
-                throw new ArgumentException(
-                    "Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.");
+            if (InvocationName.GetText(locale) != InvocationName.GetText(locale).Trim().ToLower())
+            {
+                var errMsg = "Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.";
+                if (InvocationName.NumLanguages > 1) errMsg = $"({locale.LanguageCode}) {errMsg}";
+                throw new ArgumentException(errMsg);
+            }
 
             if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
 
@@ -78,7 +81,7 @@ namespace AlexaNetCore
                 }
             }
 
-            return new SkillInteractionModel(InvocationName, 
+            return new SkillInteractionModel(InvocationName.GetText(locale), 
                 Intents.Where(i => i.IncludeInInteractionModel)
                     .OrderBy(i => i.IntentName).ToList(), 
                 SlotTypes, locale);
@@ -88,14 +91,19 @@ namespace AlexaNetCore
         /// String used to invoke this skill.  This is only needed when auto-generating the interaction model.
         /// Invocation name must start with a letter and can only contain lower case letters, spaces, apostrophes, and periods.
         /// </summary>
-        public string InvocationName { get; private set; }
+        public AlexaMultiLanguageText InvocationName { get; private set; }
 
-        public AlexaSkillBase SetInvocationName(string name)
+        public AlexaSkillBase SetInvocationName(AlexaMultiLanguageText name)
         {
             InvocationName = name;
             return this;
         }
 
+        public AlexaSkillBase SetInvocationName(string name)
+        {
+            InvocationName = new AlexaMultiLanguageText(name);
+            return this;
+        }
         
         protected AlexaSkillBase()
         {
