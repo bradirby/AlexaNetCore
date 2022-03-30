@@ -4,17 +4,26 @@
       "invocationName": "my basic skill",
       "intents": [
         {
-          "name": "AMAZON.CancelIntent"
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+          ]
         },
         {
-          "name": "AMAZON.StopIntent"
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": [
+          ]
         },
         {
           "name": "BasicIntent",
           "slots": [
             {
               "name": "inputValue",
-              "type": "AMAZON.Number"
+              "type": "AMAZON.NUMBER"
             },
             {
               "name": "sourceType",

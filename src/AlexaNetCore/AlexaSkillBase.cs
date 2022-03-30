@@ -54,18 +54,31 @@ namespace AlexaNetCore
 
             if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
 
+            if (!Intents.Any(i => i.IntentName == "AMAZON.HelpIntent"))
+                throw new ArgumentException("AMAZON.HelpIntent is required for custom skill");
+
             foreach (var intent in Intents)
             {
-                foreach (var slotOption in intent.GetSlotOptions.Where(o => !o.SlotType.StartsWith("AMAZON")))
+                foreach (var slotOption in intent.GetSlotOptions)
                 {
-                    var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
-                    if (customSlotType == null)
-                        throw new ArgumentException(
-                            $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  (Names are case sensitive)");
+                    if (slotOption.SlotType.StartsWith("AMAZON.", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        if (slotOption.SlotType != slotOption.SlotType.ToUpper())
+                            throw new ArgumentException("Built in Amazon slot type names must be all uppercase (i.e. AMAZON.NUMBER)");
+                    }
+                    else
+                    {
+                        var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
+                        if (customSlotType == null)
+                            throw new ArgumentException(
+                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  (Names are case sensitive)");
+                    }
                 }
             }
 
-            return new SkillInteractionModel(InvocationName, Intents, SlotTypes);
+            return new SkillInteractionModel(InvocationName, 
+                Intents.Where(i => i.IncludeInInteractionModel).OrderBy(i => i.IntentName).ToList(), 
+                SlotTypes);
         }
 
         /// <summary>

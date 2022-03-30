@@ -13,7 +13,7 @@ namespace AlexaNetCore.InteractionModel
             IntentName = name;
 
 
-            Samples = !invocations.Any() ? null : invocations.ToArray();
+            Samples = invocations.ToArray();
 
             if (slotOptions == null) Slots = null;
             else if (!slotOptions.Any()) Slots = null;

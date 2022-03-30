@@ -47,6 +47,7 @@ namespace AlexaSampleSkill
             SetInvocationName("my basic skill");
             RegisterIntentHandler(new DefaultCancelIntentHandler());
             RegisterIntentHandler(new DefaultStopIntentHandler());
+            RegisterIntentHandler(new DefaultHelpIntentHandler());
             RegisterIntentHandler(new BasicIntent());
         }
     }

@@ -17,6 +17,11 @@ namespace AlexaNetCore
         /// </summary>
         public bool OperatesOnPreviousIntent { get; protected set; }
 
+        /// <summary>
+        /// Setting this to false will not add this intent to the interaction model
+        /// </summary>
+        public bool IncludeInInteractionModel { get; set; } = true;
+
 
         /// <summary>
         /// List of invocations to use for this intent.  Adding invocations here does not affect

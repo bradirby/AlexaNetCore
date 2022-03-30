@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Xml.Linq;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -23,7 +24,7 @@ namespace AlexaNetCore.Tests
             var intent = new ModelGenIntent();
             var obj = intent.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
-            Assert.IsFalse(str.Contains($"{dblQuote}samples{dblQuote}"));
+            Assert.IsTrue(str.Contains($"{dblQuote}samples{dblQuote}"));
         }
 
         [Test]
@@ -69,6 +70,7 @@ namespace AlexaNetCore.Tests
             var skill = new ModelGenSkill();
             skill.SetInvocationName(  "newskill");
             skill.RegisterIntentHandler(new DefaultFallbackIntentHandler());
+            skill.RegisterIntentHandler(new DefaultHelpIntentHandler());
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
             Assert.IsTrue(str.Contains($"{dblQuote}invocationName{dblQuote}:{dblQuote}newskill{dblQuote},"));
@@ -78,12 +80,11 @@ namespace AlexaNetCore.Tests
         public void Skill_OneIntentWithNoSamples_HasIntentName()
         {
             var skill = new ModelGenSkill();
-            var fallbackIntent = new DefaultFallbackIntentHandler();
             skill.SetInvocationName(  "newskill");
-            skill.RegisterIntentHandler(fallbackIntent);
+            skill.RegisterIntentHandler(new DefaultHelpIntentHandler());
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
-            var expectedVal = $"{{\"interactionModel\":{{\"languageModel\":{{\"invocationName\":\"newskill\",\"intents\":[{{\"name\":\"AMAZON.FallbackIntent\"}}]}}}}}}";
+            var expectedVal = $"{{\"interactionModel\":{{\"languageModel\":{{\"invocationName\":\"newskill\",\"intents\":[{{\"name\":\"AMAZON.HelpIntent\",\"samples\":[]}}]}}}}}}";
             Assert.IsTrue(str.Contains(expectedVal));
         }
 
@@ -91,18 +92,16 @@ namespace AlexaNetCore.Tests
         public void Skill_TwoIntentsWithNoSamples_HasIntentName()
         {
             var skill = new ModelGenSkill();
-            var fallbackIntent = new DefaultFallbackIntentHandler();
-            var cancelIntent = new DefaultCancelIntentHandler();
             skill.SetInvocationName(  "newskill");
-            skill.RegisterIntentHandler(fallbackIntent);
-            skill.RegisterIntentHandler(cancelIntent);
+            skill.RegisterIntentHandler(new DefaultCancelIntentHandler());
+            skill.RegisterIntentHandler(new DefaultHelpIntentHandler());
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
 
-            var expectedVal = $"\"intents\":[{{\"name\":\"AMAZON.FallbackIntent\"";
+            var expectedVal = $"\"intents\":[{{\"name\":\"AMAZON.CancelIntent\"";
             Assert.IsTrue(str.Contains(expectedVal));
 
-            expectedVal = $"{{\"name\":\"AMAZON.CancelIntent\"";
+            expectedVal = $"{{\"name\":\"AMAZON.HelpIntent\"";
             Assert.IsTrue(str.Contains(expectedVal));
         }
 
@@ -110,6 +109,7 @@ namespace AlexaNetCore.Tests
         public void Skill_OneIntentsWithSamples_HasIntentName()
         {
             var skill = new ModelGenSkill();
+            skill.RegisterIntentHandler(new DefaultHelpIntentHandler());
             var modelIntent = new ModelGenIntent();
             modelIntent.AddSampleInvocation("find sample invocation");
             skill.SetInvocationName(  "newskill");
@@ -117,7 +117,7 @@ namespace AlexaNetCore.Tests
             var obj= skill.GetInteractionModel();
             var str = JsonSerializer.Serialize(obj);
 
-            var expectedVal = $"{{\"interactionModel\":{{\"languageModel\":{{\"invocationName\":\"newskill\",\"intents\":[{{\"name\":\"ModelGenIntent\",\"samples\":[\"find sample invocation\"]}}]}}}}}}";
+            var expectedVal = $"{{\"interactionModel\":{{\"languageModel\":{{\"invocationName\":\"newskill\",\"intents\":[{{\"name\":\"AMAZON.HelpIntent\",\"samples\":[]}},{{\"name\":\"ModelGenIntent\",\"samples\":[\"find sample invocation\"]}}]}}}}}}";
             Assert.IsTrue(str.Contains(expectedVal));
         }
 
