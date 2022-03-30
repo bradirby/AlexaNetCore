@@ -48,6 +48,11 @@ namespace AlexaNetCore
             return this;
         }
 
+        public AlexaIntentHandlerBase AddSlotOption(string name, string slotType)
+        {
+            SlotOptions.Add(new SlotInteractionModel(name, slotType));
+            return this;
+        }
 
         public string IntentName { get; internal set; }
 
