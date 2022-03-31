@@ -20,7 +20,7 @@ namespace AlexaNetCore.InteractionModel
         public MultiValueSlotInteractionModel Enabled { get; set; }
 
 
-        public SlotDefinition(string name, string typ, bool allowMultipleValues = false)
+        public SlotDefinition(string name, string typ, bool allowMultipleValues )
         {
             Name = name;
             SlotType = typ;

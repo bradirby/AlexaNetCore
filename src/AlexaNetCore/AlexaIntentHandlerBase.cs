@@ -50,22 +50,22 @@ namespace AlexaNetCore
         {
             locale ??= AlexaLocale.English_US;
             var invocationsInProperLanguage = SampleInvocations.Select(i => i.GetText(locale)).ToList();
-            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, SlotOptions);
+            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, SlotsAvailableToIntent);
         }
 
-        private List<SlotDefinition> SlotOptions { get; set; } = new List<SlotDefinition>();
+        private List<SlotDefinition> SlotsAvailableToIntent { get; set; } = new List<SlotDefinition>();
 
-        public List<SlotDefinition> GetSlotOptions => SlotOptions.ToList();
+        public List<SlotDefinition> GetSlotOptions => SlotsAvailableToIntent.ToList();
 
         public AlexaIntentHandlerBase AddSlot(SlotDefinition slot)
         {
-            SlotOptions.Add(slot);
+            SlotsAvailableToIntent.Add(slot);
             return this;
         }
 
-        public AlexaIntentHandlerBase AddSlot(string name, string slotType, bool allowMultipleOptions)
+        public AlexaIntentHandlerBase AddSlot(string name, string slotType, bool allowMultipleOptions = false)
         {
-            SlotOptions.Add(new SlotDefinition(name, slotType,allowMultipleOptions ));
+            SlotsAvailableToIntent.Add(new SlotDefinition(name, slotType, allowMultipleOptions));
             return this;
         }
 
