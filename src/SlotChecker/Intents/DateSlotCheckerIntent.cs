@@ -29,7 +29,7 @@ namespace SlotChecker.Intents
 
         private void DefineSlots()
         {
-            AddSlot( dateSlotName,"AMAZON.DATE", true);
+            AddSlot( dateSlotName,"AMAZON.DATE");
         }
 
 
