@@ -18,7 +18,7 @@ namespace SlotChecker.Tests
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.AskForAprilFourth()).ProcessRequest();
 
-            var expectedVal = "got the single value 2 0 2 2 - 0 4 - 0 4";
+            var expectedVal = "got the single value 2 0 2 2 dash 0 4 dash 0 4";
             Assert.AreEqual(expectedVal, skill.ResponseEnv.GetOutputSpeechText());
         }
 
@@ -29,7 +29,7 @@ namespace SlotChecker.Tests
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.AskForAprilFirstAndSeptemberFifth()).ProcessRequest();
 
-            var expectedVal = "got 2 values, 2 0 2 2 - 0 4 - 0 1 and 2 0 2 2 - 0 9 - 0 5 ";
+            var expectedVal = "got 2 values, 2 0 2 2 dash 0 4 dash 0 1 and 2 0 2 2 dash 0 9 dash 0 5 ";
             Assert.AreEqual(expectedVal, skill.ResponseEnv.GetOutputSpeechText());
         }
 

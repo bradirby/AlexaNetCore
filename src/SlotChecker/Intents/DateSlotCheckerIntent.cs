@@ -53,6 +53,7 @@ namespace SlotChecker.Intents
                 {
                     ResponseEnv.SetOutputSpeechText($"got the single value {AddSpaceBetweenEachLetter(slotVal.Value)}");
                 }
+
             }
             catch (Exception exc)
             {
@@ -65,6 +66,7 @@ namespace SlotChecker.Intents
         {
             var arr = str.ToCharArray();
             var result = String.Join(" ", arr);
+            result = result.Replace(" - ", " dash ");  //this reads better coming from the Echo
             return result;
         }
 
