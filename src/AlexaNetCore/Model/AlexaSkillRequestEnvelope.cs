@@ -8,12 +8,10 @@ namespace AlexaNetCore
 {
     public class AlexaSkillRequestEnvelope
     {
-
         public AlexaSkillRequestEnvelope()
         {
 
         }
-
       
         /// <summary>
         /// The version specifier for the request with the value defined as: “1.0”
@@ -37,9 +35,9 @@ namespace AlexaNetCore
         public AlexaRequest Request { get; set; }
 
 
-        public AlexaSlotValue GetAlexaSlot(string slotKey)
+        public AlexaResponseSlotValue GetAlexaSlot(string slotKey)
         {
-            return Request.Intent.Slots[slotKey]?.SlotValue;
+            return Request.Intent.Slots[slotKey]?.ResponseSlotValue;
         }
 
         public Dictionary<int, string> GetIntentHistory()
@@ -67,7 +65,6 @@ namespace AlexaNetCore
             }
             return dict;
         }
-
 
 
         [DebuggerStepThrough]

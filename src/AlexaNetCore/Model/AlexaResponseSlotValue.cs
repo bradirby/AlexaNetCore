@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AlexaNetCore
 {
-    public class AlexaSlotValue
+    public class AlexaResponseSlotValue
     {
         [JsonPropertyName("type")]
         public virtual string ValueType{ get; set; }
@@ -22,7 +22,7 @@ namespace AlexaNetCore
         /// This property is only populated when multiple values are allowed, otherwise it is null
         /// </summary>
         [JsonPropertyName("values")]
-        public virtual List<AlexaSlotValue> Values{ get; set; }
+        public virtual List<AlexaResponseSlotValue> Values{ get; set; }
 
 
         [JsonPropertyName("resolutions")]

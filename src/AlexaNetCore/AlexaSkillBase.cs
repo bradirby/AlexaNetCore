@@ -22,11 +22,11 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
 
-        private List<CustomSlotType> SlotTypes { get; set; } = new List<CustomSlotType>();
+        private List<CustomSlotType> CustomSlotTypes { get; set; } = new List<CustomSlotType>();
 
         public AlexaSkillBase AddCustomSlotType(CustomSlotType customSlotType)
         {
-            SlotTypes.Add(customSlotType);
+            CustomSlotTypes.Add(customSlotType);
             return this;
         }
 
@@ -70,7 +70,7 @@ namespace AlexaNetCore
                     }
                     else
                     {
-                        var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
+                        var customSlotType = CustomSlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
                         if (customSlotType == null)
                             throw new ArgumentException(
                                 $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
@@ -78,10 +78,11 @@ namespace AlexaNetCore
                 }
             }
 
-            return new SkillInteractionModel(locale, InvocationName.GetText(locale), 
+            return new SkillInteractionModel(locale, 
+                InvocationName.GetText(locale), 
                 Intents.Where(i => i.IncludeInInteractionModel)
                     .OrderBy(i => i.IntentName).ToList(), 
-                SlotTypes.Select(st => st.GetInteractionModel(locale)).ToList());
+                CustomSlotTypes.Select(st => st.GetInteractionModel(locale)).ToList());
         }
 
         /// <summary>

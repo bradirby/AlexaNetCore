@@ -6,7 +6,7 @@ using Amazon.Runtime.Internal;
 
 namespace AlexaNetCore
 {
-    public class AlexaSlot
+    public class AlexaResponseSlot
     {
 
         [JsonPropertyName("name")]
@@ -25,6 +25,6 @@ namespace AlexaNetCore
         public virtual string Source{ get; set; }
 
         [JsonPropertyName("slotValue")]
-        public AlexaSlotValue SlotValue { get; set; }
+        public AlexaResponseSlotValue ResponseSlotValue { get; set; }
     }
 }

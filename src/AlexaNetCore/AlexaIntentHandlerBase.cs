@@ -50,7 +50,8 @@ namespace AlexaNetCore
         {
             locale ??= AlexaLocale.English_US;
             var invocationsInProperLanguage = SampleInvocations.Select(i => i.GetText(locale)).ToList();
-            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, SlotsAvailableToIntent);
+            var slotModels = SlotsAvailableToIntent.Select(s => s.GetInteractionModel()).ToList();
+            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, slotModels);
         }
 
         private List<SlotDefinition> SlotsAvailableToIntent { get; set; } = new List<SlotDefinition>();

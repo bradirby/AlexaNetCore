@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Compile Remove="Model\AlexaAttribute.cs" />
+    <Compile Remove="Model\AlexaLaunchRequest.cs" />
   </ItemGroup>
 
   <ItemGroup>

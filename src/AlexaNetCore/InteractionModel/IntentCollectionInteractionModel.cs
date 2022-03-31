@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace AlexaNetCore.InteractionModel
 {
-    public class IntentCollectionIteractionModel
+    public class IntentCollectionInteractionModel
     {
         [JsonPropertyName("invocationName")]
         public string InvocationName { get; set; }
@@ -21,7 +21,7 @@ namespace AlexaNetCore.InteractionModel
 
 
 
-        public IntentCollectionIteractionModel(AlexaLocale locale , string invocationName, List<AlexaIntentHandlerBase> intents
+        public IntentCollectionInteractionModel(AlexaLocale locale , string invocationName, List<AlexaIntentHandlerBase> intents
             , List<CustomSlotTypeInteractionModel> slots = null)
         {
             if (string.IsNullOrEmpty(invocationName)) throw new ArgumentNullException();
