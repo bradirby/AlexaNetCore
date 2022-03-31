@@ -5,11 +5,11 @@
     "dotnet lambda help",
     "All the command line options for the Lambda command can be specified in this file."
   ],
-  "profile": "default",
+  "profile": "AlexaSkillCreator",
   "region": "us-east-1",
   "configuration": "Release",
   "function-runtime": "dotnet6",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-handler": "AlexaSampleSkill::AlexaSampleSkill.Function::FunctionHandler"
+  "function-handler": "SlotChecker::SlotChecker.SlotCheckerSkillLambdaFunction::SlotCheckerFunction"
 }

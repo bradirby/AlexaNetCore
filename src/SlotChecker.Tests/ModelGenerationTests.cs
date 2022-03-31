@@ -17,7 +17,7 @@ namespace SlotChecker.Tests
         public void CreateInteractionModelFile()
         {
             var filePath = Environment.GetEnvironmentVariable("AlexaNetCoreSourceCodeRootFolder");
-            filePath = Path.Combine(filePath, "AlexaSampleSkill\\SupportingFiles\\InteractionModels");
+            filePath = Path.Combine(filePath, "SlotChecker\\SupportingFiles\\InteractionModels");
 
             var skill = new SlotCheckerSkill();
             
