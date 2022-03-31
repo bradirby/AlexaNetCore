@@ -29,7 +29,7 @@ namespace SlotChecker.Intents
 
         private void DefineSlots()
         {
-            AddSlot( dateSlotName,"AMAZON.DATE");
+            AddSlot( dateSlotName,"AMAZON.DATE", true);
         }
 
 
@@ -37,13 +37,35 @@ namespace SlotChecker.Intents
         {
             try
             {
-                ResponseEnv.SetOutputSpeechText("Hello World");
+                var slotVal = RequestEnv.GetAlexaSlot(dateSlotName);
+                if (slotVal.ContainsMultipleValues)
+                {
+                    var sb = new StringBuilder();
+                    var connector = "";
+                    foreach (var alexaResponseSlotValue in slotVal.Values)
+                    {
+                        sb.Append(connector + AddSpaceBetweenEachLetter(alexaResponseSlotValue.Value) );
+                        connector = " and ";
+                    }
+                    ResponseEnv.SetOutputSpeechText($"got {slotVal.Values.Count} values, {sb.ToString()} ");
+                }
+                else
+                {
+                    ResponseEnv.SetOutputSpeechText($"got the single value {AddSpaceBetweenEachLetter(slotVal.Value)}");
+                }
             }
             catch (Exception exc)
             {
                 ResponseEnv.SetOutputSpeechText("I'm sorry, something went wrong.  Can you try again?");
             }
 
+        }
+
+        private string AddSpaceBetweenEachLetter(string str)
+        {
+            var arr = str.ToCharArray();
+            var result = String.Join(" ", arr);
+            return result;
         }
 
 
