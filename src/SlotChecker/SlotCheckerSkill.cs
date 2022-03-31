@@ -65,9 +65,10 @@ namespace SlotChecker
                 .AddText( $"cumpleano grita", AlexaLocale.Spanish_US);
 
             SetInvocationName(invocationName);
-            RegisterIntentHandler(new DefaultCancelIntentHandler());
-            RegisterIntentHandler(new DefaultStopIntentHandler());
-            RegisterIntentHandler(new DefaultHelpIntentHandler());
+            RegisterIntentHandler(new DefaultCancelIntentHandler("clost checker cancel intent"));
+            RegisterIntentHandler(new DefaultStopIntentHandler("slot checker stop"));
+            RegisterIntentHandler(new DefaultHelpIntentHandler("you got slot checker help"));
+            RegisterIntentHandler(new DefaultLaunchIntentHandler("welcome to slot checker"));
 
             RegisterIntentHandler(new DateSlotCheckerIntent());
         }
