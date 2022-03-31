@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlexaSampleSkill\AlexaSampleSkill.csproj" />
+    <ProjectReference Include="..\AlexaSampleSkill\SlotChecker.csproj" />
   </ItemGroup>
 
 </Project>

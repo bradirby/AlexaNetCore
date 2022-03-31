@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "birthday echo",
+      "invocationName": "slot value checker",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -19,28 +19,18 @@
           ]
         },
         {
-          "name": "BasicIntent",
+          "name": "DateSlotCheckerIntent",
           "slots": [
             {
               "name": "inputValue",
-              "type": "AMAZON.NUMBER",
+              "type": "AMAZON.DATE",
               "multipleValues": {
                 "enabled": true
               }
-            },
-            {
-              "name": "sourceType",
-              "type": "measureType"
-            },
-            {
-              "name": "destType",
-              "type": "measureType"
             }
           ],
           "samples": [
-            "Hello, {inputValue} is your input value",
-            "Hello, {inputValue} there",
-            "Hello everyone"
+            "what date values do you get for {inputValue} as your input value"
           ]
         }
       ],
@@ -75,38 +65,6 @@
                 "value": "miles",
                 "synonyms": [
                   "mile"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "millimeters",
-                "synonyms": [
-                  "millimeter"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "centimeters",
-                "synonyms": [
-                  "centimeter"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "meters",
-                "synonyms": [
-                  "meter"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "kilometers",
-                "synonyms": [
-                  "kilometer"
                 ]
               }
             }

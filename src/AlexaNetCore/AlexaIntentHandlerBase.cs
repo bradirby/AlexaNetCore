@@ -58,16 +58,17 @@ namespace AlexaNetCore
 
         public List<SlotDefinition> GetSlotOptions => SlotsAvailableToIntent.ToList();
 
-        public AlexaIntentHandlerBase AddSlot(SlotDefinition slot)
+        public SlotDefinition AddSlot(SlotDefinition slot)
         {
             SlotsAvailableToIntent.Add(slot);
-            return this;
+            return slot;
         }
 
-        public AlexaIntentHandlerBase AddSlot(string name, string slotType, bool allowMultipleOptions = false)
+        public SlotDefinition AddSlot(string name, string slotType, bool allowMultipleOptions = false)
         {
-            SlotsAvailableToIntent.Add(new SlotDefinition(name, slotType, allowMultipleOptions));
-            return this;
+            var slot = new SlotDefinition(name, slotType, allowMultipleOptions);
+            SlotsAvailableToIntent.Add(slot);
+            return slot;
         }
 
         public string IntentName { get; internal set; }

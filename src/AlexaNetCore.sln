@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaNetCore.Tests", "Alexa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaNetCore.FlashBriefing.Tests", "AlexaNetCore.FlashBriefing.Tests\AlexaNetCore.FlashBriefing.Tests.csproj", "{617A2246-05C0-4C93-B648-2054A623055B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSampleSkill", "AlexaSampleSkill\AlexaSampleSkill.csproj", "{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlotChecker", "AlexaSampleSkill\SlotChecker.csproj", "{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample Skill", "Sample Skill", "{F536CB5A-96F0-41CC-8B0B-6319B1869DFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSampleSkill.Tests", "AlexaSampleSkill.Tests\AlexaSampleSkill.Tests.csproj", "{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlotCheckerSkill.Tests", "AlexaSampleSkill.Tests\SlotCheckerSkill.Tests.csproj", "{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

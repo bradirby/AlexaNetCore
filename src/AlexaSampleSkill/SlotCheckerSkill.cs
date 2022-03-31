@@ -1,35 +1,29 @@
 ﻿using AlexaNetCore;
-using AlexaSampleSkill.Intents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using AlexaNetCore.InteractionModel;
-using static System.Net.Mime.MediaTypeNames;
+using SlotChecker.Intents;
 
-namespace AlexaSampleSkill
+namespace SlotChecker
 {
-    public class BasicSkill: AlexaSkillBase
+    public class SlotCheckerSkill: AlexaSkillBase
     {
 
-        public BasicSkill() : base()
+        public SlotCheckerSkill() : base()
         {
             Init();
         }
 
-        public BasicSkill(ILambdaLogger log) : base(log)
+        public SlotCheckerSkill(ILambdaLogger log) : base(log)
         {
             Init();
         }
         
-        public BasicSkill(IAlexaNetCoreMessageLogger log) : base(log)
+        public SlotCheckerSkill(IAlexaNetCoreMessageLogger log) : base(log)
         {
             Init();
         }
 
-        private void Init()
+        private void DefineCustomSlots()
         {
             var measureSlotType = new CustomSlotType("measureType");
 
@@ -54,29 +48,28 @@ namespace AlexaSampleSkill
                 .AddText( $"piesies", AlexaLocale.Spanish_US));
             measureSlotType.AddValueOption(measure,synLst.ToArray());
             
-            
             measureSlotType.AddValueOption("yards");
             measureSlotType.AddValueOption("miles","mile");
-            measureSlotType.AddValueOption("millimeters","millimeter");
-            measureSlotType.AddValueOption("centimeters","centimeter");
-            measureSlotType.AddValueOption("meters","meter");
-            measureSlotType.AddValueOption("kilometers","kilometer");
 
             AddCustomSlotType(measureSlotType);
+        }
 
-
+        private void Init()
+        {
+            DefineCustomSlots();
             SetSkillVersion("0.1");
 
                  
-            measure = new AlexaMultiLanguageText( $"birthday echo", AlexaLocale.English_US)
+            var invocationName = new AlexaMultiLanguageText( $"slot value checker", AlexaLocale.English_US)
                 .AddText( $"tanti aguri", AlexaLocale.Italian)
                 .AddText( $"cumpleano grita", AlexaLocale.Spanish_US);
 
-            SetInvocationName(measure);
+            SetInvocationName(invocationName);
             RegisterIntentHandler(new DefaultCancelIntentHandler());
             RegisterIntentHandler(new DefaultStopIntentHandler());
             RegisterIntentHandler(new DefaultHelpIntentHandler());
-            RegisterIntentHandler(new BasicIntent());
+
+            RegisterIntentHandler(new DateSlotCheckerIntent());
         }
     }
 }
