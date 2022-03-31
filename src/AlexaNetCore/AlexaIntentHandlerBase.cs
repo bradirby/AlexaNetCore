@@ -57,13 +57,13 @@ namespace AlexaNetCore
 
         public List<SlotInteractionModel> GetSlotOptions => SlotOptions.ToList();
 
-        public AlexaIntentHandlerBase AddSlotOption(SlotInteractionModel slot)
+        public AlexaIntentHandlerBase AddSlot(SlotInteractionModel slot)
         {
             SlotOptions.Add(slot);
             return this;
         }
 
-        public AlexaIntentHandlerBase AddSlotOption(string name, string slotType, bool allowMultipleOptions)
+        public AlexaIntentHandlerBase AddSlot(string name, string slotType, bool allowMultipleOptions)
         {
             SlotOptions.Add(new SlotInteractionModel(name, slotType,allowMultipleOptions ));
             return this;
