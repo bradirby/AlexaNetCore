@@ -12,9 +12,9 @@ namespace AlexaSampleSkill.Intents
     {
         public BasicIntent() : base("BasicIntent")
         {
-            AddSlot( new SlotInteractionModel("inputValue","AMAZON.NUMBER"));
-            AddSlot( new SlotInteractionModel("sourceType","measureType"));
-            AddSlot( new SlotInteractionModel("destType","measureType"));
+            AddSlot( new SlotDefinition("inputValue","AMAZON.NUMBER", true));
+            AddSlot( new SlotDefinition("sourceType","measureType"));
+            AddSlot( new SlotDefinition("destType","measureType"));
 
 
             var txt = new AlexaMultiLanguageText( $"Hello, {{inputValue}} is your input value", AlexaLocale.English_US)

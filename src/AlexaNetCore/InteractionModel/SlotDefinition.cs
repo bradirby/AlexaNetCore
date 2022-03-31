@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace AlexaNetCore.InteractionModel
 {
-    public class SlotInteractionModel
+    public class SlotDefinition
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace AlexaNetCore.InteractionModel
         public MultiValueSlotInteractionModel Enabled { get; set; }
 
 
-        public SlotInteractionModel(string name, string typ, bool allowMultipleValues = false)
+        public SlotDefinition(string name, string typ, bool allowMultipleValues = false)
         {
             Name = name;
             SlotType = typ;

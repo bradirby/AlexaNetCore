@@ -8,7 +8,7 @@ namespace AlexaNetCore.InteractionModel
 {
     public class IntentInteractionModel
     {
-        public IntentInteractionModel(string name, List<string> invocations, List<SlotInteractionModel> slotOptions = null)
+        public IntentInteractionModel(string name, List<string> invocations, List<SlotDefinition> slotOptions = null)
         {
             IntentName = name;
 
@@ -24,7 +24,7 @@ namespace AlexaNetCore.InteractionModel
 
         [JsonPropertyName("slots")] 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public SlotInteractionModel[] Slots{ get; }
+        public SlotDefinition[] Slots{ get; }
 
 
         [JsonPropertyName("samples")] 
