@@ -25,6 +25,10 @@ namespace SlotChecker.Intents
                 .AddText( $"que valores de fecha obtienes para {{{dateSlotName}}} como valor de entrada", AlexaLocale.Spanish_US);
             AddSampleInvocation(txt);
 
+            txt = new AlexaMultiLanguageText( $"what about dates {{{dateSlotName}}}", AlexaLocale.English_US)
+                .AddText( $"quali valori per {{{dateSlotName}}}", AlexaLocale.Italian)
+                .AddText( $"que valores para {{{dateSlotName}}}", AlexaLocale.Spanish_US);
+            AddSampleInvocation(txt);
         }
 
         private void DefineSlots()

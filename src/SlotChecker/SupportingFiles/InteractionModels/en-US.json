@@ -30,7 +30,8 @@
             }
           ],
           "samples": [
-            "what date values do you get for {inputValue} as your input value"
+            "what date values do you get for {inputValue} as your input value",
+            "what about dates {inputValue}"
           ]
         }
       ],
