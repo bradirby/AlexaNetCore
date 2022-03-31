@@ -23,7 +23,10 @@
           "slots": [
             {
               "name": "inputValue",
-              "type": "AMAZON.NUMBER"
+              "type": "AMAZON.NUMBER",
+              "multipleValues": {
+                "enabled": true
+              }
             },
             {
               "name": "sourceType",
@@ -31,7 +34,10 @@
             },
             {
               "name": "destType",
-              "type": "measureType"
+              "type": "measureType",
+              "multipleValues": {
+                "enabled": true
+              }
             }
           ],
           "samples": [

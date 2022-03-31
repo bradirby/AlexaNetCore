@@ -9,13 +9,22 @@ namespace AlexaNetCore.InteractionModel
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
+
+
         [JsonPropertyName("type")]
         public string SlotType { get; set; }
 
-        public SlotInteractionModel(string name, string typ)
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("multipleValues")]
+        public MultiValueSlotInteractionModel Enabled { get; set; }
+
+
+        public SlotInteractionModel(string name, string typ, bool allowMultipleValues = false)
         {
             Name = name;
             SlotType = typ;
+            if (allowMultipleValues) Enabled = new MultiValueSlotInteractionModel();
         }
 
     }
