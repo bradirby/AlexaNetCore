@@ -25,5 +25,7 @@ test console into a unit test in Visual Studio, and you can test all your voice 
 would other business logic.
 
 # How do I get started?
-Check out the <a href="https://alexanetcore.com/" target="_blank">User docs</a> for sample project and how-to tutorials
+Check out the [User Docs](https://alexanetcore.com/) for sample project and how-to tutorials.  There you
+will find a [Getting Started guide](https://alexanetcore.com/getting-started/) and other tutorials on how to make the 
+most of the architecture to build Alexa skills with .Net Core.
 
