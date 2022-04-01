@@ -996,7 +996,7 @@ namespace SlotChecker.Tests
 	},
 	""request"": {
 		""type"": ""IntentRequest"",
-		""requestId"": ""amzn1.echo-api.request.859be77c-0875-4c14-998a-ec48d9e86ab8"",
+		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
 		""locale"": ""en-US"",
 		""timestamp"": ""2022-03-31T21:28:10Z"",
 		""intent"": {

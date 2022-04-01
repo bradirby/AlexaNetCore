@@ -5,7 +5,15 @@
 
         public const string Date = "AMAZON.DATE";
         public const string Duration = "AMAZON.DURATION";
+
+        /// <summary>
+        /// This is just like Number but accepts different ways of saying them, such as saying "oh" instead of zero
+        /// </summary>
         public const string FourDigitNumber = "AMAZON.FOUR_DIGIT_NUMBER";
+
+        /// <summary>
+        /// This only accepts integers. Speaking a floating point number will return a ? in the value.
+        /// </summary>
         public const string Number = "AMAZON.NUMBER";
         public const string Ordinal = "AMAZON.Ordinal";
         public const string PhoneNumber = "AMAZON.PhoneNumber";
@@ -13,7 +21,7 @@
 
         public static class Lists
         {
-            public const string Actor = "AMAZON.Actor";
+            public const string ActorName = "AMAZON.Actor";
             public const string AdministrativeArea = "AMAZON.AdministrativeArea";
             public const string AggregateRating = "AMAZON.AggregateRating";
             public const string Airline = "AMAZON.Airline";
@@ -53,7 +61,7 @@
             public const string Food = "AMAZON.Food";
             public const string FoodEstablishment = "AMAZON.FoodEstablishment";
             public const string Game = "AMAZON.Game";
-            public const string UnitedKingdonCity = "AMAZON.GB_CITY";
+            public const string UnitedKingdomCity = "AMAZON.GB_CITY";
             public const string UnitedKingdomFirstName = "AMAZON.GB_FIRST_NAME";
             public const string UnitedKingdomRegion = "AMAZON.GB_REGION";
             public const string Genre = "AMAZON.Genre";

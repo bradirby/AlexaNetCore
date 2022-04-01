@@ -50,6 +50,15 @@ namespace SlotChecker
             RegisterIntentHandler(new DateSlotCheckerIntent());
             RegisterIntentHandler(new DurationSlotCheckerIntent());
             RegisterIntentHandler(new FourDigitNumberSlotCheckerIntent());
+            RegisterIntentHandler(new NumberSlotCheckerIntent());
+            RegisterIntentHandler(new OrdinalSlotCheckerIntent());
+            RegisterIntentHandler(new PhoneNumberSlotCheckerIntent());
+            RegisterIntentHandler(new TimeSlotCheckerIntent());
+
+            RegisterIntentHandler(new ActorNameSlotCheckerIntent());
+            RegisterIntentHandler(new AnimalSlotCheckerIntent());
+            RegisterIntentHandler(new USCitySlotCheckerIntent());
+            RegisterIntentHandler(new USStateSlotCheckerIntent());
         }
     }
 }

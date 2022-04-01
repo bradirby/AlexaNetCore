@@ -359,7 +359,7 @@ namespace SlotChecker.Tests
 	},
 	""request"": {
 		""type"": ""LaunchRequest"",
-		""requestId"": ""amzn1.echo-api.request.feb4406d-01c0-4d3e-aa6f-1da6ebd717f8"",
+		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
 		""locale"": ""en-US"",
 		""timestamp"": ""2021-09-24T10:52:31Z"",
 		""shouldLinkResultBeReturned"": false
@@ -393,7 +393,7 @@ namespace SlotChecker.Tests
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.e9dd3904-6215-430d-8063-595279c04455"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""locale"": ""en-US"",
     ""timestamp"": ""2016-08-30T18:41:50Z"",
     ""intent"": {
