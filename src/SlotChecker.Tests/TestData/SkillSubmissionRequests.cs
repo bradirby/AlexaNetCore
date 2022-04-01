@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SlotChecker.Tests
 {
-    public class GenericSkillRequests 
+    public class SkillSubmissionRequests 
     {
         
 

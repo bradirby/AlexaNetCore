@@ -15,7 +15,7 @@ namespace SlotChecker.Tests
         public void LaunchRequest()
         {
             var skill = new SlotCheckerSkill();
-            skill.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
+            skill.LoadRequest(SkillSubmissionRequests.LaunchRequest()).ProcessRequest();
 
             Assert.AreEqual(false, skill.ResponseEnv.ShouldEndSession);
             Assert.AreEqual("Welcome to slot value checker", skill.ResponseEnv.GetOutputSpeechText());
@@ -27,7 +27,7 @@ namespace SlotChecker.Tests
         public void CancelRequest()
         {
             var s = new SlotCheckerSkill();
-            s.LoadRequest(GenericSkillRequests.CancelRequest()).ProcessRequest();
+            s.LoadRequest(SkillSubmissionRequests.CancelRequest()).ProcessRequest();
 
             Assert.AreEqual(true, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
@@ -41,7 +41,7 @@ namespace SlotChecker.Tests
         public void StopRequest()
         {
             var s = new SlotCheckerSkill();
-            s.LoadRequest(GenericSkillRequests.StopRequest()).ProcessRequest();
+            s.LoadRequest(SkillSubmissionRequests.StopRequest()).ProcessRequest();
 
             Assert.AreEqual(true, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
@@ -55,7 +55,7 @@ namespace SlotChecker.Tests
         public void InvalidIntentName()
         {
             var s = new SlotCheckerSkill();
-            s.LoadRequest(GenericSkillRequests.InvalidIntentName()).ProcessRequest();
+            s.LoadRequest(SkillSubmissionRequests.InvalidIntentName()).ProcessRequest();
 
             Assert.AreEqual(false, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
@@ -66,7 +66,7 @@ namespace SlotChecker.Tests
         public void InvalidIntentType()
         {
             var s = new SlotCheckerSkill();
-            s.LoadRequest(GenericSkillRequests.InvalidIntentType()).ProcessRequest();
+            s.LoadRequest(SkillSubmissionRequests.InvalidIntentType()).ProcessRequest();
 
             Assert.AreEqual(false, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
