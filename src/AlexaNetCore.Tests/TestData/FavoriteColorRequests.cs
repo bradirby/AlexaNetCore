@@ -110,7 +110,7 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
                 ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
@@ -176,7 +176,7 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
                 ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
