@@ -50,24 +50,28 @@ namespace AlexaNetCore
         {
             locale ??= AlexaLocale.English_US;
             var invocationsInProperLanguage = SampleInvocations.Select(i => i.GetText(locale)).ToList();
-            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, SlotOptions);
+            var slotModels = SlotsAvailableToIntent.Select(s => s.GetInteractionModel()).ToList();
+            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, slotModels);
         }
 
-        private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();
+        private List<SlotDefinition> SlotsAvailableToIntent { get; set; } = new List<SlotDefinition>();
 
-        public List<SlotInteractionModel> GetSlotOptions => SlotOptions.ToList();
+        public List<SlotDefinition> GetSlotOptions => SlotsAvailableToIntent.ToList();
 
-        public AlexaIntentHandlerBase AddSlotOption(SlotInteractionModel slot)
+        public SlotDefinition AddSlot(SlotDefinition slot)
         {
-            SlotOptions.Add(slot);
-            return this;
+            SlotsAvailableToIntent.Add(slot);
+            return slot;
         }
 
-        public AlexaIntentHandlerBase AddSlotOption(string name, string slotType)
+        public SlotDefinition AddSlot(string name, string slotType, bool allowMultipleOptions = false)
         {
-            SlotOptions.Add(new SlotInteractionModel(name, slotType));
-            return this;
+            var slot = new SlotDefinition(name, slotType, allowMultipleOptions);
+            SlotsAvailableToIntent.Add(slot);
+            return slot;
         }
+
+        public string IntentType { get; internal set; } = AlexaRequestType.IntentRequest;
 
         public string IntentName { get; internal set; }
 
@@ -76,20 +80,12 @@ namespace AlexaNetCore
         /// </summary>
         /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
         /// <param name="log">Logger to use </param>
-        public AlexaIntentHandlerBase(string intentName, IAlexaNetCoreMessageLogger log)
+        public AlexaIntentHandlerBase(string intentName, IAlexaNetCoreMessageLogger log = null)
         {
             MsgLogger = log;
             IntentName = intentName;
         }
 
-        /// <summary>
-        /// Constructor for a custom skill
-        /// </summary>
-        /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
-        protected AlexaIntentHandlerBase(string intentName)
-        {
-            IntentName = intentName;
-        }
 
         /// <summary>
         /// The request envelope contains all the information coming from Amazon in the reqeust

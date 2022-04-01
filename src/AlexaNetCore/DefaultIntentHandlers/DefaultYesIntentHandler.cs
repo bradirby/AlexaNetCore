@@ -10,15 +10,12 @@ namespace AlexaNetCore
         public override void Process()
         {
             ResponseEnv.SetOutputSpeechText(DefaultText);
-
             ResponseEnv.ShouldEndSession = true;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
-
         }
 
         public DefaultYesIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.YesIntent, log)
         {
-            DefaultText = new AlexaMultiLanguageText("I'm sorry, I don't know how to do that.");
+            DefaultText = new AlexaMultiLanguageText("I'm not sure what you are saying Yes to.");
         }
 
         public DefaultYesIntentHandler(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.YesIntent, log)

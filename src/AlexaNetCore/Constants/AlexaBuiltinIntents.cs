@@ -1,4 +1,9 @@
-﻿namespace AlexaNetCore
+﻿using Amazon.Runtime;
+using System.Drawing;
+using System.IO;
+using System;
+
+namespace AlexaNetCore
 {
     public static class AlexaBuiltInIntents
     {
@@ -32,11 +37,10 @@
         public const string ShuffleOffIntent = "AMAZON.ShuffleOffIntent";
         public const string ShuffleOnIntent = "AMAZON.ShuffleOnIntent";
 
+        public const string NavigateHomeIntent = "AMAZON.NavigateHomeIntent";
         public const string StartOverIntent = "AMAZON.StartOverIntent";
 
         public const string YesIntent = "AMAZON.YesIntent";
         public const string NoIntent = "AMAZON.NoIntent";
-        public const string LaunchRequest = "LaunchRequest";
-        public const string SessionEndedRequest = "SessionEndedRequest";
     }
 }

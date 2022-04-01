@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaNetCore.Tests", "Alexa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaNetCore.FlashBriefing.Tests", "AlexaNetCore.FlashBriefing.Tests\AlexaNetCore.FlashBriefing.Tests.csproj", "{617A2246-05C0-4C93-B648-2054A623055B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSampleSkill", "AlexaSampleSkill\AlexaSampleSkill.csproj", "{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlotChecker.Tests", "SlotChecker.Tests\SlotChecker.Tests.csproj", "{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample Skill", "Sample Skill", "{F536CB5A-96F0-41CC-8B0B-6319B1869DFB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProjects", "TestProjects", "{9284C5F9-08EF-491C-A0C7-E157FBD8F972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSampleSkill.Tests", "AlexaSampleSkill.Tests\AlexaSampleSkill.Tests.csproj", "{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlotChecker", "SlotChecker\SlotChecker.csproj", "{4E011185-7AEF-41B9-844B-FC5C13AC8D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,21 +33,21 @@ Global
 		{617A2246-05C0-4C93-B648-2054A623055B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{617A2246-05C0-4C93-B648-2054A623055B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{617A2246-05C0-4C93-B648-2054A623055B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76B7C622-FF14-4402-A69D-5B6D2E8D9F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E011185-7AEF-41B9-844B-FC5C13AC8D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E011185-7AEF-41B9-844B-FC5C13AC8D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E011185-7AEF-41B9-844B-FC5C13AC8D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E011185-7AEF-41B9-844B-FC5C13AC8D27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1CC49E4D-4175-41FA-81DE-F5BD6314E2EE} = {F536CB5A-96F0-41CC-8B0B-6319B1869DFB}
-		{76B7C622-FF14-4402-A69D-5B6D2E8D9F42} = {F536CB5A-96F0-41CC-8B0B-6319B1869DFB}
+		{76B7C622-FF14-4402-A69D-5B6D2E8D9F42} = {9284C5F9-08EF-491C-A0C7-E157FBD8F972}
+		{4E011185-7AEF-41B9-844B-FC5C13AC8D27} = {9284C5F9-08EF-491C-A0C7-E157FBD8F972}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70D572AD-981E-4FE1-A04E-C2BCDA319AFA}

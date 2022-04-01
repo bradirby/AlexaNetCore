@@ -10,10 +10,7 @@ namespace AlexaNetCore
         public override void Process()
         {
             ResponseEnv.SetOutputSpeechText(DefaultText);
-
             ResponseEnv.ShouldEndSession = true;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
-
         }
 
         public DefaultShuffleOffIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.ShuffleOffIntent, log)

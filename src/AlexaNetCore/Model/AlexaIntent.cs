@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace AlexaNetCore
@@ -21,7 +18,7 @@ namespace AlexaNetCore
 
         
         [JsonPropertyName("slots")]
-        public Dictionary<string, AlexaSlot> Slots { get; set; } = new Dictionary<string, AlexaSlot>();
+        public Dictionary<string, AlexaResponseSlot> Slots { get; set; } = new Dictionary<string, AlexaResponseSlot>();
         
         public T GetSlotValue<T>(string slotName,T defaultVal)
         {
@@ -38,7 +35,7 @@ namespace AlexaNetCore
             }
         }
 
-        public List<AlexaSlot> GetAllSlots()
+        public List<AlexaResponseSlot> GetAllSlots()
         {
             return Slots.Values.ToList();
         }
@@ -56,7 +53,7 @@ namespace AlexaNetCore
                 return true;
             }
 
-            var newSlot = new AlexaSlot();
+            var newSlot = new AlexaResponseSlot();
             newSlot.Name = slotName;
             newSlot.Value = newSlotVal;
             newSlot.Source = "CODE";   //this is a code introduced here - it's not an official Amazon source

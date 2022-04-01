@@ -9,10 +9,7 @@ namespace AlexaNetCore
         public override void Process()
         {
             ResponseEnv.SetOutputSpeechText(DefaultText);
-
             ResponseEnv.ShouldEndSession = true;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
-
         }
 
         public DefaultPauseIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.PauseIntent, log)

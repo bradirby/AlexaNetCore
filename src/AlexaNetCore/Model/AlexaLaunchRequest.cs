@@ -9,8 +9,6 @@ namespace SkillForNet
     [DataContract]
     public class AlexaLaunchRequest
     {
-
-
         public string RequestType { get; set; }
         public string RequestID { get; set; }
     }

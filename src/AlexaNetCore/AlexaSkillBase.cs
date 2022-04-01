@@ -22,11 +22,11 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaSkillRequestEnvelope RequestEnv { get; private set; }
 
-        private List<CustomSlotType> SlotTypes { get; set; } = new List<CustomSlotType>();
+        private List<CustomSlotType> CustomSlotTypes { get; set; } = new List<CustomSlotType>();
 
         public AlexaSkillBase AddCustomSlotType(CustomSlotType customSlotType)
         {
-            SlotTypes.Add(customSlotType);
+            CustomSlotTypes.Add(customSlotType);
             return this;
         }
 
@@ -56,32 +56,30 @@ namespace AlexaNetCore
 
             if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
 
-            if (Intents.All(i => i.IntentName != "AMAZON.HelpIntent"))
+            if (Intents.Count(i => i.IntentType == AlexaRequestType.LaunchRequest) > 1)
+                throw new ArgumentException("You may only define one Launch Request intent");
+
+            if (Intents.Count(i => i.IntentType == AlexaRequestType.SessionEndedRequest) > 1)
+                throw new ArgumentException("You may only define one Session Ended Request intent");
+
+            if (Intents.All(i => i.IntentName != AlexaBuiltInIntents.HelpIntent ))
                 throw new ArgumentException("AMAZON.HelpIntent is required for custom skill");
 
             foreach (var intent in Intents)
             {
-                foreach (var slotOption in intent.GetSlotOptions)
+                foreach (var slotOption in intent.GetSlotOptions.Where(s => !s.SlotType.StartsWith("AMAZON.")))
                 {
-                    if (slotOption.SlotType.StartsWith("AMAZON.", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        if (slotOption.SlotType != slotOption.SlotType.ToUpper())
-                            throw new ArgumentException("Built in Amazon slot type names must be all uppercase (i.e. AMAZON.NUMBER)");
-                    }
-                    else
-                    {
-                        var customSlotType = SlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
-                        if (customSlotType == null)
-                            throw new ArgumentException(
-                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
-                    }
+                    if (CustomSlotTypes.All(st => st.Name != slotOption.SlotType))
+                        throw new ArgumentException(
+                            $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
                 }
             }
 
-            return new SkillInteractionModel(locale, InvocationName.GetText(locale), 
+            return new SkillInteractionModel(locale, 
+                InvocationName.GetText(locale), 
                 Intents.Where(i => i.IncludeInInteractionModel)
                     .OrderBy(i => i.IntentName).ToList(), 
-                SlotTypes.Select(st => st.GetInteractionModel(locale)).ToList());
+                CustomSlotTypes.Select(st => st.GetInteractionModel(locale)).ToList());
         }
 
         /// <summary>
@@ -312,11 +310,21 @@ namespace AlexaNetCore
         private AlexaIntentHandlerBase GetIntentToProcess(AlexaSkillRequestEnvelope request)
         {
             if (request.Request.RequestType == AlexaRequestType.IntentRequest)
-            {
                 return GetIntentByName(request.Request.Intent.Name);
-            }
-            return GetIntentByName(request.Request.RequestType);
+            return GetIntentByType(request.Request.RequestType);
         }
+
+        private AlexaIntentHandlerBase GetIntentByType(string intentType)
+        {
+            var intent = Intents.FirstOrDefault(i => i.IntentType.Equals(intentType, StringComparison.CurrentCultureIgnoreCase) );
+            if (intent == null)
+            {
+                MsgLogger?.Warning($"Could not find intent with name '{intentType}' - returning the Help intent");
+                intent = Intents.FirstOrDefault(i => i.IntentName.Equals(AlexaBuiltInIntents.HelpIntent, StringComparison.CurrentCultureIgnoreCase) );
+            }
+            return intent;
+        }
+
 
         private AlexaIntentHandlerBase GetIntentByName(string intentName)
         {

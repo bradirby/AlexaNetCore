@@ -268,7 +268,7 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(false, req.Session.New);
-            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f", req.Session.SessionId);
             Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
             Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
@@ -302,7 +302,7 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(false, req.Session.New);
-            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f", req.Session.SessionId);
             Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
             Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
