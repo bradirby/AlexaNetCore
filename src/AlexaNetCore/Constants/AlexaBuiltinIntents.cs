@@ -38,10 +38,4 @@
         public const string NoIntent = "AMAZON.NoIntent";
     }
 
-    public static class AlexaBuiltInIntentTypes
-    {
-        public const string IntentRequest = "IntentRequest";
-        public const string LaunchRequest = "LaunchRequest";
-
-    }
 }

@@ -18,8 +18,8 @@ namespace AlexaNetCore.Tests
         public void LoopOnIntent()
         {
             var skill = new SkillWithAllBuiltInIntents();
-            skill.LoadRequest(BuildInIntentsRequests.LoopOffIntent).ProcessRequest();
-            Assert.AreEqual(AlexaBuiltInIntents.LoopOffIntent, skill.ResponseEnv.IntentHandlerName);
+            skill.LoadRequest(BuildInIntentsRequests.LoopOnIntent).ProcessRequest();
+            Assert.AreEqual(AlexaBuiltInIntents.LoopOnIntent, skill.ResponseEnv.IntentHandlerName);
         }
 
         [Test]
