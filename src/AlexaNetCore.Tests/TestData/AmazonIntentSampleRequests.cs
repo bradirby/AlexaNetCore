@@ -145,19 +145,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.1412af2e-a9aa-453f-9c21-1bda18563169"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""InvalidIntent"",
-    ""requestId"": ""EdwRequestId.abf39ef4-1c40-49df-9364-a7cf50cfd62a"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""locale"": ""en-US"",
     ""timestamp"": ""2016-08-18T20:22:53Z"",
     ""intent"": {
@@ -191,19 +191,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.1412af2e-a9aa-453f-9c21-1bda18563169"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.abf39ef4-1c40-49df-9364-a7cf50cfd62a"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""locale"": ""en-US"",
     ""timestamp"": ""2016-08-18T20:22:53Z"",
     ""intent"": {
@@ -238,19 +238,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.a8b29a9e-b5cf-4d7e-89f0-6fdf1cdd1c9c"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.19bdfa12-843e-4016-af94-055bf1d5c7c0"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""locale"": ""en-US"",
     ""timestamp"": ""2016-08-30T02:52:55Z"",
     ""intent"": {
@@ -282,19 +282,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.3f1f8f0d-3c68-41f0-b24e-25c0bd1743da"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""LaunchRequest"",
-    ""requestId"": ""EdwRequestId.d2abdc61-3726-4341-aebb-51c9aa995c42"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""locale"": ""en-US"",
     ""timestamp"": ""2016-08-30T03:01:27Z""
   },
@@ -313,19 +313,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.bbb7ba23-daef-4699-9755-454b3e601cae"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": {""IntentHistory"" : ""1:intent1;2:intent2;3:intent3;"" },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.e9dd3904-6215-430d-8063-595279c04455"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""locale"": ""en-US"",
     ""timestamp"": ""2016-08-30T18:41:50Z"",
     ""intent"": {
@@ -350,17 +350,17 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0"",
   ""session"": {
                 ""new"": true,
-    ""sessionId"": ""SessionId.6e2df435-ada2-4fbd-a3b9-05498a0c515d"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                    ""applicationId"": ""amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5""
+                    ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
     },
     ""user"": {
-                    ""userId"": ""amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI""
+                    ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     }
             },
   ""request"": {
                 ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.1afedd4c-9cbe-4f82-b654-c9d25276bda2"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""timestamp"": ""2016-08-31T01:44:30Z"",
     ""locale"": ""en-US"",
     ""intent"": {

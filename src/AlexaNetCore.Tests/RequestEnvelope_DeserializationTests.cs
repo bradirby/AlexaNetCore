@@ -24,14 +24,14 @@ namespace AlexaNetCore.Tests
             Assert.IsNotNull(sess);
             Assert.AreEqual(true, sess.New);
 
-            Assert.AreEqual("SessionId.3f1f8f0d-3c68-41f0-b24e-25c0bd1743da", sess.SessionId);
-            Assert.AreEqual("amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5", sess.Application.ApplicationId);
+            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", sess.SessionId);
+            Assert.AreEqual("amzn1.ask.skill.XXXXXXXXXXXXXXXXXX", sess.Application.ApplicationId);
             Assert.AreEqual(0, sess.Attributes.Count);
-            Assert.AreEqual("amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMDS7SN3HP3B3GZPDYUVPQUNF65UGMED2LUXUORM5C7PK7RGCTLWN53FR33NJH5OZM4AOYOSJQ64N7QCSWJDZKVFZDWRJKXBDJVWY4TWTLIULKKGJMUEMJSLMBGKMYITAKTCLGRAATLR6KRSGACRCRANGSLPNVLMZC5WJVZXIB4A3EBYBXA5RI", sess.User.UserID);
+            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", sess.User.UserID);
             Assert.AreEqual(null, sess.User.AccessToken);
 
             Assert.AreEqual(AlexaRequestType.LaunchRequest, req.Request.RequestType);
-            Assert.AreEqual("EdwRequestId.d2abdc61-3726-4341-aebb-51c9aa995c42", req.Request.RequestId);
+            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual(DateTime.Parse("2016-08-30T03:01:27Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
         }
 
@@ -176,11 +176,11 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(true, req.Session.New);
-            Assert.AreEqual("SessionId.86e83b44-ab46-49c8-98c5-73d9b2f141c5", req.Session.SessionId);
-            Assert.AreEqual("amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H", req.Session.Application.ApplicationId);
-            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
+            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
+            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
-            Assert.AreEqual("EdwRequestId.5959a778-9033-4be0-9e77-96d8aec7c75e", req.Request.RequestId);
+            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual(DateTime.Parse("2016-07-03T01:48:34Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
             Assert.AreEqual(0, req.Session.Attributes.Count);
             Assert.AreEqual("airportinfo", req.Request.Intent.Name);
@@ -208,11 +208,11 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(true, req.Session.New);
-            Assert.AreEqual("SessionId.58ac99fd-73b2-49bf-b72f-5d8449850762", req.Session.SessionId);
-            Assert.AreEqual("amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H", req.Session.Application.ApplicationId);
-            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
+            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
+            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
-            Assert.AreEqual("EdwRequestId.7991ec0f-9298-4bb4-961a-e1f29e09d3a7", req.Request.RequestId);
+            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual(DateTime.Parse("2016-07-03T01:57:46Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
             Assert.AreEqual(0, req.Session.Attributes.Count);
             Assert.AreEqual("airportinfo", req.Request.Intent.Name);
@@ -241,11 +241,11 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(true, req.Session.New);
-            Assert.AreEqual("SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f", req.Session.SessionId);
-            Assert.AreEqual("amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H", req.Session.Application.ApplicationId);
-            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
+            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
+            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
-            Assert.AreEqual("EdwRequestId.cf8eddaf-9aad-465d-9743-063381815dd7", req.Request.RequestId);
+            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual(DateTime.Parse("2016-07-03T04:07:49Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
             Assert.AreEqual(0, req.Session.Attributes.Count);
             Assert.AreEqual("WhatsMyColorIntent", req.Request.Intent.Name);
@@ -268,11 +268,11 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(false, req.Session.New);
-            Assert.AreEqual("SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f", req.Session.SessionId);
-            Assert.AreEqual("amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H", req.Session.Application.ApplicationId);
-            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
+            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
+            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
-            Assert.AreEqual("EdwRequestId.710051f7-8847-43ca-9a63-7bf5c488ecf5", req.Request.RequestId);
+            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual(DateTime.Parse("2016-07-03T04:10:26Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
             Assert.AreEqual(0, req.Session.Attributes.Count);
             Assert.AreEqual("MyColorIsIntent", req.Request.Intent.Name);
@@ -302,11 +302,11 @@ namespace AlexaNetCore.Tests
             Assert.AreEqual("1.0", req.Version);
             Assert.AreEqual("en-US", req.Request.LocaleString);
             Assert.AreEqual(false, req.Session.New);
-            Assert.AreEqual("SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f", req.Session.SessionId);
-            Assert.AreEqual("amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H", req.Session.Application.ApplicationId);
-            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
+            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
+            Assert.AreEqual("amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
+            Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Session.User.UserID);
             Assert.AreEqual(AlexaRequestType.IntentRequest, req.Request.RequestType);
-            Assert.AreEqual("EdwRequestId.dc00d105-a609-4579-9f0c-64ef540667cc", req.Request.RequestId);
+            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual(DateTime.Parse("2016-07-03T04:11:59Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
             Assert.AreEqual(1, req.Session.Attributes.Count);
             Assert.AreEqual("WhatsMyColorIntent", req.Request.Intent.Name);

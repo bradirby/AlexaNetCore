@@ -51,19 +51,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H""
+                ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.cf8eddaf-9aad-465d-9743-063381815dd7"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""timestamp"": ""2016-07-03T04:07:49Z"",
     ""intent"": {
       ""name"": ""WhatsMyColorIntent"",
@@ -110,19 +110,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H""
+                ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": false
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.710051f7-8847-43ca-9a63-7bf5c488ecf5"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""timestamp"": ""2016-07-03T04:10:26Z"",
     ""intent"": {
       ""name"": ""MyColorIsIntent"",
@@ -176,21 +176,21 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.faa3dca9-1669-48ce-a032-785c0b1c4f4f"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H""
+                ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": {
                 ""favoriteColor"": ""red""
     },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": false
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.dc00d105-a609-4579-9f0c-64ef540667cc"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""timestamp"": ""2016-07-03T04:11:59Z"",
     ""intent"": {
       ""name"": ""WhatsMyColorIntent"",

@@ -16,19 +16,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.86e83b44-ab46-49c8-98c5-73d9b2f141c5"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H""
+                ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.5959a778-9033-4be0-9e77-96d8aec7c75e"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""timestamp"": ""2016-07-03T01:48:34Z"",
     ""intent"": {
       ""name"": ""airportinfo"",
@@ -85,19 +85,19 @@ namespace AlexaNetCore.Tests
             var str = @"
 {
   ""session"": {
-    ""sessionId"": ""SessionId.58ac99fd-73b2-49bf-b72f-5d8449850762"",
+    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
     ""application"": {
-                ""applicationId"": ""amzn1.echo-sdk-ams.app.AVKBEKZBEGRTZ2RGIETZJTOSIRJODK774H""
+                ""applicationId"": ""amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXX""
     },
     ""attributes"": { },
     ""user"": {
-                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX""
+                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
     },
     ""new"": true
   },
   ""request"": {
     ""type"": ""IntentRequest"",
-    ""requestId"": ""EdwRequestId.7991ec0f-9298-4bb4-961a-e1f29e09d3a7"",
+    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
     ""timestamp"": ""2016-07-03T01:57:46Z"",
     ""intent"": {
       ""name"": ""airportinfo"",
