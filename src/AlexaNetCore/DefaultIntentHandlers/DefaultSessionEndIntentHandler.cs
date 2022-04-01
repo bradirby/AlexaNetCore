@@ -15,15 +15,18 @@ namespace AlexaNetCore
 
         public DefaultSessionEndRequest(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.SessionEndedRequest, log)
         {
+            IncludeInInteractionModel = false;
             CancelText=new AlexaMultiLanguageText("Goodbye.");
         }
 
         public DefaultSessionEndRequest(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.SessionEndedRequest, log)
         {
+            IncludeInInteractionModel = false;
             CancelText=new AlexaMultiLanguageText(txt);
         }
         public DefaultSessionEndRequest(AlexaMultiLanguageText txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.SessionEndedRequest, log)
         {
+            IncludeInInteractionModel = false;
             CancelText=txt;
         }
     }

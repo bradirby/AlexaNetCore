@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using AlexaNetCore.InteractionModel;
 
 namespace AlexaNetCore
 {
@@ -13,6 +17,57 @@ namespace AlexaNetCore
         /// </summary>
         public bool OperatesOnPreviousIntent { get; protected set; }
 
+        /// <summary>
+        /// Setting this to false will not add this intent to the interaction model
+        /// </summary>
+        public bool IncludeInInteractionModel { get; set; } = true;
+
+
+        /// <summary>
+        /// List of invocations to use for this intent.  Adding invocations here does not affect
+        /// the operation of the intent, it just helps with the generation of the IntentCollectionIteractionModel
+        /// </summary>
+        private List<AlexaMultiLanguageText> SampleInvocations { get; set; } = new List<AlexaMultiLanguageText>();
+
+        public AlexaIntentHandlerBase AddSampleInvocation(string sample)
+        {
+            SampleInvocations.Add(new AlexaMultiLanguageText(sample));
+            return this;
+        }
+
+        public AlexaIntentHandlerBase AddSampleInvocation(AlexaMultiLanguageText sample)
+        {
+            SampleInvocations.Add(sample);
+            return this;
+        }
+
+        public List<AlexaMultiLanguageText> GetSampleInvocations()
+        {
+            return SampleInvocations.ToList();
+        }
+
+        public IntentInteractionModel GetInteractionModel(AlexaLocale locale = null)
+        {
+            locale ??= AlexaLocale.English_US;
+            var invocationsInProperLanguage = SampleInvocations.Select(i => i.GetText(locale)).ToList();
+            return new IntentInteractionModel(IntentName, invocationsInProperLanguage, SlotOptions);
+        }
+
+        private List<SlotInteractionModel> SlotOptions { get; set; } = new List<SlotInteractionModel>();
+
+        public List<SlotInteractionModel> GetSlotOptions => SlotOptions.ToList();
+
+        public AlexaIntentHandlerBase AddSlotOption(SlotInteractionModel slot)
+        {
+            SlotOptions.Add(slot);
+            return this;
+        }
+
+        public AlexaIntentHandlerBase AddSlotOption(string name, string slotType)
+        {
+            SlotOptions.Add(new SlotInteractionModel(name, slotType));
+            return this;
+        }
 
         public string IntentName { get; internal set; }
 
