@@ -4,7 +4,7 @@ using System.Text.Json;
 using AlexaNetCore;
 using NUnit.Framework;
 
-namespace AlexaSampleSkill.Tests
+namespace SlotChecker.Tests
 {
     /// <summary>
     /// These tests are all explicit and are used to generate the various supporting files.  Run
@@ -17,21 +17,14 @@ namespace AlexaSampleSkill.Tests
         public void CreateInteractionModelFile()
         {
             var filePath = Environment.GetEnvironmentVariable("AlexaNetCoreSourceCodeRootFolder");
-            filePath = Path.Combine(filePath, "AlexaSampleSkill\\SupportingFiles\\InteractionModels");
+            filePath = Path.Combine(filePath, "SlotChecker\\SupportingFiles\\InteractionModels");
 
-            var skill = new BasicSkill();
+            var skill = new SlotCheckerSkill();
             
             var locale = AlexaLocale.English_US;
             File.WriteAllText(Path.Combine(filePath, $"{locale.LocaleString}.json"), 
                 JsonSerializer.Serialize(skill.GetInteractionModel(locale)));
 
-            locale = AlexaLocale.Spanish_ES;
-            File.WriteAllText(Path.Combine(filePath, $"{locale.LocaleString}.json"), 
-                JsonSerializer.Serialize(skill.GetInteractionModel(locale)));
-
-            locale = AlexaLocale.Italian;
-            File.WriteAllText(Path.Combine(filePath, $"{locale.LocaleString}.json"), 
-                JsonSerializer.Serialize(skill.GetInteractionModel(locale)));
         }
     }
 }

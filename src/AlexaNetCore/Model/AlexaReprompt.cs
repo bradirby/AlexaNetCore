@@ -1,6 +1,4 @@
-﻿using System;
-using System.Dynamic;
-using System.Runtime.Serialization;
+﻿using System.Dynamic;
 
 namespace AlexaNetCore
 {
