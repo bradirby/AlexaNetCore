@@ -44,6 +44,7 @@ namespace SlotChecker
             RegisterIntentHandler(new DefaultHelpIntentHandler("you got slot checker help"));
             RegisterIntentHandler(new DefaultLaunchIntentHandler("Welcome to slot value checker"));
             RegisterIntentHandler(new DefaultStartOverIntentHandler("From the top; Welcome to slot value checker"));
+            RegisterIntentHandler(new DefaultNavigateHomeIntentHandler());
             RegisterIntentHandler(new DefaultFallbackIntentHandler("I didn't quite get that.  Can you try again?"));
 
             RegisterIntentHandler(new DateSlotCheckerIntent());

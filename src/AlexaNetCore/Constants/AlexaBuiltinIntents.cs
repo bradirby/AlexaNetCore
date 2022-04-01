@@ -32,6 +32,7 @@
         public const string ShuffleOffIntent = "AMAZON.ShuffleOffIntent";
         public const string ShuffleOnIntent = "AMAZON.ShuffleOnIntent";
 
+        public const string NavigateHomeIntent = "AMAZON.NavigateHomeIntent";
         public const string StartOverIntent = "AMAZON.StartOverIntent";
 
         public const string YesIntent = "AMAZON.YesIntent";

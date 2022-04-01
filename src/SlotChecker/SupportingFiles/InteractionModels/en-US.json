@@ -9,7 +9,17 @@
           ]
         },
         {
+          "name": "AMAZON.FallbackIntent",
+          "samples": [
+          ]
+        },
+        {
           "name": "AMAZON.HelpIntent",
+          "samples": [
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
           "samples": [
           ]
         },
