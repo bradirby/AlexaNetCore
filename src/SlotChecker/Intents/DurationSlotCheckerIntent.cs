@@ -8,7 +8,7 @@ namespace SlotChecker.Intents
 
         public DurationSlotCheckerIntent() : base("DurationSlotCheckerIntent")
         {
-            AddSlot( "durationInputValue","AMAZON.DURATION", true);
+            AddSlot( "durationInputValue",AlexaBuiltInSlotTypes.Duration, true);
             AddSampleInvocation("give me duration values for {durationInputValue}");
         }
 
@@ -24,7 +24,7 @@ namespace SlotChecker.Intents
                     foreach (var alexaResponseSlotValue in slotVal.Values)
                     {
                         sb.Append(connectorWord + AddSpaceBetweenEachLetter(alexaResponseSlotValue.Value) );
-                        connectorWord = " and ";
+                        connectorWord = ", and ";
                     }
                     ResponseEnv.SetOutputSpeechText($"got {slotVal.Values.Count} values, {sb.ToString()} ");
                 }

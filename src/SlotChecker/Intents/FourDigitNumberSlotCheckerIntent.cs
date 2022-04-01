@@ -3,20 +3,20 @@ using AlexaNetCore;
 
 namespace SlotChecker.Intents
 {
-    internal class DateSlotCheckerIntent: AlexaIntentHandlerBase
+    internal class FourDigitNumberSlotCheckerIntent: AlexaIntentHandlerBase
     {
 
-        public DateSlotCheckerIntent() : base("DateSlotCheckerIntent")
+        public FourDigitNumberSlotCheckerIntent() : base("FourDigitNumberSlotCheckerIntent")
         {
-            AddSlot( "inputValue",AlexaBuiltInSlotTypes.Date, true);
-            AddSampleInvocation("give me date values for {inputValue}");
+            AddSlot( "durationInputValue",AlexaBuiltInSlotTypes.FourDigitNumber, true);
+            AddSampleInvocation("give me four digit number values for {durationInputValue}");
         }
 
         public override void Process()
         {
             try
             {
-                var slotVal = RequestEnv.GetAlexaSlot("inputValue");
+                var slotVal = RequestEnv.GetAlexaSlot("durationInputValue");
                 if (slotVal.ContainsMultipleValues)
                 {
                     var sb = new StringBuilder();
