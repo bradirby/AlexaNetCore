@@ -25,13 +25,6 @@ namespace SlotChecker.Tests
             File.WriteAllText(Path.Combine(filePath, $"{locale.LocaleString}.json"), 
                 JsonSerializer.Serialize(skill.GetInteractionModel(locale)));
 
-            locale = AlexaLocale.Spanish_ES;
-            File.WriteAllText(Path.Combine(filePath, $"{locale.LocaleString}.json"), 
-                JsonSerializer.Serialize(skill.GetInteractionModel(locale)));
-
-            locale = AlexaLocale.Italian;
-            File.WriteAllText(Path.Combine(filePath, $"{locale.LocaleString}.json"), 
-                JsonSerializer.Serialize(skill.GetInteractionModel(locale)));
         }
     }
 }

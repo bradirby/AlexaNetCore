@@ -12,7 +12,6 @@ namespace AlexaNetCore
         {
             ResponseEnv.SetOutputSpeechText(HelpText);
             ResponseEnv.ShouldEndSession = false;         
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
         }
 
         public DefaultFallbackIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.FallbackIntent, log)

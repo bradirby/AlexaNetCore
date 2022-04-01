@@ -12,7 +12,6 @@ namespace AlexaNetCore
         {
             ResponseEnv.SetOutputSpeechText(HelpTxt);
             ResponseEnv.ShouldEndSession = false;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
         }
 
         public AlexaMultiLanguageText HelpTxt { get; private set; }

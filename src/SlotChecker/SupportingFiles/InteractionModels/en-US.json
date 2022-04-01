@@ -14,6 +14,11 @@
           ]
         },
         {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+          ]
+        },
+        {
           "name": "AMAZON.StopIntent",
           "samples": [
           ]
@@ -30,8 +35,22 @@
             }
           ],
           "samples": [
-            "what date values do you get for {inputValue} as your input value",
-            "what about dates {inputValue}"
+            "give me date values for {inputValue}"
+          ]
+        },
+        {
+          "name": "DurationSlotCheckerIntent",
+          "slots": [
+            {
+              "name": "durationInputValue",
+              "type": "AMAZON.DURATION",
+              "multipleValues": {
+                "enabled": true
+              }
+            }
+          ],
+          "samples": [
+            "give me duration values for {durationInputValue}"
           ]
         }
       ],
@@ -41,7 +60,7 @@
           "values": [
             {
               "name": {
-                "value": "inches",
+                "value": "Inches",
                 "synonyms": [
                   "inch"
                 ]
@@ -51,14 +70,16 @@
               "name": {
                 "value": "feet",
                 "synonyms": [
-                  "foot",
-                  "footsies"
+                  "foot"
                 ]
               }
             },
             {
               "name": {
-                "value": "yards"
+                "value": "yards",
+                "synonyms": [
+                  "yard"
+                ]
               }
             },
             {

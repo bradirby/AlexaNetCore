@@ -12,26 +12,16 @@ namespace SlotChecker.Tests
     {
 
         [Test]
-        public void LaunchRequest_InvokeWithNoIntent()
+        public void LaunchRequest()
         {
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
 
             Assert.AreEqual(false, skill.ResponseEnv.ShouldEndSession);
-            Assert.AreEqual("welcome to slot checker", skill.ResponseEnv.GetOutputSpeechText());
+            Assert.AreEqual("Welcome to slot value checker", skill.ResponseEnv.GetOutputSpeechText());
         }
 
-        [Test]
-        public void StartRequest()
-        {
-            var s = new SlotCheckerSkill();
-            s.LoadRequest(GenericSkillRequests.LaunchRequest()).ProcessRequest();
-            
-            Assert.AreEqual(false, s.ResponseEnv.ShouldEndSession);
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
-            Assert.IsFalse(string.IsNullOrEmpty(s.ResponseEnv.GetOutputSpeechText()));
-        }
-
+      
         
         [Test]
         public void CancelRequest()
@@ -84,18 +74,7 @@ namespace SlotChecker.Tests
             Assert.AreEqual("you got slot checker help", s.ResponseEnv.GetOutputSpeechText());
         }
 
-        [Test]
-        public void LambdaManagementTestToolStartSession()
-        {
-            var s = new SlotCheckerSkill();
-            s.LoadRequest(GenericSkillRequests.StartSession()).ProcessRequest();
-
-            Assert.AreEqual(false, s.ResponseEnv.ShouldEndSession);
-            Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
-            Assert.IsFalse(string.IsNullOrEmpty(s.ResponseEnv.GetOutputSpeechText()));
-            Assert.AreEqual("welcome to slot checker", s.ResponseEnv.GetOutputSpeechText());
-        }
-       
+      
 
     }
 }

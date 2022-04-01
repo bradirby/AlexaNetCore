@@ -4,14 +4,10 @@ namespace AlexaNetCore
 {
     public class DefaultStartOverIntentHandler: AlexaIntentHandlerBase
     {
-     
-
         public override void Process()
         {
             ResponseEnv.SetOutputSpeechText(CustomStartOverText);
             ResponseEnv.ShouldEndSession = true;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
-
         }
 
         public AlexaMultiLanguageText CustomStartOverText { get; set; }

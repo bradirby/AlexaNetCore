@@ -8,24 +8,27 @@ namespace AlexaNetCore
         {
             ResponseEnv.SetOutputSpeechText(CancelText);
             ResponseEnv.ShouldEndSession = true;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
         }
 
         public AlexaMultiLanguageText CancelText { get; private set; } 
 
-        public DefaultSessionEndRequest(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.SessionEndedRequest, log)
+        public DefaultSessionEndRequest(IAlexaNetCoreMessageLogger log = null) : base(AlexaRequestType.SessionEndedRequest, log)
         {
-            IncludeInInteractionModel = false;
-            CancelText=new AlexaMultiLanguageText("Goodbye.");
+            Init(new AlexaMultiLanguageText("Goodbye."));
         }
 
-        public DefaultSessionEndRequest(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.SessionEndedRequest, log)
+        public DefaultSessionEndRequest(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaRequestType.SessionEndedRequest, log)
         {
-            IncludeInInteractionModel = false;
-            CancelText=new AlexaMultiLanguageText(txt);
+            Init(new AlexaMultiLanguageText(txt));
         }
-        public DefaultSessionEndRequest(AlexaMultiLanguageText txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.SessionEndedRequest, log)
+        public DefaultSessionEndRequest(AlexaMultiLanguageText txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaRequestType.SessionEndedRequest, log)
         {
+            Init(txt);
+        }
+
+        private void Init(AlexaMultiLanguageText txt)
+        {
+            IntentType = AlexaRequestType.SessionEndedRequest;
             IncludeInInteractionModel = false;
             CancelText=txt;
         }

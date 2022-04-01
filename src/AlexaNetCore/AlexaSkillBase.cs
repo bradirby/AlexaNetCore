@@ -56,7 +56,13 @@ namespace AlexaNetCore
 
             if (!Intents.Any()) throw new ArgumentNullException("No intents are defined");
 
-            if (Intents.All(i => i.IntentName != "AMAZON.HelpIntent"))
+            if (Intents.Count(i => i.IntentType == AlexaRequestType.LaunchRequest) > 1)
+                throw new ArgumentException("You may only define one Launch Request intent");
+
+            if (Intents.Count(i => i.IntentType == AlexaRequestType.SessionEndedRequest) > 1)
+                throw new ArgumentException("You may only define one Session Ended Request intent");
+
+            if (Intents.All(i => i.IntentName != AlexaBuiltInIntents.HelpIntent ))
                 throw new ArgumentException("AMAZON.HelpIntent is required for custom skill");
 
             foreach (var intent in Intents)
@@ -313,11 +319,21 @@ namespace AlexaNetCore
         private AlexaIntentHandlerBase GetIntentToProcess(AlexaSkillRequestEnvelope request)
         {
             if (request.Request.RequestType == AlexaRequestType.IntentRequest)
-            {
                 return GetIntentByName(request.Request.Intent.Name);
-            }
-            return GetIntentByName(request.Request.RequestType);
+            return GetIntentByType(request.Request.RequestType);
         }
+
+        private AlexaIntentHandlerBase GetIntentByType(string intentType)
+        {
+            var intent = Intents.FirstOrDefault(i => i.IntentType.Equals(intentType, StringComparison.CurrentCultureIgnoreCase) );
+            if (intent == null)
+            {
+                MsgLogger?.Warning($"Could not find intent with name '{intentType}' - returning the Help intent");
+                intent = Intents.FirstOrDefault(i => i.IntentName.Equals(AlexaBuiltInIntents.HelpIntent, StringComparison.CurrentCultureIgnoreCase) );
+            }
+            return intent;
+        }
+
 
         private AlexaIntentHandlerBase GetIntentByName(string intentName)
         {

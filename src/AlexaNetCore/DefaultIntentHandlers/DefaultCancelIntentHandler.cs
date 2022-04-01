@@ -9,7 +9,6 @@ namespace AlexaNetCore
         {
             ResponseEnv.SetOutputSpeechText(CancelText);
             ResponseEnv.ShouldEndSession = true;
-            ResponseEnv.IntentHandlerName = this.GetType().Name;
         }
 
         public AlexaMultiLanguageText CancelText { get; private set; } 

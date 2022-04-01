@@ -71,6 +71,8 @@ namespace AlexaNetCore
             return slot;
         }
 
+        public string IntentType { get; internal set; } = AlexaRequestType.IntentRequest;
+
         public string IntentName { get; internal set; }
 
         /// <summary>
@@ -78,20 +80,12 @@ namespace AlexaNetCore
         /// </summary>
         /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
         /// <param name="log">Logger to use </param>
-        public AlexaIntentHandlerBase(string intentName, IAlexaNetCoreMessageLogger log)
+        public AlexaIntentHandlerBase(string intentName, IAlexaNetCoreMessageLogger log = null)
         {
             MsgLogger = log;
             IntentName = intentName;
         }
 
-        /// <summary>
-        /// Constructor for a custom skill
-        /// </summary>
-        /// <param name="intentName">This intent name must match the intent name in the Alexa Skill creation screen</param>
-        protected AlexaIntentHandlerBase(string intentName)
-        {
-            IntentName = intentName;
-        }
 
         /// <summary>
         /// The request envelope contains all the information coming from Amazon in the reqeust

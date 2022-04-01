@@ -4,17 +4,12 @@ using NUnit.Framework;
 
 namespace SlotChecker.Tests
 {
-    /// <summary>
-    /// These tests attempt to cover the skills submission tests that are listed here:
-    /// https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-voice-interface-and-user-experience-testing?ref_=pe_679090_102923190
-    /// </summary>
     public class DateCheckerIntentTests 
     {
 
         [Test]
         public void Spring()
         {
-            //what date value do you get for this week
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.Spring()).ProcessRequest();
 
@@ -25,7 +20,6 @@ namespace SlotChecker.Tests
         [Test]
         public void NineteenNineties()
         {
-            //what date value do you get for this week
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.NineteenNineties()).ProcessRequest();
 
@@ -36,7 +30,6 @@ namespace SlotChecker.Tests
         [Test]
         public void ThisYear()
         {
-            //what date value do you get for this week
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.ThisYear()).ProcessRequest();
 
@@ -47,7 +40,6 @@ namespace SlotChecker.Tests
         [Test]
         public void January()
         {
-            //what date value do you get for this week
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.January()).ProcessRequest();
 
@@ -58,7 +50,6 @@ namespace SlotChecker.Tests
         [Test]
         public void NextWeekend()
         {
-            //what date value do you get for this week
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.NextWeekEnd()).ProcessRequest();
 
@@ -69,7 +60,6 @@ namespace SlotChecker.Tests
         [Test]
         public void ThisWeek()
         {
-            //what date value do you get for this week
             var skill = new SlotCheckerSkill();
             skill.LoadRequest(DateSlotCheckerQueries.AskForThisWeek()).ProcessRequest();
 

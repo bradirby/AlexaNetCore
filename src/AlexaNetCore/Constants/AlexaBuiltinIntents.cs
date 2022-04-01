@@ -36,7 +36,7 @@
 
         public const string YesIntent = "AMAZON.YesIntent";
         public const string NoIntent = "AMAZON.NoIntent";
-        public const string LaunchRequest = "LaunchRequest";
-        public const string SessionEndedRequest = "SessionEndedRequest";
     }
+
+   
 }

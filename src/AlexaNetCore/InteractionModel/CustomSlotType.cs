@@ -35,44 +35,53 @@ namespace AlexaNetCore.InteractionModel
             OptionValues = optionModels.ToList();
         }
 
-        public void AddValueOption(CustomSlotTypeValueOption opt)
+        public CustomSlotType AddValueOption(CustomSlotTypeValueOption opt)
         {
             OptionValues.Add(opt);
+            return this;
         }
 
-        public void AddValueOption(string name)
+        public CustomSlotType AddValueOption(string name)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name));
+            return this;
         }
 
-        public void AddValueOption(string name, string synonym)
+        public CustomSlotType AddValueOption(string name, string synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+            return this;
+
         }
 
-        public void AddValueOption(AlexaMultiLanguageText name, string synonym)
+        public CustomSlotType AddValueOption(AlexaMultiLanguageText name, string synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+            return this;
         }
 
-        public void AddValueOption(AlexaMultiLanguageText name, AlexaMultiLanguageText synonym)
+        public CustomSlotType AddValueOption(AlexaMultiLanguageText name, AlexaMultiLanguageText synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+            return this;
         }
 
-        public void AddValueOption(string name, string[] synonym)
+        public CustomSlotType AddValueOption(string name, string[] synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+            return this;
         }
 
-        public void AddValueOption(AlexaMultiLanguageText name, string[] synonym)
+        public CustomSlotType AddValueOption(AlexaMultiLanguageText name, string[] synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+            return this;
         }
 
-        public void AddValueOption(AlexaMultiLanguageText name, AlexaMultiLanguageText[] synonym)
+        public CustomSlotType AddValueOption(AlexaMultiLanguageText name, AlexaMultiLanguageText[] synonym)
         {
             OptionValues.Add(new CustomSlotTypeValueOption(name, synonym));
+            return this;
         }
 
         public CustomSlotTypeInteractionModel GetInteractionModel(AlexaLocale locale = null)

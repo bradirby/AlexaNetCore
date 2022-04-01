@@ -3,20 +3,20 @@ using AlexaNetCore;
 
 namespace SlotChecker.Intents
 {
-    internal class DateSlotCheckerIntent: AlexaIntentHandlerBase
+    internal class DurationSlotCheckerIntent: AlexaIntentHandlerBase
     {
 
-        public DateSlotCheckerIntent() : base("DateSlotCheckerIntent")
+        public DurationSlotCheckerIntent() : base("DurationSlotCheckerIntent")
         {
-            AddSlot( "inputValue","AMAZON.DATE", true);
-            AddSampleInvocation("give me date values for {inputValue}");
+            AddSlot( "durationInputValue","AMAZON.DURATION", true);
+            AddSampleInvocation("give me duration values for {durationInputValue}");
         }
 
         public override void Process()
         {
             try
             {
-                var slotVal = RequestEnv.GetAlexaSlot("inputValue");
+                var slotVal = RequestEnv.GetAlexaSlot("durationInputValue");
                 if (slotVal.ContainsMultipleValues)
                 {
                     var sb = new StringBuilder();
