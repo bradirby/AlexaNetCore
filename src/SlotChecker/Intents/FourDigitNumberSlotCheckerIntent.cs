@@ -8,15 +8,15 @@ namespace SlotChecker.Intents
 
         public FourDigitNumberSlotCheckerIntent() : base("FourDigitNumberSlotCheckerIntent")
         {
-            AddSlot( "durationInputValue",AlexaBuiltInSlotTypes.FourDigitNumber, true);
-            AddSampleInvocation("give me four digit number values for {durationInputValue}");
+            AddSlot( "fourDigitInputValue",AlexaBuiltInSlotTypes.FourDigitNumber, true);
+            AddSampleInvocation("give me four digit number values for {fourDigitInputValue}");
         }
 
         public override void Process()
         {
             try
             {
-                var slotVal = RequestEnv.GetAlexaSlot("durationInputValue");
+                var slotVal = RequestEnv.GetAlexaSlot("fourDigitInputValue");
                 if (slotVal.ContainsMultipleValues)
                 {
                     var sb = new StringBuilder();

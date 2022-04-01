@@ -62,6 +62,21 @@
           "samples": [
             "give me duration values for {durationInputValue}"
           ]
+        },
+        {
+          "name": "FourDigitNumberSlotCheckerIntent",
+          "slots": [
+            {
+              "name": "fourDigitInputValue",
+              "type": "AMAZON.FOUR_DIGIT_NUMBER",
+              "multipleValues": {
+                "enabled": true
+              }
+            }
+          ],
+          "samples": [
+            "give me four digit number values for {fourDigitInputValue}"
+          ]
         }
       ],
       "types": [

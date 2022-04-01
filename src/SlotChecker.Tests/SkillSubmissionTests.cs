@@ -32,7 +32,7 @@ namespace SlotChecker.Tests
             Assert.AreEqual(true, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
             Assert.IsFalse(string.IsNullOrEmpty(s.ResponseEnv.GetOutputSpeechText()));
-            Assert.AreEqual("slot checker cancel intent", s.ResponseEnv.GetOutputSpeechText());
+            Assert.AreEqual("OK, Canceling", s.ResponseEnv.GetOutputSpeechText());
         }
 
 
@@ -46,7 +46,7 @@ namespace SlotChecker.Tests
             Assert.AreEqual(true, s.ResponseEnv.ShouldEndSession);
             Assert.AreEqual(AlexaOutputSpeechType.PlainText, s.ResponseEnv.GetOutputSpeech().SpeechType);
             Assert.IsFalse(string.IsNullOrEmpty(s.ResponseEnv.GetOutputSpeechText()));
-            Assert.AreEqual("slot checker stop", s.ResponseEnv.GetOutputSpeechText());
+            Assert.AreEqual("OK, Stopping", s.ResponseEnv.GetOutputSpeechText());
 
         }
 

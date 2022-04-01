@@ -67,20 +67,11 @@ namespace AlexaNetCore
 
             foreach (var intent in Intents)
             {
-                foreach (var slotOption in intent.GetSlotOptions)
+                foreach (var slotOption in intent.GetSlotOptions.Where(s => !s.SlotType.StartsWith("AMAZON.")))
                 {
-                    if (slotOption.SlotType.StartsWith("AMAZON.", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        if (slotOption.SlotType != slotOption.SlotType.ToUpper())
-                            throw new ArgumentException("Built in Amazon slot type names must be all uppercase (i.e. AMAZON.NUMBER)");
-                    }
-                    else
-                    {
-                        var customSlotType = CustomSlotTypes.FirstOrDefault(st => st.Name == slotOption.SlotType);
-                        if (customSlotType == null)
-                            throw new ArgumentException(
-                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
-                    }
+                    if (CustomSlotTypes.All(st => st.Name != slotOption.SlotType))
+                        throw new ArgumentException(
+                            $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
                 }
             }
 
