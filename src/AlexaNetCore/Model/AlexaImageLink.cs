@@ -2,7 +2,7 @@
 using System.Dynamic;
 using System.Runtime.Serialization;
 
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
     [DataContract]
     public class AlexaImageLink
@@ -50,6 +50,12 @@ namespace AlexaNetCore
 
         private string _largeUrl;
 
+
+        /// <summary>
+        /// Every image shown on a screen must have two versions - a small and large.  
+        /// </summary>
+        /// <param name="smallImgUrl">The full small image URL, such as https://MyCoolApp.s3.amazonaws.com/Small.png</param>
+        /// <param name="largeImgUrl">The full large image URL, such as https://MyCoolApp.s3.amazonaws.com/Small.png</param>
         public AlexaImageLink(string smallImgUrl, string largeImgUrl)
         {
             SmallImageUrl = smallImgUrl;

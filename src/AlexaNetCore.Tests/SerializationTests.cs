@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using AlexaNetCore.RequestModel;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -15,7 +16,7 @@ namespace AlexaNetCore.Tests
         {
             
             var jsonStr = AmazonIntentSampleRequests.SessionEndedRequest().Replace("'", "\"");
-            var reqEnv = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(jsonStr);
+            var reqEnv = JsonSerializer.Deserialize<AlexaRequestEnvelope>(jsonStr);
 
             Assert.IsNotNull(reqEnv);
             Assert.IsNotNull(reqEnv.Session);

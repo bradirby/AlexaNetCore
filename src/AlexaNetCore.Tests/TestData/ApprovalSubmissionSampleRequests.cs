@@ -4,7 +4,7 @@ namespace AlexaNetCore.Tests
 {
 
 
-    public class ApprovalSubmissionSampleRequests : SampleRequestBase
+    public class ApprovalSubmissionSampleRequests 
     {
         
         public static string StartRequest()
@@ -14,7 +14,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -48,7 +48,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -92,7 +92,7 @@ namespace AlexaNetCore.Tests
 }
 
 ";
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -123,7 +123,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -229,7 +229,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -265,7 +265,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 

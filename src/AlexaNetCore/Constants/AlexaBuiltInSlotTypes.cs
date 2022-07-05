@@ -19,8 +19,6 @@
         public const string PhoneNumber = "AMAZON.PhoneNumber";
         public const string Time = "AMAZON.TIME";
 
-        public static class Lists
-        {
             public const string ActorName = "AMAZON.Actor";
             public const string AdministrativeArea = "AMAZON.AdministrativeArea";
             public const string AggregateRating = "AMAZON.AggregateRating";
@@ -117,7 +115,6 @@
             public const string WrittenCreativeWorkType = "AMAZON.WrittenCreativeWorkType";
 
 
-        }
 
 
     }

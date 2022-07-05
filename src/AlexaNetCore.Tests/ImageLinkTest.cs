@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using AlexaNetCore;
+using AlexaNetCore.Model;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests

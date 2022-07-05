@@ -9,9 +9,15 @@ namespace AlexaNetCore
         public string Authority { get; set; }
 
         [JsonPropertyName("status")]
-        public Dictionary<string, string> Status { get; private set; } = new Dictionary<string, string>();
+        public AlexaResolutionPerAuthorityStatus Status { get; set; }
 
         [JsonPropertyName("values")]
-        public List<AlexaResolutionValue> Values { get; private set; } 
+        public List<AlexaResolutionValue> Values { get; set; } 
+    }
+
+    public class AlexaResolutionPerAuthorityStatus
+    {
+        [JsonPropertyName("code")]
+        public string Code { get; set; }
     }
 }

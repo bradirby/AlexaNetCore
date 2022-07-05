@@ -6,6 +6,16 @@ namespace AlexaNetCore
     public class AlexaResolutionValue
     {
         [JsonPropertyName("value")]
-        public Dictionary<string, string> Value { get; set; } = new Dictionary<string, string>();
+        public AlexaResolutionValueProperties Value { get; set; }
+    }
+
+
+    public class AlexaResolutionValueProperties
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
     }
 }

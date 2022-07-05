@@ -1,42 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
     public class AlexaMultiLanguageText
     {
-        public AlexaLocale DefaultLocale { get; private set; }
 
-        public AlexaMultiLanguageText (string txt, AlexaLocale locale = null, AlexaLocale defaultLocale = null)
+        [DebuggerStepThrough]
+        public AlexaMultiLanguageText()
         {
-            DefaultLocale = defaultLocale ?? AlexaLocale.English_US;
-            AddText(txt, locale);
+            Phrases = new Dictionary<string, string>();
         }
 
-        public AlexaMultiLanguageText (AlexaLocale defaultLocale)
+        [DebuggerStepThrough]
+        public AlexaMultiLanguageText (string txt, AlexaLocale locale = null )
         {
-            DefaultLocale = defaultLocale ?? AlexaLocale.English_US;
+            Phrases = new Dictionary<string, string>();
+            AddText(txt, locale ?? AlexaLocale.English_US);
         }
 
-        public void SetDefaultLocale(AlexaLocale locale)
-        {
-            DefaultLocale = locale ?? throw new ArgumentNullException("Cannot have null Default Locale in MultiLanguage text");
-        }
 
-        private Dictionary<string, string> Phrases = new Dictionary<string, string>();
+        private Dictionary<string, string> Phrases;
 
         public int NumLanguages => Phrases.Count;
 
-        public bool LanguageExists(AlexaLocale locale)
-        {
-            return Phrases.ContainsKey(locale.LocaleString);
-        }
 
-        public string GetText(AlexaLocale targetLocale = null, IAlexaTranslationService translator = null )
+        public string GetText(AlexaLocale targetLocale = null)
         {
-            targetLocale ??= DefaultLocale;
-
+            targetLocale ??= AlexaLocale.English_US;
+            
             //look for the specific targetLocale
             if (Phrases.ContainsKey(targetLocale.LocaleString)) return Phrases[targetLocale.LocaleString];
 
@@ -44,17 +37,6 @@ namespace AlexaNetCore
             var entryKey = Phrases.Keys.FirstOrDefault(k => k.StartsWith(targetLocale.LanguageCode));
             if (!string.IsNullOrEmpty(entryKey)) return Phrases[entryKey];
 
-            //try the translator
-            if (translator != null)
-            {
-                //find the text for the language the translator is prepared to handle
-                var entryKeyForTranslator = Phrases.Keys.FirstOrDefault(k => k.StartsWith(translator.SourceLanguageCode));
-                if (entryKeyForTranslator != null)
-                {
-                    var srcStr = Phrases[entryKeyForTranslator];
-                    return translator.TranslateAsync(srcStr, targetLocale.LanguageCode).GetAwaiter().GetResult();
-                }
-            }
 
             //find american english
             if (Phrases.ContainsKey(AlexaLocale.English_US.LocaleString)) return Phrases[AlexaLocale.English_US.LocaleString];
@@ -70,9 +52,9 @@ namespace AlexaNetCore
         }
 
 
-        public AlexaMultiLanguageText AddText(string txt, AlexaLocale locale = null)
+        public AlexaMultiLanguageText AddText(string txt, AlexaLocale locale )
         {
-            locale ??= DefaultLocale;
+            locale ??= AlexaLocale.English_US;
             if (Phrases.ContainsKey(locale.LocaleString)) Phrases.Remove(locale.LocaleString);
             Phrases.Add(locale.LocaleString, txt);
             return this;

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
+using AlexaNetCore.Interfaces;
 
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
     /// <summary>
     /// The object containing a card to render to the Amazon Alexa App.
@@ -12,12 +12,34 @@ namespace AlexaNetCore
     public class AlexaCard
     {
 
-        private IAlexaNetCoreMessageLogger MsgLogger;
+        private IAlexaMessageLogger MsgLogger;
 
-        public AlexaCard(AlexaCardType typ, IAlexaNetCoreMessageLogger log)
+        public AlexaCard(AlexaCardType typ, string title, string text, IAlexaMessageLogger log = null)
         {
             CardType = typ;
-            MsgLogger =log;
+            MsgLogger = log;
+            SetTitleText(title);
+            SetText(text);
+        }
+
+        public AlexaCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink = null, IAlexaMessageLogger log = null)
+        {
+            MsgLogger = log;
+            CardType = urlLink == null ? AlexaCardType.Simple : AlexaCardType.Standard;
+            SetTitleText(title);
+            SetContentText(txt);
+            SetText(txt);
+            SetImageLink(urlLink);
+        }
+
+        public AlexaCard(string title, string txt, AlexaImageLink urlLink = null, IAlexaMessageLogger log = null)
+        {
+            MsgLogger = log;
+            CardType = urlLink == null ? AlexaCardType.Simple : AlexaCardType.Standard;
+            SetTitleText(title);
+            SetContentText(txt);
+            SetText(txt);
+            SetImageLink(urlLink);
         }
 
         /// <summary>
@@ -28,11 +50,8 @@ namespace AlexaNetCore
         ///       their Alexa account with a user in another system. See Linking an Alexa User with a User in Your System for details.
         ///    "" : do not show the card
         /// </summary>
-        /// <remarks>
-        /// Getter and setter must be public for the JSON parser
-        /// </remarks>
         [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
-        public AlexaCardType CardType{ get; private set; }
+        public AlexaCardType CardType { get; private set; }
 
         /// <summary>
         /// A string containing the title of the card. (not applicable for cards of type LinkAccount).
@@ -40,14 +59,16 @@ namespace AlexaNetCore
         [DataMember(Name = "title", IsRequired = true, EmitDefaultValue = true)]
         public AlexaMultiLanguageText Title { get; private set; }
 
-        public void SetTitleText(string titleText)
+        public AlexaCard SetTitleText(string titleText)
         {
-            Title= new AlexaMultiLanguageText(titleText);
+            Title = new AlexaMultiLanguageText(titleText);
+            return this;
         }
 
-        public void SetTitleText(AlexaMultiLanguageText txt)
+        public AlexaCard SetTitleText(AlexaMultiLanguageText txt)
         {
             Title = txt;
+            return this;
         }
 
         /// <summary>
@@ -55,15 +76,17 @@ namespace AlexaNetCore
         /// Note that you can include line breaks in the content for a card of type Simple. Use either “\r\n” or “\n” within the text of the card to insert line breaks.
         /// </summary>
         [DataMember(Name = "content", IsRequired = true, EmitDefaultValue = true)]
-        public AlexaMultiLanguageText Content { get; private set; }
+        public AlexaMultiLanguageText SimpleCardContent { get; private set; }
 
-        public void SetContentText(string txt)
+        public AlexaCard SetContentText(string txt)
         {
-            Content= new AlexaMultiLanguageText(txt);
+            SimpleCardContent = new AlexaMultiLanguageText(txt);
+            return this;
         }
-        public void SetContentText(AlexaMultiLanguageText txt)
+        public AlexaCard SetContentText(AlexaMultiLanguageText txt)
         {
-            Content = txt;
+            SimpleCardContent = txt;
+            return this;
         }
 
         /// <summary>
@@ -71,16 +94,18 @@ namespace AlexaNetCore
         /// Note that you can include line breaks in the text for a Standard card.Use either “\r\n” or “\n” within the text of the card to insert line breaks.
         /// </summary>
         [DataMember(Name = "text", IsRequired = true, EmitDefaultValue = true)]
-        public AlexaMultiLanguageText Text { get; private set; }
+        public AlexaMultiLanguageText StandardCardContent { get; private set; }
 
-        public void SetText(string txt)
+        public AlexaCard SetText(string txt)
         {
-            Text= new AlexaMultiLanguageText(txt);
+            StandardCardContent = new AlexaMultiLanguageText(txt);
+            return this;
         }
 
-        public void SetText(AlexaMultiLanguageText txt)
+        public AlexaCard SetText(AlexaMultiLanguageText txt)
         {
-            Text = txt;
+            StandardCardContent = txt;
+            return this;
         }
 
         /// <summary>
@@ -95,46 +120,49 @@ namespace AlexaNetCore
             return Image;
         }
 
-        public void SetImageLink(AlexaImageLink img)
+        public AlexaCard SetImageLink(AlexaImageLink img)
         {
             Image = img;
+            return this;
         }
 
-        public void Validate()
+        public IList<string> Validate()
         {
             //https://developer.amazon.com/en-US/docs/alexa/custom-skills/request-and-response-json-reference.html
             //All of the text included in a card can't exceed 8000 characters. This includes the title, content, text, and image URLs.
             //An image URL (smallImageUrl or largeImageUrl) can't exceed 2000 characters.
             var totalLen = 0;
 
+            var errLst = new List<string>();
+
             if (Image != null)
             {
                 if (Image.LargeImageUrl.Length > 2000)
-                    MsgLogger?.Error("Large image link in Card exceeds 2000 character limit");
+                    errLst.Add("Large image link in Card exceeds 2000 character limit");
                 if (Image.SmallImageUrl.Length > 2000)
-                    MsgLogger?.Error("Small image link in Card exceeds 2000 character limit");
+                    errLst.Add("Small image link in Card exceeds 2000 character limit");
 
                 if (!string.IsNullOrEmpty(Image.LargeImageUrl)) totalLen += Image.LargeImageUrl.Length;
                 if (!string.IsNullOrEmpty(Image.SmallImageUrl)) totalLen += Image.SmallImageUrl.Length;
             }
 
-            //if (!string.IsNullOrEmpty(Title.GetText())) totalLen += Title.GetText().Length;
-            //if (!string.IsNullOrEmpty(Content)) totalLen += Content.Length;
-            //if (!string.IsNullOrEmpty(Text.GetText())) totalLen += Text.GetText().Length;
-            //if (totalLen > 8000)
-            //    MsgLogger?.Error("Total card text length exceeds 8000 character limit");
+            if (!string.IsNullOrEmpty(Title.GetText())) totalLen += Title.GetText().Length;
+            if (StandardCardContent != null) totalLen += StandardCardContent.GetText().Length;
+            if (totalLen > 8000) errLst.Add("Total card text length exceeds 8000 character limit");
+
+            return errLst;
         }
 
 
-        public object GetJson(AlexaLocale targetLocale, IAlexaTranslationService translator = null)
+        public object CreateAlexaResponse(AlexaLocale targetLocale)
         {
             dynamic obj = new ExpandoObject();
             obj.type = CardType.ToString();
             if (CardType == AlexaCardType.Simple || CardType == AlexaCardType.Standard)
-                obj.title = Title?.GetText(targetLocale, translator);
+                obj.title = Title?.GetText(targetLocale);
 
-            if (CardType == AlexaCardType.Simple) obj.content = Content?.GetText(targetLocale, translator);
-            else if (CardType == AlexaCardType.Standard) obj.text = Text?.GetText(targetLocale, translator);
+            if (CardType == AlexaCardType.Simple) obj.content = SimpleCardContent?.GetText(targetLocale);
+            else if (CardType == AlexaCardType.Standard) obj.text = StandardCardContent?.GetText(targetLocale);
 
             if (Image != null)
             {

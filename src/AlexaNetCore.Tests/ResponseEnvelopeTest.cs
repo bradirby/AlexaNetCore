@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using AlexaNetCore;
+using AlexaNetCore.Model;
+using AlexaNetCore.RequestModel;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -12,15 +13,15 @@ namespace AlexaNetCore.Tests
         public void CreateAlexaResponse_FormatIsCorrect()
         {
             // Arrange
-            var reqEnv = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
-            var respEnv = new AlexaSkillResponseEnvelope(reqEnv, new ConsoleMessageLogger());
+            var reqEnv = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
+            var respEnv = new AlexaResponseEnvelope(reqEnv);
             respEnv.Version = "1.2";
-            respEnv.SetOutputSpeechText("Hello From Brad");
-            respEnv.SetRepromptSpeechText("Anything else I can do?", AlexaOutputSpeechType.PlainText);
+            respEnv.Speak("Hello From Brad");
+            respEnv.Reprompt("Anything else I can do?", AlexaOutputSpeechType.PlainText);
             respEnv.ShouldEndSession = true;
 
             // Act
-            var outputObj = respEnv.CreateAlexaResponse(null);
+            var outputObj = respEnv.CreateAlexaResponse();
             var outputStr = outputObj.ToString();
 
             // Assert
@@ -44,15 +45,15 @@ namespace AlexaNetCore.Tests
         public void CreateAlexaResponse_ServiceSimulatorTest()
         {
             // Arrange
-            var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
-            var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
+            var resp = new AlexaResponseEnvelope(req);
             resp.Version = "1.2";
-            resp.SetOutputSpeechText("Hello From Brad");
-            resp.SetRepromptSpeechText("Anything else I can do?");
+            resp.Speak("Hello From Brad");
+            resp.Reprompt("Anything else I can do?");
             resp.ShouldEndSession = true;
 
             // Act
-            var outputObj = resp.CreateAlexaResponse(null);
+            var outputObj = resp.CreateAlexaResponse();
             var outputStr = outputObj.ToString();
 
             // Assert
@@ -64,17 +65,17 @@ namespace AlexaNetCore.Tests
         public void CreateAlexaResponse_AirportInfoSFO_BadRequest()
         {
             // Arrange
-            var req = JsonSerializer.Deserialize<AlexaSkillRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
-            var resp = new AlexaSkillResponseEnvelope(req, new ConsoleMessageLogger());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AirportInfoRequests.AirportInfoSFO_GoodRequest());
+            var resp = new AlexaResponseEnvelope(req);
             resp.Version = "1.0";
-            resp.SetOutputSpeechText(
+            resp.Speak(
                 "<speak>There is currently no delay at San Francisco International. The current weather conditions are A Few Clouds, 70.0 F (21.1 C) and wind Northwest at 13.8mph.</speak>", AlexaOutputSpeechType.SSML);
 
-            resp.SetRepromptSpeechText("Anything else I can do?");
+            resp.Reprompt("Anything else I can do?");
             resp.ShouldEndSession = true;
 
             // Act
-            var outputObj = resp.CreateAlexaResponse(null);
+            var outputObj = resp.CreateAlexaResponse();
 
             // Assert
             Assert.IsNotNull(outputObj);

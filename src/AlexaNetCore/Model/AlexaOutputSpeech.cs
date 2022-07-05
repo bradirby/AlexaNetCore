@@ -1,30 +1,22 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Dynamic;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
+using AlexaNetCore.Interfaces;
 
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
     /// <summary>
     /// The object containing the speech to render to the user.
     /// </summary>
     public class AlexaOutputSpeech
     {
-        private IAlexaNetCoreMessageLogger MsgLogger;
-        public AlexaOutputSpeech(AlexaLocale locale, IAlexaNetCoreMessageLogger log)
+        private IAlexaMessageLogger MsgLogger;
+        public AlexaOutputSpeech(AlexaLocale locale, IAlexaMessageLogger log = null)
         {
             MsgLogger = log;
             SpeechType = AlexaOutputSpeechType.PlainText;
         }
 
-        public AlexaOutputSpeech SetDefaultLocale(AlexaLocale locale)
-        {
-            MultiLangText.SetDefaultLocale(locale);
-            return this;
-        }
-
-        public AlexaLocale DefaultLocale => MultiLangText.DefaultLocale;
 
         /// <summary>
         /// A string containing the type of output speech to render. Valid types are:
@@ -36,12 +28,19 @@ namespace AlexaNetCore
         /// </remarks>
         public AlexaOutputSpeechType SpeechType { get; internal set; } = AlexaOutputSpeechType.PlainText;
 
-        private AlexaMultiLanguageText MultiLangText { get; set; } = new AlexaMultiLanguageText(AlexaLocale.English_US);
+        private AlexaMultiLanguageText MultiLangText { get; set; } = new AlexaMultiLanguageText();
 
-
-        public string GetText(AlexaLocale locale = null, IAlexaTranslationService translator = null)
+        public IList<string> Validate()
         {
-            return MultiLangText.GetText(locale, translator);
+            var errLst = new List<string>();
+            if (MultiLangText == null) errLst.Add("AlexaOutputSpeech has no MultiLangText value");
+            return errLst;
+        }
+
+        public string GetText(AlexaLocale locale = null)
+        {
+            locale ??= AlexaLocale.English_US;
+            return MultiLangText.GetText(locale);
         }
 
         public void SetText(string txt, AlexaLocale locale = null)
@@ -54,15 +53,15 @@ namespace AlexaNetCore
             MultiLangText = txt;
         }
 
-        
+
         public string PlayBehavior { get; internal set; }
 
 
-        public object GetJson(AlexaLocale locale, IAlexaTranslationService translator = null)
+        public object CreateAlexaResponse(AlexaLocale locale)
         {
             try
             {
-                var txt = MultiLangText.GetText(locale, translator);
+                var txt = MultiLangText.GetText(locale);
                 if (string.IsNullOrEmpty(txt)) return null;
 
                 dynamic obj = new ExpandoObject();
@@ -78,12 +77,12 @@ namespace AlexaNetCore
             }
             catch (Exception e)
             {
-                MsgLogger?.Error(e,$"{this.GetType().Name} threw exception");
+                MsgLogger?.Error(e, $"{GetType().Name} threw exception");
                 return null;
             }
 
         }
 
-      
+
     }
 }
