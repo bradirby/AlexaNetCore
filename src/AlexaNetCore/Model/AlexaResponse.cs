@@ -1,15 +1,18 @@
-﻿using System.Dynamic;
+﻿using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using AlexaNetCore.Interfaces;
 
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
-    public class AlexaResponse
+    internal class AlexaResponse
     {
-        private IAlexaNetCoreMessageLogger MsgLogger;
+        private IAlexaMessageLogger MsgLogger;
 
-        public AlexaResponse(AlexaLocale locale, IAlexaNetCoreMessageLogger log)
+        internal AlexaResponse(AlexaLocale locale, IAlexaMessageLogger log)
         {
             MsgLogger = log;
-            OutputSpeech  = new AlexaOutputSpeech(locale, MsgLogger);
+            OutputSpeech = new AlexaOutputSpeech(locale, MsgLogger);
         }
 
 
@@ -28,43 +31,35 @@ namespace AlexaNetCore
             Card = c;
         }
 
-        public AlexaCard AddSimpleCard(string title, string txt)
+        public IList<string> Validate()
         {
-            Card = new AlexaCard(AlexaCardType.Simple, MsgLogger);
-            Card.SetTitleText(title);
-            Card.SetContentText(txt);
-            Card.SetText(txt);
+            var errLst = new List<string>();
+            if (Card != null) errLst.AddRange(Card.Validate());
+            if (Reprompt != null) errLst.AddRange(Reprompt.Validate());
+            if (OutputSpeech == null) errLst.Add("AlexaResponse.OutputSpeech is null");
+            else errLst.AddRange(OutputSpeech.Validate());
+            return errLst;
+        }
+
+        public AlexaCard AddCard(string title, string txt, AlexaImageLink urlLink = null)
+        {
+            Card = new AlexaCard(title, txt,urlLink, MsgLogger);
             return Card;
         }
 
-        public AlexaCard AddSimpleCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt)
+        public AlexaCard AddCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink = null)
         {
-            Card = new AlexaCard(AlexaCardType.Simple, MsgLogger);
-            Card.SetTitleText(title);
-            Card.SetContentText(txt);
-            Card.SetText(txt);
+            Card = new AlexaCard(title, txt,urlLink, MsgLogger);
             return Card;
         }
 
-        public AlexaCard AddStandardCard(string title, string txt, AlexaImageLink urlLink)
+        public AlexaCard AddCard(AlexaCard card)
         {
-            Card = new AlexaCard(AlexaCardType.Standard, MsgLogger);
-            Card.SetTitleText(title);
-            Card.SetContentText(txt);
-            Card.SetText(txt);
-            Card.SetImageLink(urlLink);
+            Card = card;
             return Card;
         }
-        
-        public AlexaCard AddStandardCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink)
-        {
-            Card = new AlexaCard(AlexaCardType.Standard, MsgLogger);
-            Card.SetTitleText(title);
-            Card.SetContentText(txt);
-            Card.SetText(txt);
-            Card.SetImageLink(urlLink);
-            return Card;
-        }
+
+        private IList<IAlexaDirective> Directives { get; set; } = new List<IAlexaDirective>();
 
         /// <summary>
         /// The object containing the outputSpeech to use if a re-prompt is necessary.
@@ -74,14 +69,14 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaReprompt Reprompt { get; private set; }
 
-    
-        public void SetRepromptSpeechText(string repromptTxt, AlexaOutputSpeechType typ )
+
+        internal void SetRepromptSpeechText(string repromptTxt, AlexaOutputSpeechType typ)
         {
-            if (string.IsNullOrEmpty(repromptTxt)) SetRepromptSpeechText((AlexaMultiLanguageText) null, typ);
-            else SetRepromptSpeechText(new AlexaMultiLanguageText(repromptTxt), typ);        
+            if (string.IsNullOrEmpty(repromptTxt)) SetRepromptSpeechText((AlexaMultiLanguageText)null, typ);
+            else SetRepromptSpeechText(new AlexaMultiLanguageText(repromptTxt), typ);
         }
 
-        public void SetRepromptSpeechText(AlexaMultiLanguageText repromptTxt, AlexaOutputSpeechType typ )
+        public void SetRepromptSpeechText(AlexaMultiLanguageText repromptTxt, AlexaOutputSpeechType typ)
         {
             if (repromptTxt == null)
             {
@@ -95,31 +90,36 @@ namespace AlexaNetCore
 
         /// <summary>
         /// Indicates whether the session should be ended immediately after the response is sent, with no reprompt text sent.
-        /// To reprompt the user you must set this value to True and the reprompt text
+        /// To reprompt the user you must set this value to True and set the reprompt text
         /// </summary>
         public bool? ShouldEndSession { get; set; }
 
         /// <summary>
         /// Returns true if there is a reprompt set
         /// </summary>
-        public bool IsRepromptSet => (Reprompt != null);
+        public bool IsRepromptSet => Reprompt != null;
 
-        public object GetJson(AlexaLocale locale, IAlexaTranslationService translator = null)
+        public object CreateAlexaResponse(AlexaLocale locale)
         {
-
             dynamic obj = new ExpandoObject();
-            obj.outputSpeech = OutputSpeech.GetJson(locale, translator);
+            obj.outputSpeech = OutputSpeech.CreateAlexaResponse(locale);
 
             if (Card != null)
             {
-                var cardObj = Card.GetJson(locale, translator);
+                var cardObj = Card.CreateAlexaResponse(locale);
                 if (cardObj != null) obj.card = cardObj;
             }
 
             if (Reprompt != null && ShouldEndSession.HasValue && !ShouldEndSession.Value)
             {
-                var repromptObj = Reprompt.GetJson(locale, translator);
+                var repromptObj = Reprompt.CreateAlexaResponse(locale);
                 if (repromptObj != null) obj.reprompt = repromptObj;
+            }
+
+            if (Directives != null && Directives.Any())
+            {
+                var dirLst = Directives.Select(directive => directive.CreateAlexaResponse(locale)).ToList();
+                obj.directives = dirLst.ToArray();
             }
 
             if (ShouldEndSession.HasValue)
@@ -144,15 +144,25 @@ namespace AlexaNetCore
         }
 
 
-        public string GetOutputSpeachText(AlexaLocale locale, IAlexaTranslationService translator)
+        public string GetOutputSpeachText(AlexaLocale locale)
         {
-            return OutputSpeech.GetText(locale, translator);
+            return OutputSpeech.GetText(locale);
         }
 
-        public void SetDefaultResponseLocale(AlexaLocale locale)
+
+        public void AddDirective(IAlexaDirective dir)
         {
-            OutputSpeech.SetDefaultLocale(locale);
-            Reprompt.SetDefaultLocale(locale);
+            if (dir == null) return;
+            Directives ??= new List<IAlexaDirective>();
+            if (Directives.Any(d => d.DirectiveType == dir.DirectiveType)) return;
+            Directives.Add(dir);
         }
+
+        public void RemoveDirective(IAlexaDirective dir)
+        {
+            var dirToRemove = Directives?.FirstOrDefault(d => d.DirectiveType == dir.DirectiveType);
+            if (dirToRemove != null) Directives.Remove(dir);
+        }
+
     }
 }

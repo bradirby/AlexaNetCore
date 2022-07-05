@@ -11,7 +11,7 @@ namespace AlexaNetCore
     {
         public object GetAttributeValue(string sessionKey, object defaultValue = null)
         {
-            if (Attributes.ContainsKey(sessionKey)) return Attributes[sessionKey];
+            if (Attributes.ContainsKey(sessionKey)) return Attributes[sessionKey] ?? defaultValue;
             return  defaultValue;
         }
 

@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace AlexaNetCore.Tests
 {
     [DebuggerStepThrough]
-    public  class AmazonIntentSampleRequests: SampleRequestBase
+    public  class AmazonIntentSampleRequests
     {
         
         public static string LambdaTestScreen_AlexaIntent_Answer()
@@ -83,7 +83,7 @@ namespace AlexaNetCore.Tests
 }
 ";
 
-            return CleanRequest(str);
+            return str;
         }
 
         public static string LambdaTestScreen_AlexaStartSession()
@@ -137,7 +137,7 @@ namespace AlexaNetCore.Tests
     ""locale"": ""en-US""
   }
 }";
-            return CleanRequest(str);
+            return str;
         }
 
         public static string InvalidIntentType()
@@ -182,7 +182,7 @@ namespace AlexaNetCore.Tests
 }
 "
 ;
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -229,7 +229,7 @@ namespace AlexaNetCore.Tests
 "
 ;
 
-            return CleanRequest(str);
+            return str;
         }
         
 
@@ -273,7 +273,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -303,7 +303,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
         }
 
     
@@ -338,7 +338,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -373,7 +373,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -404,7 +404,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
         }
 
 

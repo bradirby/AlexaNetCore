@@ -4,6 +4,7 @@ namespace AlexaNetCore.InteractionModel
 {
     public class CustomSlotTypeValueOptionDescriptorInteractionModel
     {
+
         [JsonPropertyName("value")]
         public string Value { get; set; }
 
@@ -13,7 +14,7 @@ namespace AlexaNetCore.InteractionModel
         public string[] SynonymStrings { get; set; }
 
 
-        internal CustomSlotTypeValueOptionDescriptorInteractionModel(string value, string[] synStrings)
+        internal CustomSlotTypeValueOptionDescriptorInteractionModel( string value, string[] synStrings)
         {
             Value = value;
             if (synStrings.Length == 0) SynonymStrings = null;

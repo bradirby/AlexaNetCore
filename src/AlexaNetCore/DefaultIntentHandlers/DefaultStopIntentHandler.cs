@@ -1,4 +1,6 @@
-﻿using AlexaNetCore;
+﻿using System.Threading.Tasks;
+using AlexaNetCore.Interfaces;
+using AlexaNetCore.Model;
 
 namespace AlexaNetCore
 {
@@ -7,23 +9,25 @@ namespace AlexaNetCore
      
         public AlexaMultiLanguageText DefaultText { get; set; }
 
-        public override void Process()
+        public override Task ProcessAsync()
         {
-            ResponseEnv.SetOutputSpeechText(DefaultText);
-            ResponseEnv.ShouldEndSession = true;
+            Speak(DefaultText.GetText(RequestEnv.GetLocale()));
+            EndSessionAfterResponse();
+            return Task.CompletedTask;
+
         }
 
-        public DefaultStopIntentHandler(IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.StopIntent, log)
+        public DefaultStopIntentHandler(IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.StopIntent, log)
         {
-            DefaultText = new AlexaMultiLanguageText("Goodbye.");
+            DefaultText = new AlexaMultiLanguageText("Ok, stopping");
         }
 
-        public DefaultStopIntentHandler(string txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.StopIntent, log)
+        public DefaultStopIntentHandler(string txt, IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.StopIntent, log)
         {
             DefaultText = new AlexaMultiLanguageText(txt);
         }
 
-        public DefaultStopIntentHandler(AlexaMultiLanguageText txt, IAlexaNetCoreMessageLogger log = null) : base(AlexaBuiltInIntents.StopIntent, log)
+        public DefaultStopIntentHandler(AlexaMultiLanguageText txt, IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.StopIntent, log)
         {
             DefaultText = txt;
         }

@@ -3,7 +3,7 @@
 namespace AlexaNetCore.Tests
 {
     [DebuggerStepThrough]
-    public  class AirportInfoRequests : SampleRequestBase
+    public  class AirportInfoRequests 
     {
         
         

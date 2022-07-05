@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using AlexaNetCore;
+﻿using System.Threading.Tasks;
+using AlexaNetCore.Model;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -9,40 +7,37 @@ namespace AlexaNetCore.Tests
     public class SessionTest
     {
 
-        private class IntentThatSaveSession : AlexaIntentHandlerBase
+        internal class IntentThatSaveSession : AlexaIntentHandlerBase
         {
-            public static string IntentName => "IntentThatSavesSession";
-            public IntentThatSaveSession() : base(IntentName, null) { }
+            internal  IntentThatSaveSession() : base(AlexaIntentType.Launch,"IntentThatSavesSession", null) { }
 
-            public override void Process()
+            public override Task ProcessAsync()
             {
-                ResponseEnv.SetSessionValue("MySessionKey", "FindThisValue");
-                ResponseEnv.SetOutputSpeechText("Hello World");
+                SetResponseSessionValue("MySessionKey", "FindThisValue");
+                return Task.CompletedTask;
+
             }
         }
 
-        private class SessionTestAlexaSkill : AlexaSkillBase
+        internal class SessionTestAlexaSkill : AlexaSkillBase
         {
             public SessionTestAlexaSkill()
             {
                 RegisterIntentHandler(new IntentThatSaveSession());
-                RegisterDefaultIntentHandlers();
             }
         }
 
 
         [Test]
-        public void SessionValueSet_ShowsUpInJson()
+        public async Task SessionValueSet_ShowsUpInJson()
         {
             var skill = new SessionTestAlexaSkill();
-            skill.LoadRequest(AirportInfoRequests.AirportInfoSFO_GoodRequest());
-            skill.RequestEnv.Request.Intent.Name = IntentThatSaveSession.IntentName;
-            skill.ProcessRequest();
+            skill.LoadRequest(BuiltInIntentRequests.LaunchRequest);
+            await skill.ProcessRequestAsync();
 
-            Assert.AreEqual("Hello World", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
-            Assert.AreEqual("FindThisValue", skill.ResponseEnv.GetSessionValue("MySessionKey",""));
-            var json = skill.CreateAlexaResponse();
+            Assert.AreEqual("FindThisValue", skill.GetResponseSessionValue("MySessionKey", ""));
 
+            var json = skill.GetResponse();
             Assert.IsTrue(json.Contains("FindThisValue"));
         }
 

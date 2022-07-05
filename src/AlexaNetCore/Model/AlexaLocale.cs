@@ -1,5 +1,5 @@
 ﻿
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
     public class AlexaLocale
     {

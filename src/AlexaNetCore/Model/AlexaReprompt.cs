@@ -1,21 +1,31 @@
-﻿using System.Dynamic;
+﻿using System.Collections.Generic;
+using System.Dynamic;
+using AlexaNetCore.Interfaces;
 
-namespace AlexaNetCore
+namespace AlexaNetCore.Model
 {
 
 
     public class AlexaReprompt
     {
-        private IAlexaNetCoreMessageLogger MsgLogger;
+        private IAlexaMessageLogger MsgLogger;
 
-        public AlexaReprompt(string repromptText, IAlexaNetCoreMessageLogger log)
+        public IList<string> Validate()
+        {
+            var errLst = new List<string>();
+            if (OutputSpeech == null) errLst.Add("Nothing in OutputSpeech in Reprompt");
+            return errLst;
+        }
+
+
+        public AlexaReprompt(string repromptText, IAlexaMessageLogger log = null)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(AlexaLocale.English_US, MsgLogger);
             OutputSpeech.SetText(repromptText);
         }
 
-        public AlexaReprompt(AlexaMultiLanguageText repromptText, IAlexaNetCoreMessageLogger log)
+        public AlexaReprompt(AlexaMultiLanguageText repromptText, IAlexaMessageLogger log = null)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(AlexaLocale.English_US, MsgLogger);
@@ -30,19 +40,10 @@ namespace AlexaNetCore
         /// </summary>
         public AlexaOutputSpeech OutputSpeech { get; set; }
 
-        public void SetDefaultLocale(AlexaLocale locale)
-        {
-            OutputSpeech.SetDefaultLocale(locale);
-        }
 
-        public object GetJson()
+        public object CreateAlexaResponse(AlexaLocale locale)
         {
-            return GetJson(OutputSpeech.DefaultLocale);
-        }
-
-        public object GetJson(AlexaLocale locale, IAlexaTranslationService translator = null)
-        {
-            var outputSpeechObj = OutputSpeech.GetJson(locale, translator);
+            var outputSpeechObj = OutputSpeech.CreateAlexaResponse(locale);
             if (outputSpeechObj == null) return null;
 
             dynamic obj = new ExpandoObject();

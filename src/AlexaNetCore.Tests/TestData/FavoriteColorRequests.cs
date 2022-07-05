@@ -3,7 +3,7 @@
 namespace AlexaNetCore.Tests
 {
     [DebuggerStepThrough]
-    public class FavoriteColorRequests : SampleRequestBase
+    public class FavoriteColorRequests 
     {
 
         
@@ -39,7 +39,7 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 ";
-            return CleanRequest(str);
+            return str;
         }
 
         
@@ -74,7 +74,7 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 ";
-            return CleanRequest(str);
+            return str;
         }
 
         public static string FavoriteColor_Hello_Response()
@@ -102,7 +102,7 @@ namespace AlexaNetCore.Tests
   ""sessionAttributes"": { }
         }
 ";
-            return CleanRequest(str);
+            return str;
         }
 
         public static string FavoriteColor_ColorIsRed_Request()
@@ -138,7 +138,7 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 ";
-            return CleanRequest(str);
+            return str;
         }
 
         public static string FavoriteColor_ColorIsRed_Response()
@@ -169,7 +169,7 @@ namespace AlexaNetCore.Tests
   }
         }
 ";
-            return CleanRequest(str);
+            return str;
         }
         public static string FavoriteColor_WhatIsColor_Request()
         {
@@ -201,7 +201,7 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 ";
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -230,7 +230,7 @@ namespace AlexaNetCore.Tests
   ""sessionAttributes"": { }
         }
 ";
-            return CleanRequest(str);
+            return str;
         }
 
 

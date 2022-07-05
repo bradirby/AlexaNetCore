@@ -1,12 +1,9 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using AlexaNetCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Amazon.Runtime.Internal.Util;
-using Moq;
+using AlexaNetCore.Model;
+using AlexaNetCore.Util.Interceptors;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AlexaNetCore.Tests
 {
@@ -17,19 +14,25 @@ namespace AlexaNetCore.Tests
         }
 
         [Test]
-        public void NullTranslator_GivesOriginalText()
+        public async Task NullTranslator_GivesOriginalText()
         {
             var origOutputText = "orig output text";
             var origRepromptText = "orig reprompt text";
 
-            var skill = new TestAlexaSkill();
-            skill.RegisterDefaultIntentHandlers(origOutputText);
-            var returnJson = skill
-                .LoadRequest(GenericSkillRequests.LaunchRequest().SetLocale(AlexaLocale.Spanish_ES))
-                .ProcessRequest()
-                .SetRepromptSpeach(origRepromptText)
-                .SetShouldEndSession(false)
-                .CreateAlexaResponse();
+            var skill = await new TestAlexaSkill()
+                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Spanish_ES), 1000)
+                .RegisterIntentHandler(new DefaultCancelIntentHandler(origOutputText))
+                .RegisterIntentHandler(new DefaultHelpIntentHandler(origOutputText))
+                .RegisterIntentHandler(new DefaultFallbackIntentHandler(origOutputText))
+                .RegisterIntentHandler(new DefaultLaunchIntentHandler(origOutputText))
+                .RegisterIntentHandler(new DefaultSessionEndRequest(origOutputText))
+                .RegisterIntentHandler(new DefaultStartOverIntentHandler(origOutputText))
+                .RegisterIntentHandler(new DefaultStopIntentHandler(origOutputText))
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .ProcessRequestAsync();
+            skill.Reprompt(origRepromptText);
+
+            var returnJson = skill.GetResponse();
 
             Assert.IsTrue(returnJson.Contains(origOutputText));
             Assert.IsTrue(returnJson.Contains(origRepromptText));
@@ -37,102 +40,94 @@ namespace AlexaNetCore.Tests
 
 
 
-        [Test]
-        public void RegisterTranslator_TranslatesOutputText()
-        {
-            var trSvc = new Mock<IAlexaTranslationService>();
-            var origText = "orig output text";
-            var translatedText = "translated output text";
-            trSvc.Setup(x => x.TranslateAsync(origText, AlexaLocale.Italian.LanguageCode))
-                .Returns(Task.FromResult(translatedText));
-            trSvc.Setup(t => t.SourceLanguageCode).Returns(AlexaLocale.English_US.LanguageCode);
 
+        [Test]
+        public async Task LaunchRequest_ChangeRequestLocaleToSpain_TranslatesToTargetLanguage_Spanish()
+        {
+            var srchStrings = new AlexaMultiLanguageText($"find this", AlexaLocale.English_US)
+                .AddText($"trova questo", AlexaLocale.Italian)
+                .AddText($"encuentra esto", AlexaLocale.Spanish_ES);
+
+            var reprompts =new AlexaMultiLanguageText($"hello world", AlexaLocale.English_US)
+                .AddText($"ciao mondo", AlexaLocale.Italian)
+                .AddText($"hola mundo", AlexaLocale.Spanish_ES);
+
+            var skill = await new TestAlexaSkill()
+                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Spanish_ES), 1000)
+                .RegisterIntentHandler(new DefaultLaunchIntentHandler(srchStrings))
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .ProcessRequestAsync();
+            skill.Reprompt(reprompts);
+
+
+            Assert.AreEqual("encuentra esto", skill.GetSpokenText());
+            Assert.AreEqual("hola mundo", skill.GetRepromptText());
+        }
+
+        [Test]
+        public async Task LaunchRequest_ChangeRequestLocaleToSpain_TranslatesToTargetLanguage_English()
+        {
+            var srchStrings = new AlexaMultiLanguageText($"find this", AlexaLocale.English_US)
+                .AddText($"trova questo", AlexaLocale.Italian)
+                .AddText($"encuentra esto", AlexaLocale.Spanish_ES);
+
+            var reprompts =new AlexaMultiLanguageText($"hello world", AlexaLocale.English_US)
+                .AddText($"ciao mondo", AlexaLocale.Italian)
+                .AddText($"hola mundo", AlexaLocale.Spanish_ES);
+
+            var skill = await new TestAlexaSkill()
+                .RegisterIntentHandler(new DefaultLaunchIntentHandler(srchStrings))
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .ProcessRequestAsync();
+            skill.Reprompt(reprompts);
+
+
+            Assert.AreEqual("find this", skill.GetSpokenText());
+            Assert.AreEqual("hello world", skill.GetRepromptText());
+        }
+
+        [Test]
+        public async Task LaunchRequest_ChangeRequestLocaleToSpain_TranslatesToTargetLanguage_Italian()
+        {
+            var srchStrings = new AlexaMultiLanguageText($"find this", AlexaLocale.English_US)
+                .AddText($"trova questo", AlexaLocale.Italian)
+                .AddText($"encuentra esto", AlexaLocale.Spanish_ES);
+
+            var reprompts =new AlexaMultiLanguageText($"hello world", AlexaLocale.English_US)
+                .AddText($"ciao mondo", AlexaLocale.Italian)
+                .AddText($"hola mundo", AlexaLocale.Spanish_ES);
+
+            var skill = await new TestAlexaSkill()
+                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Italian), 1000)
+                .RegisterIntentHandler(new DefaultLaunchIntentHandler(srchStrings))
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .ProcessRequestAsync();
+            skill.Reprompt(reprompts);
+
+
+            Assert.AreEqual("trova questo", skill.GetSpokenText());
+            Assert.AreEqual("ciao mondo", skill.GetRepromptText());
+        }
+
+
+
+        [Test]
+        public async Task LaunchRequest_ChangeRequestLocaleToItaly_TranslatesToTargetLanguage()
+        {
             var skill = new TestAlexaSkill()
-                .RegisterDefaultIntentHandlers(origText)
-                .LoadRequest(GenericSkillRequests.LaunchRequest().SetLocale(AlexaLocale.Italian))
-                .ProcessRequest();
-            var returnJson = skill.CreateAlexaResponse(trSvc.Object);
-
-            Assert.IsFalse(returnJson.Contains(origText));
-            Assert.IsTrue(returnJson.Contains(translatedText));
-        }
-
-        [Test]
-        public void RegisterTranslator_TranslatesRepromptText()
-        {
-            var trSvc = new Mock<IAlexaTranslationService>();
-            var origText = "orig output text";
-            var translatedText = "translated output text";
-            trSvc.Setup(x => x.TranslateAsync(origText, AlexaLocale.Italian.LanguageCode))
-                .Returns(Task.FromResult(translatedText));
-            trSvc.Setup(t => t.SourceLanguageCode).Returns(AlexaLocale.English_US.LanguageCode);
-
-            var skill = new TestAlexaSkill()
-                .RegisterDefaultIntentHandlers(origText)
-                .LoadRequest(GenericSkillRequests.LaunchRequest().SetLocale(AlexaLocale.Italian));
-            skill.ProcessRequest();
-            if (!skill.IsRepromptSet) skill.SetRepromptSpeach(origText);
-            var returnJson = skill.CreateAlexaResponse(trSvc.Object);
-
-            Assert.IsFalse(returnJson.Contains(origText));
-            Assert.IsTrue(returnJson.Contains(translatedText));
-        }
-
-
-        [Test]
-        public void LaunchRequest_ChangeRequestLocaleToSpain_TranslatesToTargetLanguage()
-        {
-            var skill = new TestAlexaSkill();
-            skill.RegisterDefaultIntentHandlers(
-                new AlexaMultiLanguageText($"find this", AlexaLocale.English_US)
-                    .AddText($"trova questo", AlexaLocale.Italian)
-                    .AddText($"encuentra esto", AlexaLocale.Spanish_ES));
-
-
-            var returnJson = skill
-                .LoadRequest(GenericSkillRequests.LaunchRequest().SetLocale(AlexaLocale.Spanish_ES))
-                .ProcessRequest()
-                .SetRepromptSpeach(new AlexaMultiLanguageText($"hello world", AlexaLocale.English_US)
-                    .AddText( $"ciao mondo", AlexaLocale.Italian)
-                    .AddText( $"hola mundo", AlexaLocale.Spanish_ES))
-                .SetShouldEndSession(false)
-                .CreateAlexaResponse();
-
-            Assert.IsFalse(returnJson.Contains("hello world"));
-            Assert.IsFalse(returnJson.Contains("ciao mondo"));
-            Assert.IsTrue(returnJson.Contains("hola mundo"));
-
-            Assert.IsFalse(returnJson.Contains("find this"));
-            Assert.IsFalse(returnJson.Contains("trova questo"));
-            Assert.IsTrue(returnJson.Contains("encuentra esto"));
-
-            Assert.IsFalse(returnJson.Contains("hello world"));
-            Assert.IsFalse(returnJson.Contains("ciao mondo"));
-            Assert.IsTrue(returnJson.Contains("hola mundo"));
-
-            Assert.IsTrue(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("DEBUG")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("WARNING")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("ERROR")));
-
-        }
-
-        [Test]
-        public void LaunchRequest_ChangeRequestLocaleToItaly_TranslatesToTargetLanguage()
-        {
-            var skill = new TestAlexaSkill();
-            skill.RegisterDefaultIntentHandlers(
+                .RegisterDefaultTestHandlers(
                 new AlexaMultiLanguageText( $"find this", AlexaLocale.English_US)
                     .AddText( $"trova questo", AlexaLocale.Italian)
                     .AddText( $"encuentra esto", AlexaLocale.Spanish_ES));
 
 
-            var returnJson = skill
-                .LoadRequest(GenericSkillRequests.LaunchRequest().SetLocale(AlexaLocale.Italian))
-                .ProcessRequest()
-                .SetRepromptSpeach(new AlexaMultiLanguageText( $"hello world", AlexaLocale.English_US)
+            await skill.RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Italian), 100)
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .ProcessRequestAsync();
+            skill.Reprompt(new AlexaMultiLanguageText( $"hello world", AlexaLocale.English_US)
                     .AddText( $"ciao mondo", AlexaLocale.Italian)
-                    .AddText( $"hola mundo", AlexaLocale.Spanish_ES))
-                .CreateAlexaResponse();
+                    .AddText( $"hola mundo", AlexaLocale.Spanish_ES));
+            var returnJson = skill.GetResponse();
 
             Assert.IsFalse(returnJson.Contains("hello world"));
             Assert.IsTrue(returnJson.Contains("ciao mondo"));
@@ -142,29 +137,22 @@ namespace AlexaNetCore.Tests
             Assert.IsTrue(returnJson.Contains("trova questo"));
             Assert.IsFalse(returnJson.Contains("encuentra esto"));
 
-            Assert.IsTrue(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("DEBUG")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("WARNING")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("ERROR")));
-
         }
         
         [Test]
-        public void LaunchRequest_DoNotSpecifyLocale_TranslatesToTargetLanguage()
+        public async Task LaunchRequest_DoNotSpecifyLocale_TranslatesToTargetLanguage()
         {
-            var skill = new TestAlexaSkill();
-            skill.RegisterDefaultIntentHandlers(
+            var skill = await new TestAlexaSkill()
+                .RegisterDefaultTestHandlers(
                 new AlexaMultiLanguageText( $"find this", AlexaLocale.English_US)
                     .AddText( $"trova questo", AlexaLocale.Italian)
-                    .AddText( $"encuentra esto", AlexaLocale.Spanish_ES));
+                    .AddText( $"encuentra esto", AlexaLocale.Spanish_ES))                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .ProcessRequestAsync();
 
-
-            var returnJson = skill
-                .LoadRequest(GenericSkillRequests.LaunchRequest())
-                .ProcessRequest()
-                .SetRepromptSpeach(new AlexaMultiLanguageText( $"hello world", AlexaLocale.English_US)
+            skill.Reprompt(new AlexaMultiLanguageText( $"hello world", AlexaLocale.English_US)
                     .AddText( $"ciao mondo", AlexaLocale.Italian)
-                    .AddText( $"hola mundo", AlexaLocale.Spanish_ES))
-                .CreateAlexaResponse();
+                    .AddText( $"hola mundo", AlexaLocale.Spanish_ES));
+            var returnJson = skill.GetResponse();
 
             Assert.IsTrue(returnJson.Contains("hello world"));
             Assert.IsFalse(returnJson.Contains("ciao mondo"));
@@ -174,39 +162,61 @@ namespace AlexaNetCore.Tests
             Assert.IsFalse(returnJson.Contains("trova questo"));
             Assert.IsFalse(returnJson.Contains("encuentra esto"));
 
-            Assert.IsTrue(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("DEBUG")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("WARNING")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("ERROR")));
-
         }
 
 
         [Test]
-        public void LaunchRequest_SpecifyLocale_TranslatesCorrectly()
+        public async Task LaunchRequest_SpecifyLocaleEnglish_TranslatesCorrectly()
         {
-            var skill = new TestAlexaSkill();
-            skill.RegisterDefaultIntentHandlers(
+            var languages = 
                 new AlexaMultiLanguageText( "find this", AlexaLocale.English_US)
                     .AddText( "trova questo", AlexaLocale.Italian)
-                    .AddText( "encuentra esto", AlexaLocale.Spanish_ES));
+                    .AddText( "encuentra esto", AlexaLocale.Spanish_ES);
 
 
-            var returnJson = skill
+            var skill = await new TestAlexaSkill().RegisterDefaultTestHandlers(languages)
                 .LoadRequest(GenericSkillRequests.LaunchRequest())
-                .ProcessRequest()
-                .CreateAlexaResponse();
+                .ProcessRequestAsync();
 
-            Assert.AreEqual("find this", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.English_US));
-            Assert.AreEqual("trova questo", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.Italian));
-            Assert.AreEqual("encuentra esto", skill.ResponseEnv.GetOutputSpeechText(AlexaLocale.Spanish_ES));
-
-            Assert.IsTrue(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("DEBUG")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("WARNING")));
-            Assert.IsFalse(skill.MsgLogger.GetLogHistory().Any(s => s.StartsWith("ERROR")));
-
+            Assert.AreEqual("find this", skill.GetSpokenText(AlexaLocale.English_US));
         }
 
 
+        [Test]
+        public async Task LaunchRequest_SpecifyLocaleItalian_TranslatesCorrectly()
+        {
+            var languages = 
+                new AlexaMultiLanguageText( "find this", AlexaLocale.English_US)
+                    .AddText( "trova questo", AlexaLocale.Italian)
+                    .AddText( "encuentra esto", AlexaLocale.Spanish_ES);
+
+
+            var skill = await new TestAlexaSkill().RegisterDefaultTestHandlers(languages)
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Italian), 1000)
+                .ProcessRequestAsync();
+
+            Assert.AreEqual("trova questo", skill.GetSpokenText());
+
+        }
+
+        [Test]
+        public async Task LaunchRequest_SpecifyLocalespanish_TranslatesCorrectly()
+        {
+            var languages = 
+                new AlexaMultiLanguageText( "find this", AlexaLocale.English_US)
+                    .AddText( "trova questo", AlexaLocale.Italian)
+                    .AddText( "encuentra esto", AlexaLocale.Spanish_ES);
+
+
+            var skill = await new TestAlexaSkill().RegisterDefaultTestHandlers(languages)
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Spanish_ES), 1000)
+                .ProcessRequestAsync();
+
+            Assert.AreEqual("encuentra esto", skill.GetSpokenText());
+
+        }
 
 
     }

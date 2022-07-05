@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AlexaNetCore;
 using NUnit.Framework;
 
@@ -8,9 +9,9 @@ namespace AlexaNetCore.FlashBriefing.Tests
     {
 
         [Test]
-        public void SingleItemSerialization()
+        public async Task SingleItemSerialization()
         {
-            var briefing = new TestBriefing().ProcessRequest();
+            var briefing = await new TestBriefing().ProcessRequestAsync();
             Assert.AreEqual(1, briefing.Items.Count);
 
             var response = briefing.CreateAlexaResponse();
@@ -21,7 +22,7 @@ namespace AlexaNetCore.FlashBriefing.Tests
 
         private class TestBriefing : AlexaFlashBriefingBase
         {
-            public override AlexaFlashBriefingBase ProcessRequest()
+            public override Task<AlexaFlashBriefingBase> ProcessRequestAsync()
             {
                 var item = new AlexaTextBriefingItem()
                     .SetTitle("This is the title")
@@ -29,7 +30,7 @@ namespace AlexaNetCore.FlashBriefing.Tests
                     .SetDisplayUrl("https://developer.amazon.com/public/community/blog");
 
                 AddFlashBriefing(item);
-                return this;
+                return Task.FromResult((AlexaFlashBriefingBase) this);
             }
         }
     }

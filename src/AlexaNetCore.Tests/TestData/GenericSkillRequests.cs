@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlexaNetCore.Tests
 {
-    public class GenericSkillRequests : SampleRequestBase
+    public class GenericSkillRequests 
     {
         
 
@@ -54,122 +54,9 @@ namespace AlexaNetCore.Tests
 
 
 ";
-            return CleanRequest(str);
+            return str;
 
         }
-
-        
-            /// <summary>
-        /// This is the request generated when I type "Open exact measure" at the Alexa Simulator console here
-        /// https://developer.amazon.com/alexa/console/ask/test/amzn1.ask.skill.8323c433-7db7-44b2-97c1-1126f5cfc5f5/development/en_IN/
-        /// </summary>
-        /// <returns></returns>
-        public static string OpenExactMeasure()
-        {
-            var str = @"
-
-
-{
-	""version"": ""1.0"",
-	""session"": {
-		""new"": true,
-		""sessionId"": ""amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX"",
-		""application"": {
-			""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
-		},
-		""attributes"": {},
-		""user"": {
-			""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
-		}
-	},
-	""context"": {
-		""Viewports"": [
-			{
-				""type"": ""APL"",
-				""id"": ""main"",
-				""shape"": ""RECTANGLE"",
-				""dpi"": 213,
-				""presentationType"": ""STANDARD"",
-				""canRotate"": false,
-				""configuration"": {
-					""current"": {
-						""mode"": ""HUB"",
-						""video"": {
-							""codecs"": [
-								""H_264_42"",
-								""H_264_41""
-							]
-						},
-						""size"": {
-							""type"": ""DISCRETE"",
-							""pixelWidth"": 1280,
-							""pixelHeight"": 800
-						}
-					}
-				}
-			}
-		],
-		""Viewport"": {
-			""experiences"": [
-				{
-					""arcMinuteWidth"": 346,
-					""arcMinuteHeight"": 216,
-					""canRotate"": false,
-					""canResize"": false
-				}
-			],
-			""mode"": ""HUB"",
-			""shape"": ""RECTANGLE"",
-			""pixelWidth"": 1280,
-			""pixelHeight"": 800,
-			""dpi"": 213,
-			""currentPixelWidth"": 1280,
-			""currentPixelHeight"": 800,
-			""touch"": [
-				""SINGLE""
-			],
-			""video"": {
-				""codecs"": [
-					""H_264_42"",
-					""H_264_41""
-				]
-			}
-		},
-		""Extensions"": {
-			""available"": {
-				""aplext:backstack:10"": {}
-			}
-		},
-		""System"": {
-			""application"": {
-				""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
-			},
-			""user"": {
-				""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
-			},
-			""device"": {
-				""deviceId"": ""amzn1.ask.device.XXXXXXXXXXXXXXXXXX"",
-				""supportedInterfaces"": {}
-			},
-			""apiEndpoint"": ""https://api.amazonalexa.com"",
-			""apiAccessToken"": ""XXXXXXXXXXXXXXXXXX""
-		}
-	},
-	""request"": {
-		""type"": ""LaunchRequest"",
-		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
-		""locale"": ""en-IN"",
-		""timestamp"": ""2021-09-22T13:26:51Z"",
-		""shouldLinkResultBeReturned"": false
-	}
-}
-
-
-"
-                ;
-            return CleanRequest(str);
-        }
-
 
         
 
@@ -198,7 +85,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -235,7 +122,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -283,7 +170,7 @@ namespace AlexaNetCore.Tests
 }
 "
                 ;
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -330,7 +217,7 @@ namespace AlexaNetCore.Tests
 "
                 ;
 
-            return CleanRequest(str);
+            return str;
         }
 
 
@@ -374,7 +261,7 @@ namespace AlexaNetCore.Tests
 }
 
 ";
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -480,7 +367,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
@@ -518,7 +405,7 @@ namespace AlexaNetCore.Tests
 
 ";
 
-            return CleanRequest(str);
+            return str;
 
         }
 
