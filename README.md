@@ -9,12 +9,15 @@ The basic Hello World creates a skill that responds to the given wake word with 
 
 The samples apps provided include
 * <a href="https://www.alexanetcore.com/getting-started/" target="_blank">Getting Started</a>
-* <a href="https://www.alexanetcore.com/default-intent-handlers/" target="_blank">Taking advantage of default intent handlers</a>
-* Easy Internationalization
+* <a href="https://www.alexanetcore.com/default-intent-handlers/" target="_blank">Speed up development time with default intent handlers</a>
+* <a href="https://www.alexanetcore.com/internationalization/" target="_blank">Easy Internationalization</a>
+* <a href="https://www.alexanetcore.com/cards/" target="_blank">Display information on a screen with Cards</a>
+* <a href="https://www.alexanetcore.com/interceptors/" target="_blank">Examine and change incoming and outgoing JSON with Interceptors</a>
+* <a href="https://www.alexanetcore.com/unit-testing/" target="_blank">Maintain quality with live unit test support</a>
+* <a href="https://www.alexanetcore.com/interaction-model-generator/" target="_blank">Easily keep your interaction model up to date with automatic model generation</a>
 * Getting user input with built in slots
 * Getting user input with custom slots
 * Getting custom user input with Dynamic Entities
-* Display information on a screen with Cards
 * Track information from one interaction to the next with Session
 * Letting Alexa AI do the work with Multiturn Dialogs
 
