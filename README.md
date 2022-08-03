@@ -15,7 +15,7 @@ The samples apps provided include
 * <a href="https://www.alexanetcore.com/interceptors/" target="_blank">Examine and change incoming and outgoing JSON with Interceptors</a>
 * <a href="https://www.alexanetcore.com/unit-testing/" target="_blank">Maintain quality with live unit test support</a>
 * <a href="https://www.alexanetcore.com/interaction-model-generator/" target="_blank">Easily keep your interaction model up to date with automatic model generation</a>
-* Getting user input with built in slots
+* <a href="https://www.alexanetcore.com/slots/" target="_blank">Getting user input with built in slots</a>
 * Getting user input with custom slots
 * Getting custom user input with Dynamic Entities
 * Track information from one interaction to the next with Session
