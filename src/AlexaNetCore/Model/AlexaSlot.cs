@@ -53,6 +53,7 @@ namespace AlexaNetCore.Model
             {
                 dynamic multivalObj = new ExpandoObject();
                 multivalObj.enabled = AllowMultipleValues;
+                obj.multipleValues = multivalObj;
             }
 
             if (IsRequired) obj.samples = Requirements.UserUtterances.ToArray();
