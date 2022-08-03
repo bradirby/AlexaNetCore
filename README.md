@@ -5,11 +5,11 @@ AlexNetCore is a .Net Core library that can be used for creating custom Alexa sk
 There are many sample apps you can download to get started, 
 <a href="https://github.com/bradirby/AlexaNetCore_SampleApps" target="_blank">just go here.</a> 
 
-The basic Hello World has only 3 lines but creates a skill that responds to the given wake word with a text string of your choosing.  
-As I add functionality, I will also add other sample projects so you can exercise you skills.
+The basic Hello World creates a skill that responds to the given wake word with a text string of your choosing.  
 
 The samples apps provided include
-* Hello World
+* <a href="https://www.alexanetcore.com/getting-started/" target="_blank">Getting Started</a>
+* <a href="https://www.alexanetcore.com/default-intent-handlers/" target="_blank">Taking advantage of default intent handlers</a>
 * Easy Internationalization
 * Getting user input with built in slots
 * Getting user input with custom slots
