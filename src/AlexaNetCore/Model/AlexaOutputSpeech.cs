@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using AlexaNetCore.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore.Model
 {
@@ -10,8 +11,8 @@ namespace AlexaNetCore.Model
     /// </summary>
     public class AlexaOutputSpeech
     {
-        private IAlexaMessageLogger MsgLogger;
-        public AlexaOutputSpeech(AlexaLocale locale, IAlexaMessageLogger log = null)
+        private ILogger MsgLogger;
+        public AlexaOutputSpeech(AlexaLocale locale, ILogger log = null)
         {
             MsgLogger = log;
             SpeechType = AlexaOutputSpeechType.PlainText;
@@ -77,7 +78,7 @@ namespace AlexaNetCore.Model
             }
             catch (Exception e)
             {
-                MsgLogger?.Error(e, $"{GetType().Name} threw exception");
+                MsgLogger?.LogError(e, $"{GetType().Name} threw exception");
                 return null;
             }
 

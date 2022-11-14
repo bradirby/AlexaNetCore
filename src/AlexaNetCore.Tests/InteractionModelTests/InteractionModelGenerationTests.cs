@@ -3,10 +3,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests.InteractionModelTests
 {
+
     internal class InteractionModelGenerationTests
     {
         private string dblQuote => "\"";
@@ -52,14 +55,14 @@ namespace AlexaNetCore.Tests.InteractionModelTests
         [Test]
         public void Skill_NoInvocationName_Throws()
         {
-            var skill = new ModelGenSkill();
+            var skill = new TestSkill(new Mock<ILoggerFactory>().Object);
             Assert.Throws<ArgumentException>(() => skill.ValidateInteractionModel(AlexaLocale.English_US).GetInteractionModel(AlexaLocale.English_US));
         }
 
         [Test]
         public void Skill_NoIntents_Throws()
         {
-            var skill = new ModelGenSkill();
+            var skill = new TestSkill(new Mock<ILoggerFactory>().Object);
             skill.SetInvocationName("unimportant string");
             Assert.Throws<ArgumentException>(() => skill.ValidateInteractionModel(AlexaLocale.English_US).GetInteractionModel(AlexaLocale.English_US));
         }
@@ -68,7 +71,7 @@ namespace AlexaNetCore.Tests.InteractionModelTests
         [Test]
         public void Skill_OneIntent_HasInvocationName()
         {
-            var skill = new ModelGenSkill()
+            var skill = new TestSkill(new Mock<ILoggerFactory>().Object)
                 .SetInvocationName("newskill")
                 .RegisterIntentHandler(new ModelGenIntent().AddSampleInvocation("hello"))
                 .RegisterIntentHandler(new DefaultFallbackIntentHandler())
@@ -86,9 +89,12 @@ namespace AlexaNetCore.Tests.InteractionModelTests
         }
 
 
-        private class ModelGenSkill : AlexaSkillBase
+        private class TestSkill : AlexaSkillBase
         {
+            public TestSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
+            {
 
+            }
         }
 
 

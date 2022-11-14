@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AlexaNetCore.Interfaces;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore
 {
@@ -23,24 +24,24 @@ namespace AlexaNetCore
 
         public override Task ProcessAsync()
         {
-            Speak(HelpText.GetText(RequestEnv.GetLocale()));
+            Speak(HelpText.GetText(GetLocale()));
             KeepSessionActiveAfterResponse();
             return Task.CompletedTask;
 
         }
 
 
-        public DefaultFallbackIntentHandler(IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom, AlexaBuiltInIntents.FallbackIntent, log)
+        public DefaultFallbackIntentHandler(ILogger log = null) : base(AlexaIntentType.Custom, AlexaBuiltInIntents.FallbackIntent, log)
         {
             HelpText = new AlexaMultiLanguageText("I'm sorry, I didn't quite get that.  Can you try again?");
         }
  
-        public DefaultFallbackIntentHandler(string helpText, IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom, AlexaBuiltInIntents.FallbackIntent, log)
+        public DefaultFallbackIntentHandler(string helpText, ILogger log = null) : base(AlexaIntentType.Custom, AlexaBuiltInIntents.FallbackIntent, log)
         {
             HelpText = new AlexaMultiLanguageText(helpText);
         }
  
-        public DefaultFallbackIntentHandler(AlexaMultiLanguageText helpText, IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom, AlexaBuiltInIntents.FallbackIntent, log)
+        public DefaultFallbackIntentHandler(AlexaMultiLanguageText helpText, ILogger log = null) : base(AlexaIntentType.Custom, AlexaBuiltInIntents.FallbackIntent, log)
         {
             HelpText =  helpText;
 }

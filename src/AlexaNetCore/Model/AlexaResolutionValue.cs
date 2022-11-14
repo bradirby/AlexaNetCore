@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace AlexaNetCore
 {
+    /// <summary>
+    /// One of the possibly multiple slot values matched by an authority
+    /// </summary>
     public class AlexaResolutionValue
     {
         [JsonPropertyName("value")]
@@ -10,6 +13,9 @@ namespace AlexaNetCore
     }
 
 
+    /// <summary>
+    /// The name and (optional) id of the slot value this authority matched to what the user said
+    /// </summary>
     public class AlexaResolutionValueProperties
     {
         [JsonPropertyName("name")]

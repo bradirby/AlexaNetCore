@@ -7,16 +7,6 @@ namespace AlexaNetCore
 {
     public class AlexaUser
     {
-        public AlexaUser()
-        {
-            
-        }
-
-        public AlexaUser(dynamic objDyn)
-        {
-            UserID = objDyn.userId;
-            AccessToken = objDyn.accesstoken;
-        }
 
         /// <summary>
         /// A string that represents a unique identifier for the user who made the request. 

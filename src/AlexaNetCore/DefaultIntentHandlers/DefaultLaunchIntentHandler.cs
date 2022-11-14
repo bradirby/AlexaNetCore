@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AlexaNetCore.Interfaces;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore
 {
@@ -11,18 +12,18 @@ namespace AlexaNetCore
         private static string intentName = "LaunchIntent";
       
 
-        public DefaultLaunchIntentHandler(IAlexaMessageLogger log = null) : base(AlexaIntentType.Launch,intentName, log)
+        public DefaultLaunchIntentHandler(ILogger log = null) : base(AlexaIntentType.Launch,intentName, log)
         {
             LaunchText = new AlexaMultiLanguageText("Hello, what can I do for you today?");
         }
 
-        public DefaultLaunchIntentHandler(string defaultTxt, string repromptText = "", IAlexaMessageLogger log = null) : base(AlexaIntentType.Launch,intentName, log)
+        public DefaultLaunchIntentHandler(string defaultTxt, string repromptText = "", ILogger log = null) : base(AlexaIntentType.Launch,intentName, log)
         {
             LaunchText = new AlexaMultiLanguageText(defaultTxt);
             if (!string.IsNullOrEmpty(repromptText)) RepromptText = new AlexaMultiLanguageText(repromptText);
         }
 
-        public DefaultLaunchIntentHandler(AlexaMultiLanguageText defaultTxt, AlexaMultiLanguageText repromptTxt = null,IAlexaMessageLogger log = null) : base(AlexaIntentType.Launch,intentName, log)
+        public DefaultLaunchIntentHandler(AlexaMultiLanguageText defaultTxt, AlexaMultiLanguageText repromptTxt = null,ILogger log = null) : base(AlexaIntentType.Launch,intentName, log)
         {
             LaunchText = defaultTxt;
             RepromptText = repromptTxt;
@@ -32,8 +33,8 @@ namespace AlexaNetCore
 
         public override Task ProcessAsync()
         {
-            Speak(LaunchText.GetText(RequestEnv.GetLocale()));
-            if (RepromptText != null) Reprompt(RepromptText.GetText(RequestEnv.GetLocale()));
+            Speak(LaunchText.GetText(GetLocale()));
+            if (RepromptText != null) Reprompt(RepromptText.GetText(GetLocale()));
             if (DefaultCardLink != null) AddCard(DefaultCardTitleText, DefaultCardBodyText, DefaultCardLink);
             else if (DefaultCardBodyText != null) AddCard(DefaultCardTitleText, DefaultCardBodyText);
             KeepSessionActiveAfterResponse();

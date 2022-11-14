@@ -13,52 +13,99 @@ namespace AlexaNetCore.RequestModel
     public class AlexaRequestSlot
     {
 
+        /// <summary>
+        /// The name of the slot.  
+        /// </summary>
         [JsonPropertyName("name")]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
+
 
 
         /// <summary>
-        /// This is the value the AI engine recognized for the slot.  It may or may not be in the list of valid values for the slot.
-        /// If you want a value from the list of valid options, use MatchedValues
+        /// This is what the AI speech recognition engine thinks the user actually said.
+        /// It may or may not be in the list of valid values for the slot.
+        /// If you want a value from the list of valid options you can examine each authority and what it things using the Resolutions property,
+        /// or use the 
         /// </summary>
         [JsonPropertyName("value")]
-        public virtual string SpokenValue { get; set; }
+        public string Value { get; set; }
 
 
         /// <summary>
-        /// List of valid values that match the utterance from the user.  All these values come from the list of valid values that as provided at Slot Definition time.
-        /// There is typically only one, but can be more if the match was inconclusive.
+        /// This describes the different authorities the AI engine used to resolve what the user said, and the results each came up with
+        /// </summary>
+        [JsonPropertyName("resolutions")]
+        public AlexaResolution Resolutions { get; set; }
+
+
+        /// <summary>
+        /// If this slot required confirmation, this says what happened.  A value of "NONE" means Alexa was not asked to confirm the value
+        /// </summary>
+        [JsonPropertyName("confirmationStatus")]
+        public string ConfirmationStatus { get; set; }
+
+
+        /// <summary>
+        /// Where this slot value came from - typically "USER"
+        /// </summary>
+        [JsonPropertyName("source")]
+        public virtual string Source { get; set; }
+
+
+        /// <summary>
+        /// Much of this seems to be a duplication of the Resolutions listed above.  I don't understand how they differ.
+        /// This descriptor may be null for slots that have validations.
+        /// </summary>
+        [JsonPropertyName("slotValue")]
+        public AlexaRequestSlotValueDescriptor ValueDescriptor { get; set; }
+
+
+
+
+
+
+        /// <summary>
+        /// If there are multiple values, this will return the IEnumerable<string>.  Else it returns null
         /// </summary>
         [JsonIgnore]
-        public IEnumerable<AlexaResolutionValue> MatchedValues
+        public virtual IEnumerable<string> Values
         {
             get
             {
-                if (Resolutions?.ResolutionsPerAuthority == null) return null;
-                var valueObj = Resolutions.ResolutionsPerAuthority.FirstOrDefault();
-                if (valueObj?.Values == null) return null;
-                return valueObj.Values;
+                if (ValueDescriptor == null) return null;
+                if (ValueDescriptor.Values == null) return null;
+                return ValueDescriptor.Values.Select(v => v.Value);
             }
         }
 
 
-
-        [JsonPropertyName("resolutions")]
-        public AlexaResolution Resolutions { get; set; }
-
-        [JsonPropertyName("confirmationStatus")]
-        public virtual string ConfirmationStatus { get; set; }
-
-        [JsonPropertyName("source")]
-        public virtual string Source { get; set; }
-
-        [JsonPropertyName("slotValue")]
-        public AlexaRequestSlotValue RequestSlotValue { get; set; }
-
-        public string GetValueOrDefault(string defaultVal = "")
+        /// <summary>
+        /// The slot value that best matches what the user said, according to all the available authorities.
+        /// This includes the value and the code, if it was specified in the interaction model
+        /// </summary>
+        [JsonIgnore]
+        public AlexaResolutionValue[] BestMatchedValues
         {
-            if (string.IsNullOrEmpty(SpokenValue)) return defaultVal;
-            return SpokenValue;
+            get
+            {
+                if (Resolutions?.ResolutionsPerAuthority == null) return Array.Empty<AlexaResolutionValue>();
+
+                //todo we could have multiple authorities provide matches but we're randomly selecting the first.  is there a better way?
+                var resolvedValues = Resolutions.ResolutionsPerAuthority.FirstOrDefault(r => r.Status.IsMatched);
+                if (resolvedValues?.Values == null) return Array.Empty<AlexaResolutionValue>();
+                return resolvedValues.Values;
+            }
         }
+
+
+        public bool ContainsMultipleValues
+        {
+            get
+            {
+                if (ValueDescriptor == null) return false;
+                return ValueDescriptor.ContainsMultipleValues;
+            }
+        }
+
     }
 }

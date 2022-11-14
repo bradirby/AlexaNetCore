@@ -5,22 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AlexaNetCore.Model;
-using AlexaNetCore.Util.Interceptors;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
 {
     internal class DefaultLaunchIntentHandlerTest
     {
-      private class TestSkill : AlexaSkillBase
+        private class TestSkill : AlexaSkillBase
         {
+            public TestSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
+            {
 
+            }
         }
 
-        
+
         [Test]
         public async Task ProperIntentExecuted()
         {
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
@@ -32,7 +36,7 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
         [Test]
         public async Task DoesNotEndSession()
         {
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
@@ -45,7 +49,7 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
         [Test]
         public async Task Ctor_NoParams_SetsDefaultText()
         {
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
@@ -64,7 +68,7 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
                 .AddText("Ciao", AlexaLocale.Italian);
 
             
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler(txt))
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
@@ -82,12 +86,11 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
                 .AddText("Ciao", AlexaLocale.Italian);
 
             
-            var skill = await new TestSkill()
-                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Italian), 1000)
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler(txt))
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
-                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .LoadRequest(GenericSkillRequests.LaunchRequest(AlexaLocale.Italian))
                 .ProcessRequestAsync();
             
             Assert.AreEqual("Ciao", skill.GetSpokenText());
@@ -104,7 +107,7 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
                 .AddText("mondo", AlexaLocale.Italian);
 
             
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler(txt, repromptTxt))
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
@@ -125,12 +128,11 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
                 .AddText("mondo", AlexaLocale.Italian);
 
             
-            var skill = await new TestSkill()
-                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Italian), 1000)
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler(txt,repromptTxt))
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
-                .LoadRequest(GenericSkillRequests.LaunchRequest())
+                .LoadRequest(GenericSkillRequests.LaunchRequest(AlexaLocale.Italian))
                 .ProcessRequestAsync();
             
             Assert.AreEqual("Ciao", skill.GetSpokenText());

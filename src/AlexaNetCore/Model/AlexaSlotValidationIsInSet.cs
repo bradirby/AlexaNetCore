@@ -16,17 +16,17 @@ namespace AlexaNetCore.Model
 
         public string ValidationType { get; set; }= "isInSet";
 
-        private IList<T> ValidationItems;
+        private List<T> ValidationItems;
 
         /// <summary>
         /// Accept values that match a fixed set of values you specify.
         /// If the user provides a value that does not match any validationItems on this list, the value fails the validation.
         /// <see href="https://developer.amazon.com/en-US/docs/alexa/custom-skills/validate-slot-values.html#validation-rules">Full Ref Here</see>
         /// </summary>
-        public AlexaSlotValidationIsInSet(IList<T> validationItems, AlexaPrompt invalidValuePrompt)
+        public AlexaSlotValidationIsInSet(IEnumerable<T> validationItems, AlexaPrompt invalidValuePrompt)
         {
             Prompt = invalidValuePrompt;
-            ValidationItems = validationItems;
+            ValidationItems = validationItems.ToList();
         }
 
         /// <summary>
@@ -45,12 +45,24 @@ namespace AlexaNetCore.Model
         /// If the user provides a value that does not match any validationItems on this list, the value fails the validation.
         /// <see href="https://developer.amazon.com/en-US/docs/alexa/custom-skills/validate-slot-values.html#validation-rules">Full Ref Here</see>
         /// </summary>
-        public AlexaSlotValidationIsInSet(IList<T> validationItems, string invalidValuePromptText)
+        public AlexaSlotValidationIsInSet(IEnumerable<T> validationItems, string invalidValuePromptText)
         {
             Prompt = new AlexaPrompt(Guid.NewGuid().ToString(), invalidValuePromptText);
-            ValidationItems = validationItems;
+            ValidationItems = validationItems.ToList();
         }
-        
+
+        /// <summary>
+        /// Add a prompt for the user if the slot has no value
+        /// </summary>
+        /// <param name="promptTxt">Prompt to give the user</param>
+        public AlexaSlotValidationIsInSet<T> AddInvalidValuePromptVariation(string promptTxt)
+        {
+            if (Prompt == null) Prompt = new AlexaPrompt(Guid.NewGuid().ToString(), promptTxt);
+            else Prompt.AddVariation(promptTxt);
+            return this;
+        }
+
+
         /// <summary>
         /// Accept values that match a fixed set of values you specify.
         /// If the user provides a value that does not match any validationItems on this list, the value fails the validation.

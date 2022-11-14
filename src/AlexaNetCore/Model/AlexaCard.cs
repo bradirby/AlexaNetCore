@@ -2,6 +2,7 @@
 using System.Dynamic;
 using System.Runtime.Serialization;
 using AlexaNetCore.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore.Model
 {
@@ -12,9 +13,9 @@ namespace AlexaNetCore.Model
     public class AlexaCard
     {
 
-        private IAlexaMessageLogger MsgLogger;
+        private ILogger MsgLogger;
 
-        public AlexaCard(AlexaCardType typ, string title, string text, IAlexaMessageLogger log = null)
+        public AlexaCard(AlexaCardType typ, string title, string text, ILogger log = null)
         {
             CardType = typ;
             MsgLogger = log;
@@ -22,7 +23,7 @@ namespace AlexaNetCore.Model
             SetText(text);
         }
 
-        public AlexaCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink = null, IAlexaMessageLogger log = null)
+        public AlexaCard(AlexaMultiLanguageText title, AlexaMultiLanguageText txt, AlexaImageLink urlLink = null, ILogger log = null)
         {
             MsgLogger = log;
             CardType = urlLink == null ? AlexaCardType.Simple : AlexaCardType.Standard;
@@ -32,7 +33,7 @@ namespace AlexaNetCore.Model
             SetImageLink(urlLink);
         }
 
-        public AlexaCard(string title, string txt, AlexaImageLink urlLink = null, IAlexaMessageLogger log = null)
+        public AlexaCard(string title, string txt, AlexaImageLink urlLink = null, ILogger log = null)
         {
             MsgLogger = log;
             CardType = urlLink == null ? AlexaCardType.Simple : AlexaCardType.Standard;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AlexaNetCore;
+using AlexaNetCore.Model;
 using NUnit.Framework;
 
 namespace AlexaNetCore.FlashBriefing.Tests
@@ -14,7 +15,7 @@ namespace AlexaNetCore.FlashBriefing.Tests
             var briefing = await new TestBriefing().ProcessRequestAsync();
             Assert.AreEqual(1, briefing.Items.Count);
 
-            var response = briefing.CreateAlexaResponse();
+            var response = briefing.GetResponse(AlexaLocale.English_US);
 
             Assert.IsFalse(string.IsNullOrEmpty(response));
             Assert.IsTrue(response.Contains("urn:uuid:"));

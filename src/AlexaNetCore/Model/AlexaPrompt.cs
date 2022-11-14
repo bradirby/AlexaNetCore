@@ -5,13 +5,25 @@ using System.Linq;
 
 namespace AlexaNetCore.Model
 {
+    /// <summary>
+    /// A way of randomly choosing text to speak to the user without the skill
+    /// needing to get involved.
+    /// </summary>
     public class AlexaPrompt
     {
 
+        /// <summary>
+        /// ID of this prompt.  This is necessary for the interaction model.  Using a GUID is allowed and convenient.
+        /// </summary>
         public string Id { get; private set; }
 
 
+        /// <summary>
+        /// A list of variations for this prompt.  Variations are different phrases that aim to achieve
+        /// the same goal
+        /// </summary>
         public List<AlexaPromptVariation> Variations { get; private set; } = new List<AlexaPromptVariation>();
+
 
         public AlexaPrompt(string id, AlexaPromptVariation variation)
         {
@@ -34,6 +46,15 @@ namespace AlexaNetCore.Model
         public AlexaPrompt(string id, IEnumerable<AlexaPromptVariation> variations = null)
         {
             if (variations != null) Variations = variations.ToList();
+            Id = id;
+        }
+
+        public AlexaPrompt(string id, IEnumerable<string> variations = null)
+        {
+            if (variations != null)
+            {
+                foreach (var str in variations) Variations.Add(new AlexaPromptVariation(str));
+            }
             Id = id;
         }
 

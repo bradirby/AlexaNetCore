@@ -11,27 +11,22 @@ namespace AlexaNetCore.Tests
         [Test]
         public void LaunchRequestTest()
         {
-            // Arrange
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
 
-
-            // Act
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
-
-            // Assert
             Assert.AreEqual(req.Version, "1.0");
 
             var sess = req.Session;
             Assert.IsNotNull(sess);
             Assert.AreEqual(true, sess.New);
 
-            Assert.AreEqual("SessionId.XXXXXXXXXXXXXXXXXX", sess.SessionId);
+            Assert.AreEqual("amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX", sess.SessionId);
             Assert.AreEqual("amzn1.ask.skill.XXXXXXXXXXXXXXXXXX", sess.Application.ApplicationId);
             Assert.AreEqual(0, sess.Attributes.Count);
             Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", sess.User.UserID);
             Assert.AreEqual(null, sess.User.AccessToken);
 
-            Assert.AreEqual("EdwRequestId.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
-            Assert.AreEqual(DateTime.Parse("2016-08-30T03:01:27Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
+            Assert.AreEqual("amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
+            Assert.AreEqual(DateTime.Parse("2021-09-24T10:52:31Z").ToUniversalTime(), req.Request.TimeStamp.ToUniversalTime());
         }
 
         [Test]
@@ -41,7 +36,7 @@ namespace AlexaNetCore.Tests
             //https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interface-reference
 
             // Act
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.SessionEndedRequest());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.EndSession());
 
             // Assert
             Assert.AreEqual(req.Version, "1.0");
@@ -75,7 +70,7 @@ namespace AlexaNetCore.Tests
 
             var slot = slotEntry.Value;
             Assert.AreEqual("ZodiacSign", slot.Name);
-            Assert.AreEqual("virgo", slot.SpokenValue);
+            Assert.AreEqual("virgo", slot.Value);
         }
 
 
@@ -84,7 +79,7 @@ namespace AlexaNetCore.Tests
         public void SessionEndRequestTest()
         {
             // Act
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.SessionEndedRequest());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.EndSession());
 
             // Assert
             Assert.AreEqual(req.Version, "1.0");
@@ -188,7 +183,7 @@ namespace AlexaNetCore.Tests
 
             var slotValue = slot.Value;
             Assert.AreEqual("AIRPORTCODE", slotValue.Name);
-            Assert.AreEqual("how is sfo", slotValue.SpokenValue);
+            Assert.AreEqual("how is sfo", slotValue.Value);
 
 
         }
@@ -219,7 +214,7 @@ namespace AlexaNetCore.Tests
 
             var slotValue = slot.Value;
             Assert.AreEqual("AIRPORTCODE", slotValue.Name);
-            Assert.AreEqual("sfo", slotValue.SpokenValue);
+            Assert.AreEqual("sfo", slotValue.Value);
 
 
         }
@@ -277,7 +272,7 @@ namespace AlexaNetCore.Tests
 
             var slotValue = slot.Value;
             Assert.AreEqual("Color", slotValue.Name);
-            Assert.AreEqual("red", slotValue.SpokenValue);
+            Assert.AreEqual("red", slotValue.Value);
 
 
         }
@@ -312,40 +307,6 @@ namespace AlexaNetCore.Tests
             //Assert.AreEqual("Color", slotValue.Name);
             //Assert.AreEqual("red", slotValue.LocaleString);
 
-
-        }
-
-        [Test]
-        public void GetIntentHistory_EmptyHistory_ReturnsEmptyList()
-        {
-            // arrange
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.EmptyRequest());
-
-            //act
-            var history = req.GetIntentHistory();
-
-            //assert
-            Assert.IsNotNull(history);
-            Assert.AreEqual(0, history.Count);
-
-        }
-
-        [Test]
-        [Ignore("history is not working yet")]
-        public void GetIntentHistory_TwoItemHistory_ReadsHistoryCorrectly()
-        {
-            // arrange
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.AMAZONStopIntent());
-
-            //act
-            var history = req.GetIntentHistory();
-
-            //assert
-            Assert.IsNotNull(history);
-            Assert.AreEqual(3, history.Count);
-            Assert.AreEqual("intent1", history[1]);
-            Assert.AreEqual("intent2", history[2]);
-            Assert.AreEqual("intent3", history[3]);
 
         }
 

@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using System.Threading.Tasks;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -12,7 +14,7 @@ namespace AlexaNetCore.Tests
 
         private class TestAlexaSkill : AlexaSkillBase
         {
-            public TestAlexaSkill()
+            public TestAlexaSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
             {
             }
         }
@@ -20,7 +22,7 @@ namespace AlexaNetCore.Tests
         [Test]
         public async Task CardIsAddedToResponse_IsRenderedInJson()
         {
-            var skill = await new TestAlexaSkill()
+            var skill = await new TestAlexaSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultFallbackIntentHandler())
@@ -28,7 +30,7 @@ namespace AlexaNetCore.Tests
                 .RegisterIntentHandler(new DefaultSessionEndRequest())
                 .RegisterIntentHandler(new DefaultStartOverIntentHandler())
                 .RegisterIntentHandler(new DefaultStopIntentHandler())
-                .LoadRequest(AmazonIntentSampleRequests.LaunchRequest())
+                .LoadRequest(GenericSkillRequests.LaunchRequest())
                 .ProcessRequestAsync();
             skill.AddCard("card title to find", "card body to find");
 

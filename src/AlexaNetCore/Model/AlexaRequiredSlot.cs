@@ -6,6 +6,32 @@ namespace AlexaNetCore.Model
 {
     public class AlexaRequiredSlot
     {
+
+        /// <summary>
+        /// Makes a slot required and adds a prompt for the user when they do not provide the value
+        /// </summary>
+        public AlexaRequiredSlot(string elicitationPrompt)
+        {
+            ElicitationPrompt = new AlexaPrompt(Guid.NewGuid().ToString(), elicitationPrompt);
+        }
+
+        /// <summary>
+        /// Makes a slot required and adds a prompt for the user when they do not provide the value
+        /// </summary>
+        public AlexaRequiredSlot(AlexaPrompt elicitationPrompt)
+        {
+            ElicitationPrompt = elicitationPrompt;
+        }
+
+        /// <summary>
+        /// Makes a slot required and adds a prompt for the user when they do not provide the value
+        /// </summary>
+        public AlexaRequiredSlot(AlexaMultiLanguageText elicitationPrompt)
+        {
+            ElicitationPrompt = new AlexaPrompt(Guid.NewGuid().ToString(), elicitationPrompt);
+        }
+
+
         public AlexaRequiredSlotConfirmation Confirmation { get; set; }
 
         public bool ConfirmationRequired => Confirmation != null;

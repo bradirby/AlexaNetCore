@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AlexaNetCore.Interfaces;
 using AlexaNetCore.Model;
 using AlexaNetCore.RequestModel;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore
 {
@@ -19,7 +20,8 @@ namespace AlexaNetCore
         /// <summary>
         /// Message Logger for writing debug messages
         /// </summary>
-        public IAlexaMessageLogger MsgLogger { get; private set; }
+        public ILogger MsgLogger { get; private set; }
+
 
         /// <summary>
         /// The parsed contents of the incoming request string
@@ -187,29 +189,40 @@ namespace AlexaNetCore
                 errLst.Add("Invocation name must not contain the launch word");
 
 
-            if (!Intents.Any()) errLst.Add("No intents are defined");
-            else
+            //at least one custom intent is required
+            if (!Intents.Any())
             {
-                //at least one custom intent is required
-                if (Intents.All(i => !i.IsCustomIntent))
-                    errLst.Add("You must have at least one custom intent");
+                errLst.Add("No intents are defined");
+                return errLst;
+            }
 
-                LookForRequiredIntents(errLst);
+            if (Intents.All(i => !i.IsCustomIntent))
+                errLst.Add("You must have at least one custom intent");
 
-                //each custom intent must have at least one invocation example
-                foreach (var intent in Intents.Where(i => i.IsCustomIntent))
+            LookForRequiredIntents(errLst);
+
+            //each custom intent must have at least one invocation example
+            foreach (var intent in Intents.Where(i => i.IsCustomIntent))
+            {
+                if (!intent.GetSampleInvocations().Any()) errLst.Add($"{intent.IntentName} has no sample invocatios");
+
+                foreach (var sample in intent.GetSampleInvocations())
                 {
-                    if (!intent.GetSampleInvocations().Any()) errLst.Add($"{intent.IntentName} has no sample invocatios");
+                    if (sample.GetText(locale).Contains("?"))
+                        errLst.Add($"{intent.IntentName} - Question marks are not valid in sample invocations: Sample utterances can consist of only unicode characters, spaces, periods for abbreviations, underscores, possessive apostrophes, and hyphens.");
+                    if (sample.GetText(locale).Contains("!"))
+                        errLst.Add($"{intent.IntentName} - Exclamation points are not valid in sample invocations: Sample utterances can consist of only unicode characters, spaces, periods for abbreviations, underscores, possessive apostrophes, and hyphens.");
+
                 }
+            }
 
-                foreach (var intent in Intents)
+            foreach (var intent in Intents)
+            {
+                foreach (var slotOption in intent.GetSlotOptions.Where(s => !s.SlotType.StartsWith("AMAZON.")))
                 {
-                    foreach (var slotOption in intent.GetSlotOptions.Where(s => !s.SlotType.StartsWith("AMAZON.")))
-                    {
-                        if (CustomSlotTypes.All(st => st.Name != slotOption.SlotType))
-                            errLst.Add(
-                                $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
-                    }
+                    if (CustomSlotTypes.All(st => st.Name != slotOption.SlotType))
+                        errLst.Add(
+                            $"Intent '{intent.IntentName}' uses custom slot type '{slotOption.SlotType}' which is not defined.  Names are case sensitive and custom slot types are defined at the Skill level.");
                 }
             }
 
@@ -261,9 +274,9 @@ namespace AlexaNetCore
             return this;
         }
 
-        protected AlexaSkillBase(IAlexaMessageLogger log = null)
+        protected AlexaSkillBase(ILoggerFactory loggerFactory)
         {
-            MsgLogger = log ?? null;
+            MsgLogger = loggerFactory.CreateLogger<AlexaSkillBase>();
         }
 
 
@@ -286,7 +299,7 @@ namespace AlexaNetCore
         {
             try
             {
-                RequestEnv = await ProcessRequestInterceptorsAsync(RequestEnv);
+                await ProcessRequestInterceptorsAsync(RequestEnv);
                 ResponseEnv = new AlexaResponseEnvelope(RequestEnv, MsgLogger) { Version = SkillVersion };
                 await ProcessIntentRequestAsync();
                 ResponseEnv = await ProcessResponseInterceptorsAsync(RequestEnv, ResponseEnv);
@@ -294,7 +307,7 @@ namespace AlexaNetCore
             }
             catch (Exception exc)
             {
-                MsgLogger?.Error($"{this.GetType().Name} Error ProcessIntentRequestAsync", exc);
+                MsgLogger?.LogError($"{this.GetType().Name} LogError ProcessIntentRequestAsync", exc);
                 ResponseEnv.Speak(IntentNotFoundMessage);
                 ResponseEnv.ShouldEndSession = true;
                 return null;
@@ -311,11 +324,11 @@ namespace AlexaNetCore
 
             if (string.IsNullOrEmpty(postedJsonData))
             {
-                MsgLogger?.Error($"{this.GetType().Name} No Data to create request and response");
+                MsgLogger?.LogError($"{this.GetType().Name} No Data to create request and response");
                 throw new ArgumentNullException("postedJsonData", "No data to create request and response");
             }
 
-            MsgLogger?.Debug($"postedJsonData: {postedJsonData}");
+            MsgLogger?.LogDebug($"postedJsonData: {postedJsonData}");
 
             try
             {
@@ -324,7 +337,7 @@ namespace AlexaNetCore
             }
             catch (Exception exc)
             {
-                MsgLogger?.Error($"{this.GetType().Name} ProcessRequestAsync Error parsing request envelope", exc);
+                MsgLogger?.LogError($"{this.GetType().Name} ProcessRequestAsync LogError parsing request envelope", exc);
                 ProcessErrorInRequest();
                 return null;
             }
@@ -340,7 +353,7 @@ namespace AlexaNetCore
             }
             catch (Exception exc)
             {
-                MsgLogger?.Error($"{this.GetType().Name} Error parsing request envelope", exc);
+                MsgLogger?.LogError($"{this.GetType().Name} LogError parsing request envelope", exc);
                 ProcessErrorInRequest();
                 return null;
             }
@@ -352,7 +365,7 @@ namespace AlexaNetCore
         public string GetResponse()
         {
             var responseStr = ResponseEnv.CreateAlexaResponse();
-            MsgLogger?.Debug($"Response str after intent {RequestEnv.Request.Intent?.Name}: {responseStr}");
+            MsgLogger?.LogDebug($"Response str after intent {RequestEnv.Request.Intent?.Name}: {responseStr}");
             return responseStr;
         }
 
@@ -376,7 +389,7 @@ namespace AlexaNetCore
             {
                 ChosenIntent = GetIntentToProcess(RequestEnv);
 
-                MsgLogger?.Debug("Request being handled by " + ChosenIntent.IntentName);
+                MsgLogger?.LogDebug("Request being handled by " + ChosenIntent.IntentName);
 
                 ChosenIntent.InitIntent(RequestEnv, ResponseEnv);
 
@@ -386,7 +399,7 @@ namespace AlexaNetCore
             }
             catch (Exception exc)
             {
-                MsgLogger?.Error($"{this.GetType().Name} Error ProcessIntentRequestAsync", exc);
+                MsgLogger?.LogError($"{this.GetType().Name} LogError ProcessIntentRequestAsync", exc);
                 return null;
             }
             return ChosenIntent;
@@ -416,7 +429,7 @@ namespace AlexaNetCore
 
             if (chosenIntent == null)
             {
-                MsgLogger?.Warning($"Could not find intent with name '{requestEnv.Request.Intent.Name}' - returning the Help intent");
+                MsgLogger?.LogWarning($"Could not find intent with name '{requestEnv.Request.Intent.Name}' - returning the Help intent");
                 chosenIntent = GetHelpIntent();
             }
 
@@ -461,12 +474,13 @@ namespace AlexaNetCore
         /// the incoming source language to a value you need for testing.  Request interceptors
         /// are run in the order they are registered
         /// </summary>
-        public AlexaSkillBase RegisterRequestInterceptor(IAlexaRequestInterceptor reqInt, int processOrder)
+        public AlexaSkillBase RegisterRequestInterceptor(AlexaBaseRequestInterceptor reqInt)
         {
-            RequestInterceptors ??= new Dictionary<int, IAlexaRequestInterceptor>();
-            RequestInterceptors.Add(processOrder , reqInt);
+            RequestInterceptors ??= new List<AlexaBaseRequestInterceptor>();
+            RequestInterceptors.Add(reqInt);
             return this;
         }
+
 
         public AlexaIntentHandlerBase GetRegisteredIntent(AlexaIntentType typ,  string intentName)
         {
@@ -475,16 +489,15 @@ namespace AlexaNetCore
             return intent;
         }
 
-        private Dictionary<int, IAlexaRequestInterceptor> RequestInterceptors;
+        private List<AlexaBaseRequestInterceptor> RequestInterceptors;
 
-        private async Task<AlexaRequestEnvelope> ProcessRequestInterceptorsAsync(AlexaRequestEnvelope env)
+        private async Task ProcessRequestInterceptorsAsync(AlexaRequestEnvelope env)
         {
-            if (RequestInterceptors == null) return env;
-            foreach (var requestInterceptor in RequestInterceptors.OrderBy(i => i.Key))
+            if (RequestInterceptors == null) return ;
+            foreach (var requestInterceptor in RequestInterceptors.OrderBy(i => i.ExecutionOrder))
             {
-                env = await requestInterceptor.Value.ProcessAsync(env);    
+                await requestInterceptor.ProcessAsync_Internal(env);    
             }
-            return env;
         }
 
         /// <summary>
@@ -492,21 +505,21 @@ namespace AlexaNetCore
         /// your own purposes.  An example of this would be adding a reprompt to any responses that don't
         /// already have one.  Response interceptors are run in the order they are registered
         /// </summary>
-        public AlexaSkillBase RegisterResponseInterceptor(IAlexaResponseInterceptor respInt, int processOrder)
+        public AlexaSkillBase RegisterResponseInterceptor(AlexaBaseResponseInterceptor respInt)
         {
-            ResponseInterceptors ??= new Dictionary<int, IAlexaResponseInterceptor>();
-            ResponseInterceptors.Add(processOrder, respInt);
+            ResponseInterceptors ??= new List<AlexaBaseResponseInterceptor>();
+            ResponseInterceptors.Add(respInt);
             return this;
         }
-        private Dictionary<int, IAlexaResponseInterceptor> ResponseInterceptors;
+        private List<AlexaBaseResponseInterceptor> ResponseInterceptors;
 
 
         private async Task<AlexaResponseEnvelope> ProcessResponseInterceptorsAsync(AlexaRequestEnvelope reqEnv, AlexaResponseEnvelope env)
         {
             if (ResponseInterceptors == null) return env;
-            foreach (var keyValuePair in ResponseInterceptors.OrderBy(r => r.Key))
+            foreach (var interceptor in ResponseInterceptors.OrderBy(r => r.ExecutionOrder))
             {
-                env = await keyValuePair.Value.ProcessAsync(reqEnv, env);
+                await interceptor.ProcessAsync_Internal(reqEnv, env);
             }
             return env;
         }

@@ -15,7 +15,7 @@ namespace AlexaNetCore.Tests
         public void RequestEnvelope_CanDeserialize()
         {
             
-            var jsonStr = AmazonIntentSampleRequests.SessionEndedRequest().Replace("'", "\"");
+            var jsonStr = GenericSkillRequests.EndSession();
             var reqEnv = JsonSerializer.Deserialize<AlexaRequestEnvelope>(jsonStr);
 
             Assert.IsNotNull(reqEnv);

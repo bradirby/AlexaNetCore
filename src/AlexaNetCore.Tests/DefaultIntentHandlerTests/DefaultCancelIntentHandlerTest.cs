@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AlexaNetCore.Model;
-using AlexaNetCore.Util.Interceptors;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
@@ -13,18 +14,21 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
     {
         private class TestSkill : AlexaSkillBase
         {
+            public TestSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
+            {
 
+            }
         }
 
         
         [Test]
         public async Task ProperIntentExecuted()
         {
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
-                .LoadRequest(BuiltInIntentRequests.CancelIntent)
+                .LoadRequest(GenericSkillRequests.CancelRequest())
                 .ProcessRequestAsync();
             Assert.AreEqual(AlexaBuiltInIntents.CancelIntent, skill.ChosenIntent.IntentName);
         }
@@ -34,11 +38,11 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
         [Test]
         public async Task EndsSession()
         {
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
-                .LoadRequest(BuiltInIntentRequests.CancelIntent)
+                .LoadRequest(GenericSkillRequests.CancelRequest())
                 .ProcessRequestAsync();
             Assert.AreEqual(true, skill.ShouldEndSession);
         }
@@ -46,11 +50,11 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
         [Test]
         public async Task Ctor_NoParams_SetsDefaultText()
         {
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler())
-                .LoadRequest(BuiltInIntentRequests.CancelIntent)
+                .LoadRequest(GenericSkillRequests.CancelRequest())
                 .ProcessRequestAsync();
             
             Assert.AreEqual("Ok, cancelling", skill.GetSpokenText());
@@ -65,11 +69,11 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
                 .AddText("Ciao", AlexaLocale.Italian);
 
             
-            var skill = await new TestSkill()
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler(txt))
-                .LoadRequest(BuiltInIntentRequests.CancelIntent)
+                .LoadRequest(GenericSkillRequests.CancelRequest())
                 .ProcessRequestAsync();
             
             Assert.AreEqual("Goodbye", skill.GetSpokenText());
@@ -83,12 +87,11 @@ namespace AlexaNetCore.Tests.DefaultIntentHandlerTests
                 .AddText("Ciao", AlexaLocale.Italian);
 
             
-            var skill = await new TestSkill()
-                .RegisterRequestInterceptor(new SetRequestLanguageDebugInterceptor(AlexaLocale.Italian), 1000)
+            var skill = await new TestSkill(new LoggerFactory())
                 .RegisterIntentHandler(new DefaultLaunchIntentHandler())
                 .RegisterIntentHandler(new DefaultHelpIntentHandler())
                 .RegisterIntentHandler(new DefaultCancelIntentHandler(txt))
-                .LoadRequest(BuiltInIntentRequests.CancelIntent)
+                .LoadRequest(GenericSkillRequests.CancelRequest(AlexaLocale.Italian))
                 .ProcessRequestAsync();
             
             Assert.AreEqual("Ciao", skill.GetSpokenText());

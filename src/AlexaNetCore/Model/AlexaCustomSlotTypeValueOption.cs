@@ -27,9 +27,10 @@ namespace AlexaNetCore.Model
         }
 
 
-        public void AddSynonym(string val)
+        public AlexaCustomSlotTypeValueOption AddSynonym(string val)
         {
             SlotTypeValueOptionDescriptor.AddSynonym(val);
+            return this;
         }
 
         public CustomSlotTypeValueOptionInteractionModel GetInteractionModel(AlexaLocale locale = null)

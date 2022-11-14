@@ -8,7 +8,7 @@ using AlexaNetCore.RequestModel;
 
 namespace AlexaNetCore.Util.Interceptors
 {
-    public class AddSlotValueDebugInterceptor : IAlexaRequestInterceptor
+    public class AddSlotValueDebugInterceptor : AlexaBaseRequestInterceptor
     {
         private string slotName;
         private string slotValue;
@@ -19,10 +19,11 @@ namespace AlexaNetCore.Util.Interceptors
             slotValue = sValue;
         }
 
-        public Task<AlexaRequestEnvelope> ProcessAsync(AlexaRequestEnvelope reqEnv)
+        public override Task ProcessAsync(IAlexaRequestEnvelope reqEnv)
         {
             reqEnv.SetSlotValue(slotName,slotValue);
-            return Task.FromResult(reqEnv);
+            return Task.CompletedTask;
+            
 
         }
     }

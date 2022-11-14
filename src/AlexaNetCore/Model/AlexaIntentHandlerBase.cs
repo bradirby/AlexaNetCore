@@ -8,12 +8,13 @@ using AlexaNetCore.Directives;
 using AlexaNetCore.InteractionModel;
 using AlexaNetCore.Interfaces;
 using AlexaNetCore.RequestModel;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore.Model
 {
     public abstract class AlexaIntentHandlerBase
     {
-        protected IAlexaMessageLogger MsgLogger;
+        protected ILogger MsgLogger;
 
         public AlexaMultiLanguageText DefaultCardTitleText { get; private set; }
         public AlexaMultiLanguageText DefaultCardBodyText { get; private set; }
@@ -44,31 +45,43 @@ namespace AlexaNetCore.Model
 
         public AlexaIntentHandlerBase AddDirective(IAlexaDirective dir)
         {
-            ResponseEnv.AddDirective(dir);
+            ResponseEnvInternal.AddDirective(dir);
             return this;
+        }
+
+        public AlexaIntentHandlerBase UpdateDynamicEntities(AlexaSlotUpdate slotUpdate)
+        {
+            var directive = new AlexaUpdateDynamicEntitiesDirective(slotUpdate);
+            ResponseEnvInternal.AddDirective(directive);
+            return this;
+        }
+
+        public AlexaLocale GetLocale()
+        {
+            return RequestEnvInternal.GetLocale();
         }
 
         public AlexaIntentHandlerBase RemoveDirective(IAlexaDirective dir)
         {
-            ResponseEnv.RemoveDirective(dir);
+            ResponseEnvInternal.RemoveDirective(dir);
             return this;
         }
 
-        public AlexaRequestSlotValue GetAlexaSlot(string slotKey)
+        public AlexaRequestSlot GetAlexaSlot(string slotKey)
         {
-            return RequestEnv.GetAlexaSlot(slotKey);
+            return RequestEnvInternal.GetSlot(slotKey);
         }
 
         public IEnumerable<AlexaRequestSlot> GetAllSlots()
         {
-            return RequestEnv.Request.Intent.GetAllSlots();
+            return RequestEnvInternal.Request.Intent.GetAllSlots();
         }
 
 
         /// <summary>
         /// This can have values of "NONE", "DENIED", or "CONFIRMED".  You will get an empty string if something went wrong.
         /// </summary>
-        public string IntentConfirmationStatus => RequestEnv?.Request?.Intent?.ConfirmationStatus ?? "";
+        public string IntentConfirmationStatus => RequestEnvInternal?.Request?.Intent?.ConfirmationStatus ?? "";
 
 
         /// <summary>
@@ -145,38 +158,38 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaCard AddCard(AlexaCard card)
         {
-            if (ResponseEnv == null) CardToAdd = card;
+            if (ResponseEnvInternal == null) CardToAdd = card;
             else
             {
                 CardToAdd = null;
-                ResponseEnv.AddCard(card);
+                ResponseEnvInternal.AddCard(card);
             }
             return card;
         }
 
 
-        public AlexaIntentHandlerBase RegisterRequestInterceptor(IAlexaRequestInterceptor reqInt)
+        public AlexaIntentHandlerBase RegisterRequestInterceptor(AlexaBaseRequestInterceptor reqInt)
         {
-            RequestInterceptors ??= new Dictionary<int, IAlexaRequestInterceptor>();
-            RequestInterceptors.Add(RequestInterceptors.Count, reqInt);
+            RequestInterceptors ??= new List<AlexaBaseRequestInterceptor>();
+            RequestInterceptors.Add(reqInt);
             return this;
         }
-        private Dictionary<int, IAlexaRequestInterceptor> RequestInterceptors;
+        private List<AlexaBaseRequestInterceptor> RequestInterceptors;
 
-        public AlexaIntentHandlerBase RegisterResponseInterceptor(IAlexaResponseInterceptor respInt)
+        public AlexaIntentHandlerBase RegisterResponseInterceptor(AlexaBaseResponseInterceptor respInt)
         {
-            ResponseInterceptors ??= new Dictionary<int, IAlexaResponseInterceptor>();
-            ResponseInterceptors.Add(ResponseInterceptors.Count, respInt);
+            ResponseInterceptors ??= new List<AlexaBaseResponseInterceptor>();
+            ResponseInterceptors.Add(respInt);
             return this;
         }
-        private Dictionary<int, IAlexaResponseInterceptor> ResponseInterceptors;
+        private List<AlexaBaseResponseInterceptor> ResponseInterceptors;
 
-        internal virtual async Task PreProcessAsync()
+        internal async Task PreProcessAsync()
         {
             await ProcessRequestInterceptorsAsync();
         }
 
-        internal virtual async Task PostProcessAsync()
+        internal async Task PostProcessAsync()
         {
             AddMissingCard();
             await ProcessResponseInterceptorsAsync();
@@ -185,20 +198,25 @@ namespace AlexaNetCore.Model
         internal async Task ProcessRequestInterceptorsAsync()
         {
             if (RequestInterceptors == null) return;
-            for (int i = 0; i < RequestInterceptors.Count; i++) RequestEnv = await RequestInterceptors[i].ProcessAsync(RequestEnv);
+            foreach (var interceptor in RequestInterceptors.OrderBy(i => i.ExecutionOrder))
+            {
+                await interceptor.ProcessAsync_Internal(RequestEnvInternal);
+            }
         }
 
 
         internal async Task ProcessResponseInterceptorsAsync()
         {
             if (ResponseInterceptors == null) return;
-            for (int i = 0; i < ResponseInterceptors.Count; i++)
-                ResponseEnv = await ResponseInterceptors[i].ProcessAsync(RequestEnv, ResponseEnv);
+            foreach (var interceptor in ResponseInterceptors.OrderBy(i => i.ExecutionOrder))
+            {
+                await interceptor.ProcessAsync_Internal(RequestEnvInternal, ResponseEnvInternal);
+            }
         }
 
         internal void AddMissingCard()
         {
-            if (ResponseEnv.HasCard) return;
+            if (ResponseEnvInternal.HasCard) return;
             if (DefaultCardBodyText == null || DefaultCardTitleText == null) return;
             if (DefaultCardLink == null) AddCard(DefaultCardTitleText, DefaultCardBodyText);
             else AddCard(DefaultCardTitleText, DefaultCardBodyText, DefaultCardLink);
@@ -206,7 +224,7 @@ namespace AlexaNetCore.Model
 
         public string DialogDelegationStrategy { get; set; } = "ALWAYS";
 
-        public List<AlexaMultiLanguageText> GetSampleInvocations()
+        internal List<AlexaMultiLanguageText> GetSampleInvocations()
         {
             return SampleInvocations.ToList();
         }
@@ -230,7 +248,7 @@ namespace AlexaNetCore.Model
 
         public bool HasValidations => SlotsAvailableToIntent.Any(s => s.HasValidations);
 
-        public AlexaRequiredIntentSettings Requirements{ get; set; }
+        private AlexaRequiredIntentSettings Requirements{ get; set; }
 
         public AlexaIntentHandlerBase RemoveConfirmation()
         {
@@ -300,11 +318,6 @@ namespace AlexaNetCore.Model
 
         public AlexaIntentType IntentType { get; private set; } = AlexaIntentType.Custom;
 
-        public AlexaIntentHandlerBase SetIntentType(AlexaIntentType typ)
-        {
-            IntentType = typ;
-            return this;
-        }
 
         public string IntentName { get; private set; }
 
@@ -312,28 +325,34 @@ namespace AlexaNetCore.Model
         /// <summary>
         /// Constructor for a intent handler 
         /// </summary>
-        public AlexaIntentHandlerBase(AlexaIntentType reqTyp, string intentName, IAlexaMessageLogger log = null)
+        public AlexaIntentHandlerBase(AlexaIntentType reqTyp, string intentName, ILogger log = null)
         {
             if (string.IsNullOrEmpty(intentName)) throw new ArgumentNullException(intentName);
             IntentName = intentName;
             MsgLogger = log;
             IncludeInInteractionModel = reqTyp == AlexaIntentType.Custom;
-            SetIntentType(reqTyp);
+            IntentType = reqTyp;
         }
+
+        private AlexaRequestEnvelope RequestEnvInternal { get; set; }
+
 
         /// <summary>
         /// The request envelope contains all the information coming from Amazon in the request
         /// </summary>
-        public AlexaRequestEnvelope RequestEnv { get; private set; }
+        public IAlexaRequestEnvelope RequestEnv => RequestEnvInternal;
+
 
         /// <summary>
         /// Response envelope is where you craft your response
         /// </summary>
-        public AlexaResponseEnvelope ResponseEnv { get; protected set; }
+        public IAlexaResponseEnvelope ResponseEnv => ResponseEnvInternal;
+        
+        private AlexaResponseEnvelope ResponseEnvInternal { get; set; }
 
         public bool IsCustomIntent => IntentType == AlexaIntentType.Custom && !IntentName.StartsWith("AMAZON.");
 
-        public bool HasRequiredSlots => SlotsAvailableToIntent.Any(s => s.IsRequired);
+        private bool HasRequiredSlots => SlotsAvailableToIntent.Any(s => s.IsRequired);
 
 
         /// <summary>
@@ -343,15 +362,15 @@ namespace AlexaNetCore.Model
         /// <param name="response"></param>
         internal void InitIntent(AlexaRequestEnvelope request, AlexaResponseEnvelope response)
         {
-            RequestEnv = request ?? throw new ArgumentNullException(nameof(request));
-            ResponseEnv = response ?? throw new ArgumentNullException(nameof(ResponseEnv));
+            RequestEnvInternal = request ?? throw new ArgumentNullException(nameof(request));
+            ResponseEnvInternal = response ?? throw new ArgumentNullException(nameof(ResponseEnvInternal));
 
-            ResponseEnv.IntentHandlerName = IntentName;
+            ResponseEnvInternal.IntentHandlerName = IntentName;
 
             //check if a card was added during intent definition
             if (CardToAdd != null)
             {
-                ResponseEnv.AddCard(CardToAdd);
+                ResponseEnvInternal.AddCard(CardToAdd);
                 CardToAdd = null;
             }
         }
@@ -362,7 +381,7 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaIntentHandlerBase Speak(string txt)
         {
-            ResponseEnv.Speak(txt);
+            ResponseEnvInternal.Speak(txt);
             return this;
         }
 
@@ -372,7 +391,7 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaIntentHandlerBase Speak(AlexaMultiLanguageText txt)
         {
-            ResponseEnv.Speak(txt);
+            ResponseEnvInternal.Speak(txt);
             return this;
         }
 
@@ -383,7 +402,7 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaIntentHandlerBase Reprompt(string txt)
         {
-            ResponseEnv.Reprompt(txt);
+            ResponseEnvInternal.Reprompt(txt);
             return this;
         }
 
@@ -394,7 +413,7 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaIntentHandlerBase Reprompt(AlexaMultiLanguageText txt)
         {
-            ResponseEnv.Reprompt(txt);
+            ResponseEnvInternal.Reprompt(txt);
             return this;
         }
 
@@ -403,7 +422,7 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaIntentHandlerBase EndSessionAfterResponse()
         {
-            ResponseEnv.ShouldEndSession = true;
+            ResponseEnvInternal.ShouldEndSession = true;
             return this;
         }
 
@@ -412,13 +431,13 @@ namespace AlexaNetCore.Model
         /// </summary>
         public AlexaIntentHandlerBase KeepSessionActiveAfterResponse()
         {
-            ResponseEnv.ShouldEndSession = false;
+            ResponseEnvInternal.ShouldEndSession = false;
             return this;
         }
 
 
         /// <summary>
-        /// Override this method to process the intent.  The RequestEnv and ResponseEnv variables have already been populated
+        /// Override this method to process the intent.  The RequestEnvInternal and ResponseEnvInternal variables have already been populated
         /// by the time this method is called
         /// </summary>
         public abstract Task ProcessAsync();
@@ -446,13 +465,16 @@ namespace AlexaNetCore.Model
         /// <param name="slotName">Name of the slot to retrieve</param>
         protected AlexaRequestSlot GetSlot(string slotName)
         {
-            return RequestEnv.Request.Intent.GetSlot(slotName);
+            return RequestEnvInternal.Request.Intent.GetSlot(slotName);
         }
 
 
         /// <summary>
-        /// Returns the value the user provided for this slot, as a string.  To get the full slot with all of the
-        /// associated parameters, use GetSlot instead
+        /// An easy and simple way of returning the value the user provided for this slot.
+        /// If there was a list of options provided for the slot, this will provide the best match according
+        /// to the available Authorities.  If no list of options was provided or the users utterance did not match any options
+        /// this will return what the user uttered.
+        /// To get the full slot with all of the associated parameters including the ID of the slot value chosen use GetSlot instead.
         /// </summary>
         /// <param name="slotName">Name of the slot to retrieve</param>
         /// <param name="defaultVal">Default value if the slot value does not exist</param>
@@ -460,14 +482,39 @@ namespace AlexaNetCore.Model
         {
             var slot = GetSlot(slotName);
             if (slot == null) return defaultVal;
-            return slot.GetValueOrDefault(defaultVal);
+
+            if (slot.BestMatchedValues != null)
+            {
+                var bestMatch = slot.BestMatchedValues.FirstOrDefault();
+                if (bestMatch != null) return bestMatch.Value.Name;
+            }
+
+            return slot.Value;
         }
 
-        protected string GetRequestSessionValue(string valueName, string defaultVal)
+
+        /// <summary>
+        /// Gets the value from the incoming session
+        /// </summary>
+        /// <param name="valueName"></param>
+        /// <param name="defaultVal"></param>
+        /// <returns></returns>
+        protected string GetSessionValue(string valueName, string defaultVal = null)
         {
-            return RequestEnv.Session.GetAttributeValue(valueName, defaultVal).ToString();
+            return RequestEnvInternal.Session.GetAttributeValue(valueName, defaultVal).ToString();
         }
 
+
+        /// <summary>
+        /// Incoming session values are pulled from the request, not the response.  This is here if you need to
+        /// check a value that you've set, but it is not typically used.
+        /// </summary>
+        /// <param name="valueName"></param>
+        /// <param name="defaultVal"></param>
+        protected void GetSessionValueFromResponse(string valueName, string defaultVal = null)
+        {
+            ResponseEnvInternal.SetSessionValue(valueName, defaultVal);
+        }
 
         /// <summary>
         /// Sets the value of the given session variable.  Session variables will persist from one invocation to another,
@@ -475,10 +522,22 @@ namespace AlexaNetCore.Model
         /// </summary>
         /// <param name="sessVariableName">Name of the variable to set</param>
         /// <param name="variableValue">Value to set</param>
-        protected void SetResponseSessionValue(string sessVariableName, string variableValue)
+        protected void SetSessionValue(string sessVariableName, string variableValue)
         {
-            ResponseEnv.SetSessionValue(sessVariableName, variableValue);
+            ResponseEnvInternal.SetSessionValue(sessVariableName, variableValue);
         }
+
+        /// <summary>
+        /// Setting the incoming request session value is typically only done during debugging when you want to setup a
+        /// certain condition.
+        /// </summary>
+        /// <param name="sessVariableName">Name of the variable to set</param>
+        /// <param name="variableValue">Value to set</param>
+        protected void SetSessionValueOnRequest(string sessVariableName, string variableValue)
+        {
+            RequestEnvInternal.SetSessionAttribute(sessVariableName, variableValue);
+        }
+
 
         internal virtual IEnumerable<AlexaPrompt> GetAllPrompts()
         {

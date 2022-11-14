@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AlexaNetCore.Model;
 
 namespace AlexaNetCore
 {
@@ -28,10 +29,13 @@ namespace AlexaNetCore
         /// <summary>
         /// Creates a JSON response appropriate for consumption by an Echo
         /// </summary>
-        public string CreateAlexaResponse()
+        public string GetResponse(AlexaLocale locale)
         {
-            if (Items.Count == 1) return Serialize(Items.First());
-            return Serialize(Items.ToArray());
+            if (Items.Count == 1)
+            {
+                return Serialize(Items.First().GetResponse(locale));
+            }
+            return Serialize(Items.Select(i => i.GetResponse(locale)).ToArray());
         }
     }
 }

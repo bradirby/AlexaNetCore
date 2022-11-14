@@ -4,17 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using AlexaNetCore.Directives;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace AlexaNetCore.Tests
 {
     internal class DirectiveTests
     {
 
-        private class TestDirectiveAlexaSkill : AlexaSkillBase
+        private class TestSkill : AlexaSkillBase
         {
-            public TestDirectiveAlexaSkill()
+            public TestSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
             {
-                SetSkillVersion("0.1");
+
             }
         }
 
@@ -39,9 +41,9 @@ namespace AlexaNetCore.Tests
         [Test]
         public async Task NoDirectives_NothingAddedToResponse()
         {
-            var skill = new TestDirectiveAlexaSkill();
+            var skill = new TestSkill(new LoggerFactory());
             skill.RegisterIntentHandler(new DefaultLaunchIntentHandler());
-            skill.LoadRequest(AmazonIntentSampleRequests.LaunchRequest());
+            skill.LoadRequest(GenericSkillRequests.LaunchRequest());
             await skill.ProcessRequestAsync();
 
             var json = skill.GetResponse();
@@ -54,9 +56,9 @@ namespace AlexaNetCore.Tests
         public async Task DirectiveAdded_KeyWordAddedToResponse()
         {
             var lst = new List<AlexaSlotUpdate>();
-            var skill = new TestDirectiveAlexaSkill()
-                .RegisterIntentHandler(new TestDirectiveIntent(lst))
-                .LoadRequest(AmazonIntentSampleRequests.LaunchRequest());
+            var skill = new TestSkill(new LoggerFactory());
+            skill.RegisterIntentHandler(new TestDirectiveIntent(lst))
+                .LoadRequest(GenericSkillRequests.LaunchRequest());
             await skill.ProcessRequestAsync();
 
             var json = skill.GetResponse();
@@ -77,9 +79,9 @@ namespace AlexaNetCore.Tests
             slotLst.Add(new AlexaSlotUpdate("AirportSlotType", optionLst));
 
 
-            var skill = new TestDirectiveAlexaSkill()
-                .RegisterIntentHandler(new TestDirectiveIntent(slotLst))
-                .LoadRequest(AmazonIntentSampleRequests.LaunchRequest());
+            var skill = new TestSkill(new LoggerFactory());
+            skill.RegisterIntentHandler(new TestDirectiveIntent(slotLst))
+                .LoadRequest(GenericSkillRequests.LaunchRequest());
             await skill.ProcessRequestAsync();
 
             var json = skill.GetResponse();

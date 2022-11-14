@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.Json.Serialization;
-using System.Xml.Linq;
+﻿using System.Text.Json.Serialization;
 using AlexaNetCore.Model;
 
 namespace AlexaNetCore.RequestModel
 {
-    public class AlexaRequestEnvelope
+    public class AlexaRequestEnvelope : IAlexaRequestEnvelope
     {
         public AlexaRequestEnvelope()
         {
@@ -50,60 +46,75 @@ namespace AlexaNetCore.RequestModel
             return Session.GetAttributeValue(sessionKey, defaultValue);
         }
 
-        public AlexaRequestEnvelope SetSessionAttributeValue(string sessionKey, string val)
+        public void SetSessionAttribute(string sessionKey, string value )
         {
-            Session.SetAttributeValue(sessionKey, val);
-            return this;
+            Session.SetAttributeValue(sessionKey, value);
         }
-
-
-        public AlexaRequestSlotValue GetAlexaSlot(string slotKey)
-        {
-            return Request.Intent.Slots[slotKey]?.RequestSlotValue;
-        }
-
-        public Dictionary<int, string> GetIntentHistory()
-        {
-
-            var dict = new Dictionary<int, string>();
-            try
-            {
-                var history = Session.GetAttributeValue("IntentHistory", "").ToString();
-                if (!string.IsNullOrWhiteSpace(history))
-                {
-                    var entries = history.Split(';');
-                    foreach (var entry in entries)
-                    {
-                        if (string.IsNullOrWhiteSpace(entry)) continue;
-                        var colon = entry.IndexOf(":");
-                        var order = entry.Substring(0, colon);
-                        var intentName = entry.Substring(colon + 1);
-                        dict.Add(int.Parse(order), intentName);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return dict;
-        }
-
 
         public AlexaRequestSlot GetSlot(string slotName)
         {
             return Request.GetSlot(slotName);
         }
 
+
+        /// <summary>
+        /// Setting a slot value is not normally done but is here to allow setting values for testing
+        /// </summary>
         public void SetSlotValue(string slotName, string val)
         {
             Request.SetSlotValue(slotName, val);
         }
 
-        public string GetSlotValue(string slotName, string defaultVal = "")
+        public string GetSSLForUserFirstName(string defaulVal)
         {
-            var slot = Request.GetSlot(slotName);
-            if (slot == null) return defaultVal;
-            return slot.GetValueOrDefault(defaultVal);
+            if (Context.System.Person == null) return defaulVal;
+            return $"<alexa name:type='first' personId='{Context.System.Person.PersonId}'/> ";
         }
+
+        public string IntentName => Request?.Intent?.Name;
+    }
+
+
+    public interface IAlexaRequestEnvelope
+    {
+        /// <summary>
+        /// Name of the intent the user requested;
+        /// </summary>
+        string IntentName { get; }
+
+        string GetSSLForUserFirstName(string defaulVal = "");
+
+        string GetUserId();
+
+        /// <summary>
+        /// The version specifier for the request with the value defined as: “1.0”
+        /// </summary>
+        string Version { get; set; }
+
+        /// <summary>
+        /// The session object provides additional context associated with the request.
+        /// </summary>
+        AlexaSession Session { get; set; }
+
+        AlexaContext Context { get; set; }
+
+        /// <summary>
+        /// An object that is composed of associated parameters that further describes the user’s request. 
+        /// </summary>
+        AlexaRequest Request { get; set; }
+
+        AlexaLocale GetLocale();
+
+        object GetSessionAttribute(string sessionKey, object defaultValue = null);
+
+
+        AlexaRequestSlot GetSlot(string slotName);
+
+
+        /// <summary>
+        /// Setting a slot value is not normally done but is here to allow setting values for testing
+        /// </summary>
+        void SetSlotValue(string slotName, string val);
+
     }
 }

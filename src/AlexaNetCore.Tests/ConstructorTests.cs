@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AlexaNetCore.Interfaces;
 using Amazon.Lambda.Core;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -14,11 +15,7 @@ namespace AlexaNetCore.Tests
     {
         private class TestAlexaSkill : AlexaSkillBase
         {
-            public TestAlexaSkill()
-            {
-            }
-
-            public TestAlexaSkill(IAlexaMessageLogger log) : base(log)
+            public TestAlexaSkill(ILoggerFactory log) : base(log)
             {
 
             }
@@ -29,26 +26,20 @@ namespace AlexaNetCore.Tests
         [Test]
         public void AlexaSkillBase_EmptyConstructor()
         {
-            var skill = new TestAlexaSkill();
+            var skill = new TestAlexaSkill(new LoggerFactory());
         }
 
         [Test]
         public void AlexaSkillBase_NullLogger()
         {
-            var skill = new TestAlexaSkill((IAlexaMessageLogger) null);
-            Assert.IsNull( skill.MsgLogger);
+            var skill = new TestAlexaSkill(new LoggerFactory());
+            Assert.IsNotNull( skill.MsgLogger);
 
-            skill = new TestAlexaSkill(null);
-            Assert.IsNull( skill.MsgLogger);
+            skill = new TestAlexaSkill(new LoggerFactory());
+            Assert.IsNotNull( skill.MsgLogger);
         }
 
-        [Test]
-        public void AlexaSkillBase_BuiltInLogger()
-        {
-            var mockLogger = new Mock<IAlexaMessageLogger>();
-            var skill = new TestAlexaSkill(mockLogger.Object);
-            Assert.AreEqual(mockLogger.Object, skill.MsgLogger);
-        }
+      
 
     }
 }

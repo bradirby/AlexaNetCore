@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -13,15 +15,15 @@ namespace AlexaNetCore.Tests
 
             public override Task ProcessAsync()
             {
-                SetResponseSessionValue("MySessionKey", "FindThisValue");
+                SetSessionValue("MySessionKey", "FindThisValue");
                 return Task.CompletedTask;
 
             }
         }
 
-        internal class SessionTestAlexaSkill : AlexaSkillBase
+        internal class TestSkill : AlexaSkillBase
         {
-            public SessionTestAlexaSkill()
+            public TestSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
             {
                 RegisterIntentHandler(new IntentThatSaveSession());
             }
@@ -31,8 +33,8 @@ namespace AlexaNetCore.Tests
         [Test]
         public async Task SessionValueSet_ShowsUpInJson()
         {
-            var skill = new SessionTestAlexaSkill();
-            skill.LoadRequest(BuiltInIntentRequests.LaunchRequest);
+            var skill = new TestSkill(new LoggerFactory());
+            skill.LoadRequest(GenericSkillRequests.LaunchRequest());
             await skill.ProcessRequestAsync();
 
             Assert.AreEqual("FindThisValue", skill.GetResponseSessionValue("MySessionKey", ""));

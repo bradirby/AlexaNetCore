@@ -14,14 +14,14 @@ namespace AlexaNetCore.Tests
         [Test]
         public void Version()
         {
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(ApprovalSubmissionSampleRequests.LaunchRequest2());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             Assert.AreEqual("1.0", req.Version);
         }
 
         [Test]
         public void Session()
         {
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(ApprovalSubmissionSampleRequests.LaunchRequest2());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             Assert.AreEqual(true, req.Session.New);
             Assert.AreEqual("amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX", req.Session.SessionId);
             Assert.AreEqual("amzn1.ask.skill.XXXXXXXXXXXXXXXXXX", req.Session.Application.ApplicationId);
@@ -33,7 +33,7 @@ namespace AlexaNetCore.Tests
         [Test]
         public void Request()
         {
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(ApprovalSubmissionSampleRequests.LaunchRequest2());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             Assert.AreEqual("LaunchRequest", req.Request.RequestTypeStr);
             Assert.AreEqual("amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX", req.Request.RequestId);
             Assert.AreEqual("en-US", req.Request.LocaleString);
@@ -46,7 +46,7 @@ namespace AlexaNetCore.Tests
         [Test]
         public void Context_Viewport()
         {
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(ApprovalSubmissionSampleRequests.LaunchRequest2());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             Assert.AreEqual("HUB", req.Context.Viewport.Mode);
             Assert.AreEqual("RECTANGLE", req.Context.Viewport.Shape);
             Assert.AreEqual(1280, req.Context.Viewport.PixelWidth);
@@ -61,7 +61,7 @@ namespace AlexaNetCore.Tests
         [Test]
         public void Context_Viewport_Experiences()
         {
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(ApprovalSubmissionSampleRequests.LaunchRequest2());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             Assert.AreEqual(1, req.Context.Viewport.Experiences.Count);
             Assert.IsNotNull(req.Context.Viewport.Experiences.First(e => e.ArcMinuteWidth == 346));
             Assert.IsNotNull(req.Context.Viewport.Experiences.First(e => e.ArcMinuteHeight == 216));
@@ -72,12 +72,12 @@ namespace AlexaNetCore.Tests
         [Test]
         public void Context_Viewport_System()
         {
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(ApprovalSubmissionSampleRequests.LaunchRequest2());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             Assert.AreEqual("amzn1.ask.skill.XXXXXXXXXXXXXXXXXX", req.Context.System.Application.ApplicationId);
             Assert.AreEqual("amzn1.ask.account.XXXXXXXXXXXXXXXXXX", req.Context.System.User.UserID);
             Assert.AreEqual("amzn1.ask.device.XXXXXXXXXXXXXXXXXX", req.Context.System.Device.Id);
             Assert.AreEqual("https://api.amazonalexa.com", req.Context.System.ApiEndpoint);
-            Assert.AreEqual("XXXXXXXXXXXXXXXXXX", req.Context.System.ApiAccessToken);
+            Assert.AreEqual("eyJ0eXAiOi", req.Context.System.ApiAccessToken);
         }
     }
 }

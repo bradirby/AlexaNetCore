@@ -13,7 +13,7 @@ namespace AlexaNetCore.Tests
         public void CreateAlexaResponse_FormatIsCorrect()
         {
             // Arrange
-            var reqEnv = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
+            var reqEnv = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             var respEnv = new AlexaResponseEnvelope(reqEnv);
             respEnv.Version = "1.2";
             respEnv.Speak("Hello From Brad");
@@ -45,7 +45,7 @@ namespace AlexaNetCore.Tests
         public void CreateAlexaResponse_ServiceSimulatorTest()
         {
             // Arrange
-            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(AmazonIntentSampleRequests.LaunchRequest());
+            var req = JsonSerializer.Deserialize<AlexaRequestEnvelope>(GenericSkillRequests.LaunchRequest());
             var resp = new AlexaResponseEnvelope(req);
             resp.Version = "1.2";
             resp.Speak("Hello From Brad");

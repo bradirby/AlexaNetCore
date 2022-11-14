@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AlexaNetCore.Interfaces;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore
 {
@@ -12,25 +13,25 @@ namespace AlexaNetCore
 
         public override Task ProcessAsync()
         {
-            Speak(DefaultText.GetText(RequestEnv.GetLocale()));
+            Speak(DefaultText.GetText(GetLocale()));
             if (RepromptText != null) Reprompt(RepromptText);
             EndSessionAfterResponse();
             return Task.CompletedTask;
 
         }
 
-        public DefaultNavigateHomeIntentHandler(IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.NavigateHomeIntent, log)
+        public DefaultNavigateHomeIntentHandler(ILogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.NavigateHomeIntent, log)
         {
             DefaultText = new AlexaMultiLanguageText("I'm sorry, I don't know how navigate home.");
         }
 
-        public DefaultNavigateHomeIntentHandler(string txt, string reprompt= "", IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.NavigateHomeIntent, log)
+        public DefaultNavigateHomeIntentHandler(string txt, string reprompt= "", ILogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.NavigateHomeIntent, log)
         {
             DefaultText = new AlexaMultiLanguageText(txt);
             if (!string.IsNullOrEmpty(reprompt)) RepromptText = new AlexaMultiLanguageText(reprompt) ;
         }
 
-        public DefaultNavigateHomeIntentHandler(AlexaMultiLanguageText txt, AlexaMultiLanguageText reprompt =null, IAlexaMessageLogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.NavigateHomeIntent, log)
+        public DefaultNavigateHomeIntentHandler(AlexaMultiLanguageText txt, AlexaMultiLanguageText reprompt =null, ILogger log = null) : base(AlexaIntentType.Custom,AlexaBuiltInIntents.NavigateHomeIntent, log)
         {
             DefaultText = txt;
             RepromptText = reprompt;

@@ -5,8 +5,12 @@ namespace AlexaNetCore
 {
     public class AlexaResolution
     {
+        /// <summary>
+        /// An array of the different authorities used when trying to match what the user said to the array of options
+        /// provided in the interaction model.  These are in no particular order
+        /// </summary>
         [JsonPropertyName("resolutionsPerAuthority")]
-        public List<AlexaResolutionPerAuthority> ResolutionsPerAuthority { get; set; }
+        public AlexaResolutionPerAuthority[] ResolutionsPerAuthority { get; set; }
 
     }
 }

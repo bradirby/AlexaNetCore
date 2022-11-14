@@ -2,14 +2,15 @@
 using System.Dynamic;
 using System.Linq;
 using AlexaNetCore.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore.Model
 {
     internal class AlexaResponse
     {
-        private IAlexaMessageLogger MsgLogger;
+        private ILogger MsgLogger;
 
-        internal AlexaResponse(AlexaLocale locale, IAlexaMessageLogger log)
+        internal AlexaResponse(AlexaLocale locale, ILogger log)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(locale, MsgLogger);

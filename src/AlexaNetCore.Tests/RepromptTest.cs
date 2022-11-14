@@ -2,6 +2,7 @@
 using System.Text.Json;
 using AlexaNetCore;
 using AlexaNetCore.Model;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace AlexaNetCore.Tests
@@ -9,9 +10,15 @@ namespace AlexaNetCore.Tests
 
     public class RepromptTest
     {
-        public class TestAlexaSkill : AlexaSkillBase { }
+        private class TestSkill : AlexaSkillBase
+        {
+            public TestSkill(ILoggerFactory loggerFactory) : base(loggerFactory)
+            {
 
-        
+            }
+        }
+
+
         [Test]
         public void GetJson_TypeProperty()
         {

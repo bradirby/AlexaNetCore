@@ -1,17 +1,32 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using AlexaNetCore.Model;
 
 namespace AlexaNetCore.Tests
 {
-    public class GenericSkillRequests 
+    [DebuggerStepThrough]
+    public class GenericSkillRequests
     {
-        
 
-        
-        public static string EndSession()
+
+
+        public static string BlankRequest()
         {
+            var str = @"
+
+";
+            return str;
+        }
+
+
+
+        public static string EndSession(AlexaLocale localStr = null)
+        {
+            if (localStr == null) localStr = AlexaLocale.English_US;
+
             var str = @"
 
 
@@ -53,15 +68,16 @@ namespace AlexaNetCore.Tests
 }
 
 
-";
+".Replace("en-US", localStr.LocaleString);
             return str;
 
         }
 
         
 
-        public static string StartSession()
+        public static string StartSession(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 {
   ""session"": {
@@ -83,7 +99,7 @@ namespace AlexaNetCore.Tests
 }
 
 
-";
+".Replace("en-US", localStr.LocaleString);
 
             return str;
 
@@ -92,8 +108,9 @@ namespace AlexaNetCore.Tests
 
 
 
-        public static string CancelRequest()
+        public static string CancelRequest(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 {
   ""session"": {
@@ -120,16 +137,126 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 
-";
+".Replace("en-US", localStr.LocaleString);
 
             return str;
 
         }
 
 
-        
-        public static string InvalidIntentType()
+
+        public static string HelpRequest(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
+            var str = @"{
+	""version"": ""1.0"",
+	""session"": {
+		""new"": false,
+		""sessionId"": ""amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX"",
+		""application"": {
+			""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+		},
+		""attributes"": {},
+		""user"": {
+			""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""context"": {
+		""Viewports"": [
+			{
+				""type"": ""APL"",
+				""id"": ""main"",
+				""shape"": ""RECTANGLE"",
+				""dpi"": 213,
+				""presentationType"": ""STANDARD"",
+				""canRotate"": false,
+				""configuration"": {
+					""current"": {
+						""mode"": ""HUB"",
+						""video"": {
+							""codecs"": [
+								""H_264_42"",
+								""H_264_41""
+							]
+						},
+						""size"": {
+							""type"": ""DISCRETE"",
+							""pixelWidth"": 1280,
+							""pixelHeight"": 800
+						}
+					}
+				}
+			}
+		],
+		""Viewport"": {
+			""experiences"": [
+				{
+					""arcMinuteWidth"": 346,
+					""arcMinuteHeight"": 216,
+					""canRotate"": false,
+					""canResize"": false
+				}
+			],
+			""mode"": ""HUB"",
+			""shape"": ""RECTANGLE"",
+			""pixelWidth"": 1280,
+			""pixelHeight"": 800,
+			""dpi"": 213,
+			""currentPixelWidth"": 1280,
+			""currentPixelHeight"": 800,
+			""touch"": [
+				""SINGLE""
+			],
+			""video"": {
+				""codecs"": [
+					""H_264_42"",
+					""H_264_41""
+				]
+			}
+		},
+		""Extensions"": {
+			""available"": {
+				""aplext:backstack:10"": {}
+			}
+		},
+		""System"": {
+			""application"": {
+				""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+			},
+			""user"": {
+				""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+			},
+			""device"": {
+				""deviceId"": ""amzn1.ask.device.XXXXXXXXXXXXXXXXXX"",
+				""supportedInterfaces"": {}
+			},
+			""apiEndpoint"": ""https://api.amazonalexa.com"",
+			""apiAccessToken"": ""XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""request"": {
+		""type"": ""IntentRequest"",
+		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
+		""locale"": ""en-US"",
+		""timestamp"": ""2022-04-01T09:45:57Z"",
+		""intent"": {
+			""name"": ""AMAZON.HelpIntent"",
+			""confirmationStatus"": ""NONE""
+		}
+	}
+}
+".Replace("en-US", localStr.LocaleString);
+
+            return str;
+
+        }
+
+
+
+
+        public static string InvalidIntentType(AlexaLocale localStr = null)
+        {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 {
   ""session"": {
@@ -174,8 +301,9 @@ namespace AlexaNetCore.Tests
         }
 
 
-        public static string InvalidIntentName()
+        public static string InvalidIntentName(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 {
   ""session"": {
@@ -214,16 +342,16 @@ namespace AlexaNetCore.Tests
   },
   ""version"": ""1.0""
 }
-"
-                ;
+".Replace("en-US", localStr.LocaleString);
 
             return str;
         }
 
 
         
-        public static string EmptyRequest()
+        public static string EmptyRequest(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 {
   ""session"": {
@@ -260,14 +388,15 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 
-";
+".Replace("en-US", localStr.LocaleString);
             return str;
 
         }
 
     
-        public static string LaunchRequest()
+        public static string LaunchRequest(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 
 {
@@ -365,7 +494,8 @@ namespace AlexaNetCore.Tests
 	}
 }
 
-";
+".Replace("en-US", localStr.LocaleString);
+
 
             return str;
 
@@ -373,10 +503,235 @@ namespace AlexaNetCore.Tests
 
 
 
-        
-
-        public static string StopRequest()
+        public static string StartOverRequest(AlexaLocale localStr = null)
         {
+            if (localStr == null) localStr = AlexaLocale.English_US;
+            var str = @"
+
+{
+	""version"": ""1.0"",
+	""session"": {
+		""new"": false,
+		""sessionId"": ""amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX"",
+		""application"": {
+			""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+		},
+		""attributes"": {},
+		""user"": {
+			""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""context"": {
+		""Viewports"": [
+			{
+				""type"": ""APL"",
+				""id"": ""main"",
+				""shape"": ""RECTANGLE"",
+				""dpi"": 213,
+				""presentationType"": ""STANDARD"",
+				""canRotate"": false,
+				""configuration"": {
+					""current"": {
+						""mode"": ""HUB"",
+						""video"": {
+							""codecs"": [
+								""H_264_42"",
+								""H_264_41""
+							]
+						},
+						""size"": {
+							""type"": ""DISCRETE"",
+							""pixelWidth"": 1280,
+							""pixelHeight"": 800
+						}
+					}
+				}
+			}
+		],
+		""Viewport"": {
+			""experiences"": [
+				{
+					""arcMinuteWidth"": 346,
+					""arcMinuteHeight"": 216,
+					""canRotate"": false,
+					""canResize"": false
+				}
+			],
+			""mode"": ""HUB"",
+			""shape"": ""RECTANGLE"",
+			""pixelWidth"": 1280,
+			""pixelHeight"": 800,
+			""dpi"": 213,
+			""currentPixelWidth"": 1280,
+			""currentPixelHeight"": 800,
+			""touch"": [
+				""SINGLE""
+			],
+			""video"": {
+				""codecs"": [
+					""H_264_42"",
+					""H_264_41""
+				]
+			}
+		},
+		""Extensions"": {
+			""available"": {
+				""aplext:backstack:10"": {}
+			}
+		},
+		""System"": {
+			""application"": {
+				""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+			},
+			""user"": {
+				""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+			},
+			""device"": {
+				""deviceId"": ""amzn1.ask.device.XXXXXXXXXXXXXXXXXX"",
+				""supportedInterfaces"": {}
+			},
+			""apiEndpoint"": ""https://api.amazonalexa.com"",
+			""apiAccessToken"": ""XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""request"": {
+		""type"": ""IntentRequest"",
+		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
+		""locale"": ""en-US"",
+		""timestamp"": ""2022-04-01T09:45:57Z"",
+		""intent"": {
+			""name"": ""AMAZON.StartOverIntent"""",
+			""confirmationStatus"": ""NONE""
+		}
+	}
+}
+".Replace("en-US", localStr.LocaleString);
+
+
+            return str;
+
+        }
+
+
+
+
+        public static string FallBackIntent(AlexaLocale localStr = null)
+        {
+            if (localStr == null) localStr = AlexaLocale.English_US;
+            var str = @"
+
+{
+	""version"": ""1.0"",
+	""session"": {
+		""new"": false,
+		""sessionId"": ""amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX"",
+		""application"": {
+			""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+		},
+		""attributes"": {},
+		""user"": {
+			""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""context"": {
+		""Viewports"": [
+			{
+				""type"": ""APL"",
+				""id"": ""main"",
+				""shape"": ""RECTANGLE"",
+				""dpi"": 213,
+				""presentationType"": ""STANDARD"",
+				""canRotate"": false,
+				""configuration"": {
+					""current"": {
+						""mode"": ""HUB"",
+						""video"": {
+							""codecs"": [
+								""H_264_42"",
+								""H_264_41""
+							]
+						},
+						""size"": {
+							""type"": ""DISCRETE"",
+							""pixelWidth"": 1280,
+							""pixelHeight"": 800
+						}
+					}
+				}
+			}
+		],
+		""Viewport"": {
+			""experiences"": [
+				{
+					""arcMinuteWidth"": 346,
+					""arcMinuteHeight"": 216,
+					""canRotate"": false,
+					""canResize"": false
+				}
+			],
+			""mode"": ""HUB"",
+			""shape"": ""RECTANGLE"",
+			""pixelWidth"": 1280,
+			""pixelHeight"": 800,
+			""dpi"": 213,
+			""currentPixelWidth"": 1280,
+			""currentPixelHeight"": 800,
+			""touch"": [
+				""SINGLE""
+			],
+			""video"": {
+				""codecs"": [
+					""H_264_42"",
+					""H_264_41""
+				]
+			}
+		},
+		""Extensions"": {
+			""available"": {
+				""aplext:backstack:10"": {}
+			}
+		},
+		""System"": {
+			""application"": {
+				""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+			},
+			""user"": {
+				""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+			},
+			""device"": {
+				""deviceId"": ""amzn1.ask.device.XXXXXXXXXXXXXXXXXX"",
+				""supportedInterfaces"": {}
+			},
+			""apiEndpoint"": ""https://api.amazonalexa.com"",
+			""apiAccessToken"": ""XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""request"": {
+		""type"": ""IntentRequest"",
+		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
+		""locale"": ""en-US"",
+		""timestamp"": ""2022-04-01T09:45:57Z"",
+		""intent"": {
+			""name"": ""AMAZON.FallbackIntent"""",
+			""confirmationStatus"": ""NONE""
+		}
+	}
+}
+".Replace("en-US", localStr.LocaleString);
+
+
+            return str;
+
+        }
+
+
+
+
+
+
+        public static string StopRequest(AlexaLocale localStr = null)
+        {
+            if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
 {
   ""session"": {
@@ -403,7 +758,7 @@ namespace AlexaNetCore.Tests
   ""version"": ""1.0""
 }
 
-";
+".Replace("en-US", localStr.LocaleString);
 
             return str;
 

@@ -44,13 +44,13 @@ namespace AlexaNetCore.Model
             if (Slots.ContainsKey(slotName))
             {
                 var slot = Slots[slotName];
-                slot.SpokenValue = newSlotVal;
+                slot.Value = newSlotVal;
                 return true;
             }
 
             var newSlot = new AlexaRequestSlot();
             newSlot.Name = slotName;
-            newSlot.SpokenValue = newSlotVal;
+            newSlot.Value = newSlotVal;
             newSlot.Source = "CODE";   //this is a code introduced here - it's not an official Amazon source
             Slots.Add(newSlot.Name, newSlot);
             return false;

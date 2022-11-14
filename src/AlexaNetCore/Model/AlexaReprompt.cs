@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 using AlexaNetCore.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AlexaNetCore.Model
 {
@@ -8,7 +9,7 @@ namespace AlexaNetCore.Model
 
     public class AlexaReprompt
     {
-        private IAlexaMessageLogger MsgLogger;
+        private ILogger MsgLogger;
 
         public IList<string> Validate()
         {
@@ -18,14 +19,14 @@ namespace AlexaNetCore.Model
         }
 
 
-        public AlexaReprompt(string repromptText, IAlexaMessageLogger log = null)
+        public AlexaReprompt(string repromptText, ILogger log = null)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(AlexaLocale.English_US, MsgLogger);
             OutputSpeech.SetText(repromptText);
         }
 
-        public AlexaReprompt(AlexaMultiLanguageText repromptText, IAlexaMessageLogger log = null)
+        public AlexaReprompt(AlexaMultiLanguageText repromptText, ILogger log = null)
         {
             MsgLogger = log;
             OutputSpeech = new AlexaOutputSpeech(AlexaLocale.English_US, MsgLogger);
