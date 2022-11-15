@@ -6,16 +6,16 @@ using Amazon.Lambda.Core;
 
 namespace AlexaNetCore.Util
 {
-    public class ConsoleMessageLogger : IAlexaMessageLogger
+    public class ConsoleLogger : IAlexaMessageLogger
     {
         internal ILambdaLogger lambdaLogger;
 
-        public ConsoleMessageLogger()
+        public ConsoleLogger()
         {
             lambdaLogger = null;
         }
 
-        public ConsoleMessageLogger(ILambdaLogger log)
+        public ConsoleLogger(ILambdaLogger log)
         {
             if (log!=null) lambdaLogger = log;
         }
