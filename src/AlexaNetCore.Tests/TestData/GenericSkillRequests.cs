@@ -11,6 +11,113 @@ namespace AlexaNetCore.Tests
     public class GenericSkillRequests
     {
 
+        public static string SessionEndedWithInvalidResponse(AlexaLocale localStr = null)
+        {
+
+            var str = @"
+{
+	""version"": ""1.0"",
+	""session"": {
+		""new"": false,
+		""sessionId"": ""amzn1.echo-api.session.XXXXXXXXXXXXXXXXXX"",
+		""application"": {
+			""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+		},
+		""attributes"": {},
+		""user"": {
+			""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+		}
+	},
+	""context"": {
+		""Viewports"": [
+			{
+				""type"": ""APL"",
+				""id"": ""main"",
+				""shape"": ""RECTANGLE"",
+				""dpi"": 213,
+				""presentationType"": ""STANDARD"",
+				""canRotate"": false,
+				""configuration"": {
+					""current"": {
+						""mode"": ""HUB"",
+						""video"": {
+							""codecs"": [
+								""H_264_42"",
+								""H_264_41""
+							]
+						},
+						""size"": {
+							""type"": ""DISCRETE"",
+							""pixelWidth"": 1280,
+							""pixelHeight"": 800
+						}
+					}
+				}
+			}
+		],
+		""Viewport"": {
+			""experiences"": [
+				{
+					""arcMinuteWidth"": 346,
+					""arcMinuteHeight"": 216,
+					""canRotate"": false,
+					""canResize"": false
+				}
+			],
+			""mode"": ""HUB"",
+			""shape"": ""RECTANGLE"",
+			""pixelWidth"": 1280,
+			""pixelHeight"": 800,
+			""dpi"": 213,
+			""currentPixelWidth"": 1280,
+			""currentPixelHeight"": 800,
+			""touch"": [
+				""SINGLE""
+			],
+			""video"": {
+				""codecs"": [
+					""H_264_42"",
+					""H_264_41""
+				]
+			}
+		},
+		""Extensions"": {
+			""available"": {
+				""aplext:backstack:10"": {}
+			}
+		},
+		""System"": {
+			""application"": {
+				""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
+			},
+			""user"": {
+				""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
+			},
+			""device"": {
+				""deviceId"": ""amzn1.ask.device.XXXXXXXXXXXXXXXXXX"",
+				""supportedInterfaces"": {}
+			},
+			""apiEndpoint"": ""https://api.amazonalexa.com"",
+			""apiAccessToken"": ""XXXXXXXXXXXXXXXXXX
+	},
+	""request"": {
+		""type"": ""SessionEndedRequest"",
+		""requestId"": ""amzn1.echo-api.request.XXXXXXXXXXXXXXXXXX"",
+		""timestamp"": ""2022-08-12T10:42:32Z"",
+		""locale"": ""en-US"",
+		""reason"": ""ERROR"",
+		""error"": {
+			""type"": ""INVALID_RESPONSE"",
+			""message"": ""An exception occurred while dispatching the request to the skill.""
+		}
+	}
+}
+
+
+";
+
+            return str.Replace("en-US", localStr.LocaleString);
+        }
 
 
         public static string BlankRequest()
@@ -73,7 +180,7 @@ namespace AlexaNetCore.Tests
 
         }
 
-        
+
 
         public static string StartSession(AlexaLocale localStr = null)
         {
@@ -253,55 +360,7 @@ namespace AlexaNetCore.Tests
 
 
 
-
-        public static string InvalidIntentType(AlexaLocale localStr = null)
-        {
-            if (localStr == null) localStr = AlexaLocale.English_US;
-            var str = @"
-{
-  ""session"": {
-    ""sessionId"": ""SessionId.XXXXXXXXXXXXXXXXXX"",
-    ""application"": {
-                ""applicationId"": ""amzn1.ask.skill.XXXXXXXXXXXXXXXXXX""
-    },
-    ""attributes"": { },
-    ""user"": {
-                ""userId"": ""amzn1.ask.account.XXXXXXXXXXXXXXXXXX""
-    },
-    ""new"": true
-  },
-  ""request"": {
-    ""type"": ""InvalidIntent"",
-    ""requestId"": ""EdwRequestId.XXXXXXXXXXXXXXXXXX"",
-    ""locale"": ""en-US"",
-    ""timestamp"": ""2016-08-18T20:22:53Z"",
-    ""intent"": {
-      ""name"": ""WithoutDecimal"",
-      ""slots"": {
-        ""sourceType"": {
-          ""name"": ""sourceType"",
-          ""value"": ""meter""
-        },
-        ""inputValue"": {
-          ""name"": ""inputValue"",
-          ""value"": ""1""
-        },
-        ""destType"": {
-          ""name"": ""destType"",
-          ""value"": ""yards""
-        }
-      }
-    }
-  },
-  ""version"": ""1.0""
-}
-"
-                ;
-            return str;
-        }
-
-
-        public static string InvalidIntentName(AlexaLocale localStr = null)
+        public static string InvalidIntent(AlexaLocale localStr = null)
         {
             if (localStr == null) localStr = AlexaLocale.English_US;
             var str = @"
@@ -348,7 +407,7 @@ namespace AlexaNetCore.Tests
         }
 
 
-        
+
         public static string EmptyRequest(AlexaLocale localStr = null)
         {
             if (localStr == null) localStr = AlexaLocale.English_US;
@@ -393,7 +452,7 @@ namespace AlexaNetCore.Tests
 
         }
 
-    
+
         public static string LaunchRequest(AlexaLocale localStr = null)
         {
             if (localStr == null) localStr = AlexaLocale.English_US;
