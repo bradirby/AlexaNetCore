@@ -1,28 +1,38 @@
 ﻿using System;
 using System.Dynamic;
 using System.Text.Json.Serialization;
-using AlexaNetCore.Directives;
 using AlexaNetCore.Model;
 
 namespace AlexaNetCore
 {
     public class AlexaTextBriefingItem
     {
-        public string JsonId => $"urn:uuid:{Id}";
-
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public DateTime BriefingDate { get; set; } = DateTime.Today;
-
 
         /// <summary>
-        /// The title that is displayed on the screen (if there is one).  This text is not read aloud
+        /// This is a unique identifier for this feeditem.  Alexa keeps track of whether a feed item has been played
+        /// yet by using this id.  Changing this id makes this feed item a "new" item
+        /// </summary>
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        /// <summary>
+        /// The date the briefing item was created, in UTC format.
+        /// </summary>
+        public DateTime BriefingUTCDate { get; private set; } = DateTime.Today;
+
+        public AlexaTextBriefingItem SetUTCDate(DateTime utcDate)
+        {
+            BriefingUTCDate = utcDate;
+            return this;
+        }
+
+        /// <summary>
+        /// The title that is displayed on the screen (if there is one).  This text is not read aloud but is shown on the Alexa app.
         /// </summary>
         public AlexaMultiLanguageText Title { get; private set; }
 
 
         /// <summary>
-        /// Sets the title that is displayed on the screen (if there is one).  This text is not read aloud
+        /// Sets the title that is displayed on the screen (if there is one).  This text is not read aloud but is shown on the Alexa app.
         /// </summary>
         public AlexaTextBriefingItem SetTitle(string title)
         {
@@ -31,7 +41,7 @@ namespace AlexaNetCore
         }
 
         /// <summary>
-        /// Sets the title that is displayed on the screen (if there is one).  This text is not read aloud
+        /// Sets the title that is displayed on the screen (if there is one).  This text is not read aloud but is shown on the Alexa app.
         /// </summary>
         public AlexaTextBriefingItem SetTitle(AlexaMultiLanguageText title)
         {
@@ -59,7 +69,6 @@ namespace AlexaNetCore
         /// <summary>
         /// Provides the URL target for the Read More link in the Alexa app. "
         /// </summary>
-        [JsonPropertyName("redirectionUrl")] 
         public string DisplayUrl { get; private set; }
 
 
@@ -72,8 +81,8 @@ namespace AlexaNetCore
         public object GetResponse(AlexaLocale locale)
         {
             dynamic obj = new ExpandoObject();
-            obj.uid = JsonId;
-            obj.updateDate = BriefingDate;
+            obj.uid = $"urn:uuid:{Id}";
+            obj.updateDate = BriefingUTCDate;
             obj.titleText = Title.GetText(locale);
             obj.mainText = Content.GetText(locale);
             if (!string.IsNullOrEmpty(DisplayUrl))
