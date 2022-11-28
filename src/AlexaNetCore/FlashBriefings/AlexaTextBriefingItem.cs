@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Dynamic;
-using System.Text.Json.Serialization;
 using AlexaNetCore.Model;
 
 namespace AlexaNetCore
@@ -9,10 +8,18 @@ namespace AlexaNetCore
     {
 
         /// <summary>
-        /// This is a unique identifier for this feeditem.  Alexa keeps track of whether a feed item has been played
-        /// yet by using this id.  Changing this id makes this feed item a "new" item
+        /// This is a unique identifier for this feed item so Alexa can keep track of whether a feed item has been played
+        /// yet.  Changing this id makes this feed item a "new" item so Alexa will consider it to be unplayed.
         /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid FeedId { get; private set; } = Guid.NewGuid();
+
+        public AlexaTextBriefingItem SetFeedId(Guid newId)
+        {
+            FeedId = newId;
+            return this;
+        }
+
+
 
         /// <summary>
         /// The date the briefing item was created, in UTC format.
@@ -81,7 +88,7 @@ namespace AlexaNetCore
         public object GetResponse(AlexaLocale locale)
         {
             dynamic obj = new ExpandoObject();
-            obj.uid = $"urn:uuid:{Id}";
+            obj.uid = $"urn:uuid:{FeedId}";
             obj.updateDate = BriefingUTCDate;
             obj.titleText = Title.GetText(locale);
             obj.mainText = Content.GetText(locale);
