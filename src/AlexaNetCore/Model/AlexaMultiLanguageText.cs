@@ -10,20 +10,20 @@ namespace AlexaNetCore.Model
         [DebuggerStepThrough]
         public AlexaMultiLanguageText()
         {
-            Phrases = new Dictionary<string, string>();
+            _phrases = new Dictionary<string, string>();
         }
 
         [DebuggerStepThrough]
         public AlexaMultiLanguageText (string txt, AlexaLocale locale = null )
         {
-            Phrases = new Dictionary<string, string>();
+            _phrases = new Dictionary<string, string>();
             AddText(txt, locale ?? AlexaLocale.English_US);
         }
 
 
-        private Dictionary<string, string> Phrases;
+        private readonly Dictionary<string, string> _phrases;
 
-        public int NumLanguages => Phrases.Count;
+        public int NumLanguages => _phrases.Count;
 
 
         public string GetText(AlexaLocale targetLocale = null)
@@ -31,32 +31,37 @@ namespace AlexaNetCore.Model
             targetLocale ??= AlexaLocale.English_US;
             
             //look for the specific targetLocale
-            if (Phrases.ContainsKey(targetLocale.LocaleString)) return Phrases[targetLocale.LocaleString];
+            if (_phrases.ContainsKey(targetLocale.LocaleString)) return _phrases[targetLocale.LocaleString];
 
             //look for the same language but diff country
-            var entryKey = Phrases.Keys.FirstOrDefault(k => k.StartsWith(targetLocale.LanguageCode));
-            if (!string.IsNullOrEmpty(entryKey)) return Phrases[entryKey];
+            var entryKey = _phrases.Keys.FirstOrDefault(k => k.StartsWith(targetLocale.LanguageCode));
+            if (!string.IsNullOrEmpty(entryKey)) return _phrases[entryKey];
 
 
             //find american english
-            if (Phrases.ContainsKey(AlexaLocale.English_US.LocaleString)) return Phrases[AlexaLocale.English_US.LocaleString];
+            if (_phrases.ContainsKey(AlexaLocale.English_US.LocaleString)) return _phrases[AlexaLocale.English_US.LocaleString];
 
             //find any kind of english
-            entryKey = Phrases.Keys.FirstOrDefault(k => k.StartsWith(AlexaLocale.English_US.LanguageCode));
-            if (!string.IsNullOrEmpty(entryKey)) return Phrases[entryKey];
+            entryKey = _phrases.Keys.FirstOrDefault(k => k.StartsWith(AlexaLocale.English_US.LanguageCode));
+            if (!string.IsNullOrEmpty(entryKey)) return _phrases[entryKey];
 
             //give up
-            if (Phrases.Any()) return Phrases.First().Value;
+            if (_phrases.Any()) return _phrases.First().Value;
 
             return "";
+        }
+
+        public bool Contains(string str)
+        {
+            return _phrases.ContainsValue(str);
         }
 
 
         public AlexaMultiLanguageText AddText(string txt, AlexaLocale locale )
         {
             locale ??= AlexaLocale.English_US;
-            if (Phrases.ContainsKey(locale.LocaleString)) Phrases.Remove(locale.LocaleString);
-            Phrases.Add(locale.LocaleString, txt);
+            if (_phrases.ContainsKey(locale.LocaleString)) _phrases.Remove(locale.LocaleString);
+            _phrases.Add(locale.LocaleString, txt);
             return this;
         }
     }
